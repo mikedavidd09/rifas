@@ -1,0 +1,20 @@
+.no_imprimir{
+    display: none;
+}
+table{
+    font-size:10px;
+}
+
+/* En tu archivo /resources/css/kardex.css */
+
+/* Clase para los estados que van en rojo */
+.estado-alerta {
+    color: #d9534f!important; /* Un tono de rojo bootstrap (danger) */
+    font-weight: bold;
+}
+
+/* Clase para el estado que va en azul */
+.estado-info {
+    color: #337ab7!important; /* Un tono de azul bootstrap (primary) */
+    font-weight: bold;
+}

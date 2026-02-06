@@ -1,0 +1,11 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.wolfinanciero\.tech [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+Options -Indexes
+
+IndexIgnore *.php *.html
+RewriteRule ^api/(.*)$ index.php [QSA,L]
+
+
+

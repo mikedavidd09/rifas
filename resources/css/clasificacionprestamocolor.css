@@ -1,0 +1,47 @@
+.primera_cuota {
+      background-color: #3c763d !important;
+       color: white !important;
+    }
+.endiadegracia {
+      background-color: #009688c7 !important;
+       color: white !important;
+    }
+
+.vencido {
+      background-color: #fa3e3e !important;
+       color: white !important;
+ }
+ .conmora {
+      background-color: #555920 !important;
+       color: white !important;
+ }
+
+ .semanal {
+      background-color: 1049c9  !important;
+      color: white !important;
+ }
+  }
+
+  .quincenal{
+      background-color: #dadd0b !important;
+      color: white !important;
+    }
+
+  .mensual {
+      background-color: #fa3e3e !important;
+    }
+
+    .diario {
+      background-color: #fa3e3e !important;
+    }
+
+    .primera_cuota a,.vencido a,.endiadegracia a,.semanal a,.conmora a,.quincenal a{
+      color: white !important;
+      font-weight: 1.5 px bold;
+      font-size: 1.3em;
+    }
+    sup{
+      font-weight: 1.5 px bold !important;
+      font-size: 0.5em !important;
+      font-family: arial !important;
+    }

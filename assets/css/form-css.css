@@ -1,0 +1,105 @@
+.txRed {
+    color: Red;
+}
+.div_btn_button{
+    padding-bottom: 13px;
+}
+.div_error {
+    border-style: solid;
+    border-width: 1px;
+    color: red;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+    border-radius: 0px!important;
+}
+.imgSalida{
+
+}
+.superior{
+ width: 100%;
+    position:fixed; /*El div serÃ¡ ubicado con relaciÃ³n a la pantalla*/
+   /* bottom:0px; Abajo deje un espacio de 0px*/
+    z-index:1000;
+	padding-left: 0;
+    padding-right: 0;
+}
+#inferior{
+    /* color: #FFF; */
+    /* background: #FFF; */
+    /* border-style: solid; */
+    /* border-width: 1px; */
+    /* color: grey; */
+   /* ey; */
+    width: 100%;
+    position:fixed; /*El div serÃ¡ ubicado con relaciÃ³n a la pantalla*/
+    bottom:0px; /*Abajo deje un espacio de 0px*/
+    z-index:0;
+}
+.inferior_firma{
+    width: 100%;
+    position:fixed; /*El div serÃ¡ ubicado con relaciÃ³n a la pantalla*/
+    bottom:0px; /*Abajo deje un espacio de 0px*/
+    z-index:0;
+    visibility: hidden;
+
+}
+
+#cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none;
+}
+
+#cover-spin::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid red; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    align-content: center;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.clase_cargando {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+}
+
+.green-tooltip + .tooltip > .tooltip-inner {background-color:green;}
+.green-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:green; }
+.red-tooltip + .tooltip > .tooltip-inner {background-color:#f00;}
+.red-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#f00; }

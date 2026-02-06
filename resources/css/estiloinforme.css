@@ -1,0 +1,9 @@
+.titleinfrome{
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+table th,td{
+	text-align: center;
+}

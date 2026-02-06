@@ -1,0 +1,6 @@
+.inferior_firma{
+    width: 100%;
+    position:fixed; /*El div será ubicado con relación a la pantalla*/
+    bottom:0px; /*Abajo deje un espacio de 0px*/
+    z-index:0;
+}

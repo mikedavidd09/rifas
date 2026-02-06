@@ -1,0 +1,35 @@
+# Carpetas de dependencias
+/vendor/
+/node_modules/
+
+# Archivos de log
+*.log
+log-*.txt
+logfile*.txt
+
+# Archivos de base de datos (backups)
+*.sql
+db_*.sql
+
+# Archivos temporales
+index.lock
+*.tmp
+*.swp
+*.swo
+*~
+
+# Archivos de configuración sensibles
+.env
+.env.example
+config/database.php
+config/config.php
+
+# Backups y archivos viejos
+*.old.php
+*.backup.php
+backup.php
+
+# Cache
+cache/
+tmp/
+temp/

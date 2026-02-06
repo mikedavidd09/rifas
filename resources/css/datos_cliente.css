@@ -1,0 +1,8 @@
+.cortar{
+    width:200px;
+    height:20px;
+    padding:20px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+}

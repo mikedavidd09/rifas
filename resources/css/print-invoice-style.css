@@ -1,0 +1,67 @@
+.ticket{
+    font-size: 12px;
+    font-family: 'Times New Roman';
+    /*position: absolute;*/
+    top: 0px;
+    left: 0;
+    width: 100%;
+}
+
+td,
+th,
+tr,
+table {
+    /*border-top: 1px solid black;*/
+    border-collapse: collapse;
+}
+
+td.producto,
+th.producto {
+    width: 30%;
+    max-width:  30%;
+}
+
+td.cantidad,
+th.cantidad {
+    width: 20%;
+    max-width:  20%;
+    word-break: break-all;
+}
+
+td.precio,
+th.precio {
+    width: 80%;
+    max-width: 80%;
+    word-break: break-all;
+    text-align: right;
+}
+
+.centrado {
+    text-align: center;
+    align-content: center;
+    width: 270px;
+    max-width: 270px;
+}
+
+.ticket {
+    width: 270px;
+    max-width: 270px;
+}
+
+.img-gota {
+    max-width: 270px;
+    width: 270px;
+    /*margin-top: 120px;*/
+}
+.image-div{
+    /*position: relative;*/
+    width: 270px;
+}
+.image-img{
+    /* position: relative;*/
+    width: 100px;
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
