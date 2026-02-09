@@ -8,6 +8,11 @@
                </a>
             </div>
             <div class="col-xs-12 col-md-3 mb-custom">
+               <a class='link' href="index.php?controller=juegos&action=juegaFecha" class="thumbnail">
+               <img src="resources/imagen/juegos/juegaFecha.webp" alt="Imagen" class="img-responsive img-rounded">
+               </a>
+            </div>
+            <div class="col-xs-12 col-md-3 mb-custom">
                <a class='link' href="index.php?controller=juegos&action=juega3" class="thumbnail">
                <img src="resources/imagen/juegos/juega3.webp" alt="Imagen" class="img-responsive img-rounded">
                </a>

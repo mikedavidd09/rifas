@@ -9,10 +9,13 @@
         <thead>
         <tr>
             <th> ID </th>
+            <th>CONSECUTIVO</th>
             <th>VENDEDOR</th>
-            <th>JUEGO</th>
+            <th>CLIENTE</th>
             <th>JUEGO</th>
             <th>SORTEO</th>
+            <th>FECHA</th>
+            <th>HORA</th>
             <th>TOTAL</th>
         </tr>
         </thead>
@@ -23,20 +26,19 @@
 
 <script>
 
-    document.addEventListener("DOMContentLoaded", function(event) {
-       
+        console.log("DOM fully loaded and parsed");
 
     $.getScript("resources/js/jsDatatable.js", function(){
 
-    DatatableJs('#ventas',"index.php?controller=juego&action=getVentas",0,[{
+    DatatableJs('#ventas',"index.php?controller=Venta&action=getVentas",0,[{
 
         "targets": 1,
 
         "render": function ( data, type, row, meta ) {
 
-            var itemID = row[0];
+            let itemID = row[0];
 
-            return '<a class="link" href="index.php?controller=juego&action=ver_datos&obj=' + itemID + '">' + data + '</a>';
+            return '<a class="link" href="index.php?controller=Venta&action=ver_venta&id=' + itemID + '">' + data + '</a>';
 
         }
 
@@ -44,7 +46,5 @@
 
     });
 
-
- });
 
 </script>

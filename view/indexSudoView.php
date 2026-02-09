@@ -148,7 +148,7 @@
                      <li><a class='link' href="index.php?controller=juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
                   </ul>
                </li>
-               <li ><a class ='link'   href="index.php?controller=juegos&action=verVentas"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
+               <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
                <li ><a class ='link'   href="index.php?controller=juegos&action=numerosGanadores"><i class="fa fa-trophy"></i><span>Numeros Ganadores</span></a></li>
                <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
                <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
