@@ -45,7 +45,7 @@ class VentaModel extends ModeloBase{
         INNER JOIN juegos j ON v.id_juego = j.id_juego
         WHERE v.id_venta = $id_venta
         ";
-        $obj=$this->ejecutarSqlRow($query);
+        $obj=$this->ejecutarSql($query);
         return $obj;
     }
 
@@ -56,7 +56,7 @@ class VentaModel extends ModeloBase{
         INNER JOIN ventas v ON n.id_venta = v.id_venta
         WHERE v.id_venta = $id_venta
         ";
-        $obj=$this->ejecutarSqlRow($query);
+        $obj=$this->ejecutarSql($query);
         return $obj;
     }
 
