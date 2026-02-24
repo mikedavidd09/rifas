@@ -23,22 +23,23 @@ class VentaModel extends ModeloBase{
         ";
     }
 
-       public function getListadoIndex($query){
+    public function getListadoIndex($query){
         $listado=$this->ejecutarSqlRow($query);
         return $listado;
     }
 
     public function getVenta($id_venta){
-       $query = "SELECT 
-       v.id_venta,
-       v.consecutivo,
-       concat(col.nombre,' ',col.apellido) as vendedor,
+        $query = "SELECT 
+        v.id_venta,
+        v.consecutivo,
+        concat(col.nombre,' ',col.apellido) as vendedor,
         v.nombre as cliente,
 	    j.nombre as juego, 
         s.etiqueta as sorteo,
         v.fecha,
         v.hora,
-        v.total
+        v.total,
+        s.id_sorteo
         FROM colaboradores col
         INNER JOIN ventas v ON col.id_colaborador = v.id_colaborador 
         INNER JOIN sorteos s ON v.id_sorteo = s.id_sorteo
@@ -46,7 +47,7 @@ class VentaModel extends ModeloBase{
         WHERE v.id_venta = $id_venta
         ";
         $obj=$this->ejecutarSql($query);
-        return $obj;
+        return is_object($obj) ? $obj : [$obj];
     }
 
     public function getNumeros($id_venta){
@@ -57,9 +58,18 @@ class VentaModel extends ModeloBase{
         WHERE v.id_venta = $id_venta
         ";
         $obj=$this->ejecutarSql($query);
-        return $obj;
+        return is_object($obj) ? [$obj] : $obj;
     }
 
+    public function getSorteo($id_sorteo){
+        $query = "SELECT 
+        *
+        FROM sorteos s
+        WHERE s.id_sorteo = $id_sorteo
+        ";
+        $obj=$this->ejecutarSql($query);
+        return $obj;
+    }
 
 }
 

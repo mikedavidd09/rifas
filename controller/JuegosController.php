@@ -17,86 +17,172 @@ class JuegosController extends ControladorBase
         return $this->view('home',array());
     }
 
-    public function juegaDiaria(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Diaria','id_juego'=>1,'min'=>0,'max'=>99]);
-    }
-    public function juega3(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega 3','id_juego'=>2,'min'=>0,'max'=>999]);
-    }
-    public function juegaFecha(){
-        $this->view('juegos/juegaFecha',['juego'=>'Juega Fecha','id_juego'=>3,'min'=>0,'max'=>999]);
-    }
-    public function juegaCombo(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Combo','id_juego'=>4,'min'=>0,'max'=>9999]);
-    }
-    public function juegaTica(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Tica','id_juego'=>5,'min'=>0,'max'=>99]);
-    }
-    public function juegaMonazos(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Monazos','id_juego'=>6,'min'=>0,'max'=>999]);
-    }
-    public function juegaHondurena(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Hondurena','id_juego'=>7,'min'=>0,'max'=>99]);
-    }
-    public function juegaJ3Honduras(){
-        $this->view('juegos/juegaDiaria',['juego'=>'J3 Hondurena','id_juego'=>8,'min'=>0,'max'=>999]);
-    }
-    public function juegaTerminacion(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Termination','id_juego'=>9,'min'=>0,'max'=>99]);
-    }
-    public function juegaPrimera(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Primera','id_juego'=>10,'min'=>0,'max'=>99]);
-    }
-    public function juegaSalvadorena(){
-        $this->view('juegos/juegaDiaria',['juego'=>'Juega Salvadorena','id_juego'=>11,'min'=>0,'max'=>99]);
-    }
+
     public function juegaMultisorteos(){
+        $login = $_SESSION['Login_View'];
+        $digitos = strlen(abs(99)); 
+        $juego = new juegoModel($this->adapter);
+        $vendedor = $juego->getVendedor($login->id_colaborador);
         $this->view('juegos/juegaMultisorteos',array());
     }
 
-    public function store(){
+    public function jugar(){
+        $id_juego = $_GET['juego'];
+        $login = $_SESSION['Login_View'];
+        $juego  = new juegoModel($this->adapter);
+        $vendedor = $juego->getVendedor($login->id_colaborador);
+        $juego = $juego->getJuegoById($id_juego);
+        $maxdigits = strlen(abs($juego->max)); 
+        if($id_juego == 3)
+            $this->view('juegos/juegaFecha',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
+        else
+            $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
+    }
 
-     
 
-        $consecutivo = time();
+    public function sorteos(){
 
-        $now  = new DateTime();
-        $hora = $now->format('H:i:s');
-        $sorteo = new SorteoModel($this->adapter);
-        $sorteo = $sorteo->getSorteo($_POST["id_juego"],$hora);
+        $juego = new JuegoModel($this->adapter);
 
-        if($sorteo == null){
-            echo json_encode(["status"=>false,"data"=>"","message"=>"Error, no se puede guardar el sorteo, fuera de horario! = ".$now->format('Y-m-d H:i:s')]);
-             return;
-         }
+        $juegos = $juego->getJuegos();
 
-        $venta = new Venta($this->adapter);
-        $venta->setIdJuego($_POST["id_juego"]);
-        $venta->setNombre($_POST["nombre"]);
-        $venta->setFecha(date('Y-m-d'));
-        $venta->setHora(date('H:i:s'));
-        $venta->setConsecutivo($consecutivo);
-        $venta->setIdColaborador($_SESSION['Login_View']->id_colaborador);
-        $venta->setIdSorteo($sorteo->id_sorteo);
-        $venta->setTotal($_POST["total"]);
-        $venta->setEstado(1);
-        $save = $venta->put($venta);
+        foreach($juegos as $item)
+            $item->sorteos = $juego->getSorteos($item->id_juego);
 
-        $id_venta = $venta->getIdEnd('id_venta');
+        $this->view('juegos/sorteos',['juegos'=>$juegos]);
+    }
+
+    public function add_numero_ganador(){
+        $juego = new JuegoModel($this->adapter);
+        $juegos = $juego->getJuegos();
+        foreach($juegos as $item)
+            $item->sorteos = $juego->getSorteos($item->id_juego);
+        return $this->view('ganadores/agregar',['juegos'=>$juegos]);
+    }
+
+
+    public function guardarNumero(){
+
+    $numero = $_POST['numero'];
+    $id_juego = $_POST['id_juego'];
+    $id_sorteo = $_POST['id_sorteo'];
+    $today = date('Y-m-d');
+
+    $numeroGanador = new numeroGanador($this->adapter);
+    $numeroGanador->setNumero($numero);
+    $numeroGanador->setIdJuego($id_juego);
+    $numeroGanador->setIdSorteo($id_sorteo);
+    $numeroGanador->setFecha(date('Y-m-d'));
+
+    $model = new JuegoModel($this->adapter);
+
+    $id_numero_ganador = $model->existeNumeroGanador($id_juego,$id_sorteo,$today);
+    if(!$id_numero_ganador){
+        $save  = $numeroGanador->put($numeroGanador);
+    }else{
+        $numeroGanador->setIdNumeroGanador($id_numero_ganador);
+        $save = $numeroGanador->updateById($id_numero_ganador,'numero_ganador',$numeroGanador);
+    }
+
+    if($save){
+        echo json_encode(['status'=>true,'message'=>'El numero '.$numero.' fue guardado correctamente id_juego: '.$id_juego.' id_sorteo: '.$id_sorteo]);
+    }
+    else{
+        echo json_encode(['status'=>false,'message'=>'Error al guardar el numero '.$numero.' id_juego: '.$id_juego.' id_sorteo: '.$id_sorteo." error=".$save]);
+    }  
+    }
+
+    function ver_ganadores(){
+
+        return $this->view('ganadores/index',array());
+    }
+
+    public function getGanadores(){
+
+    $session = $_SESSION['Login_View'];
+    $params = $columns = $totalRecords = $data = array();
+
+    $params = $_REQUEST;
+
+    $columns = array(
+            0 => 'v.id_venta',
+            1 => 'CONCAT(col.nombre, " ", col.apellido)',
+            2 => 'v.nombre',
+            3 => 'v.consecutivo',
+            4 => 'j.nombre',
+            5 => 's.etiqueta',
+            6 => 'v.fecha',
+            7 => 'v.hora',
+            8 => 'v.total',            
+            9 => 'ng.numero',
+            10 => 'n.premio',
+            11 => 'v.pagado',
+        );
+
+    $where_condition = $sqlTot = $sqlRec = "";
+
+    $sql_query = "SELECT
+    v.id_venta,
+    CONCAT(col.nombre, ' ', col.apellido),
+    v.nombre,
+    v.consecutivo,
+    j.nombre,
+    s.etiqueta,
+    v.fecha,
+    v.hora,
+    CONCAT('C$',' ',v.total),
+    ng.numero,
+    CONCAT('C$',' ',n.premio),
+    v.pagado
+    FROM ventas v
+    INNER JOIN colaboradores col 
+        ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s 
+        ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j 
+        ON v.id_juego = j.id_juego
+    INNER JOIN numeros n 
+        ON v.id_venta = n.id_venta
+    INNER JOIN numeros_ganadores ng 
+        ON ng.numero = n.numero 
+        AND ng.id_sorteo = s.id_sorteo 
+        AND ng.fecha = v.fecha";
+    $sqlTot .= $sql_query;
+    $sqlRec .= $sql_query;
+    $now  = new DateTime();
+    $today = $now->format('Y:m:d');
+
+    if(!empty($params['search']['value']) ) 
+        $where_condition .= " WHERE (concat(col.nombre,' ',col.apellido) LIKE '%".$params['search']['value']."%'
+                                OR v.nombre LIKE '%".$params['search']['value']."%' 
+                                OR v.consecutivo LIKE '%".$params['search']['value']."%'
+                                OR j.nombre LIKE '%".$params['search']['value']."%'
+                                OR s.etiqueta LIKE '%".$params['search']['value']."%'
+                                OR v.fecha LIKE '%".$params['search']['value']."%'
+                                OR v.hora LIKE '%".$params['search']['value']."%'
+                                OR v.total LIKE '%".$params['search']['value']."%' 
+                                OR ng.numero LIKE '%".$params['search']['value']."%'
+                                OR n.monto * 80 LIKE '%".$params['search']['value']."%' )";
+
         
-        $numero = new Numero($this->adapter);
+        $where_condition.= ($session->role == "sudo"  || $session->role == "admin") ?  " and v.fecha = '$today' and v.borrado = 0 ":" and v.fecha = '$today' and v.borrado = 0 and  col.id_colaborador = ".$session->id_colaborador;
+        $sqlTot .= $where_condition;
+        $sqlRec .= $where_condition;
 
-        foreach($_POST["numeros"] as $item){
-           
-            $numero->setIdVenta($id_venta);
-            $numero->setNumero($item ['numero']);
-            $numero->setMonto($item ['monto']);
-            $save = $numero->put($numero);
-        }
+        $sqlRec .=  " ORDER BY ". $columns[$params['order'][0]['column']]."   ".$params['order'][0]['dir']."  LIMIT ".$params['start']." ,".$params['length']." ";
 
-        if($save == 1)
-            echo json_encode(["status"=>true,"consecutivo"=>$consecutivo,"sorteo"=>$sorteo->etiqueta,"data"=>"","message"=>"Exito, se guardo correctamente! id_venta=".$id_venta]);
-    
+       // echo $sqlRec;
+        $juegos  = new JuegoModel($this->adapter);
+        $ganadores = $juegos->getListadoIndex($sqlRec);
+        $totalRecords = $juegos->TotalRecord($sqlTot);
+        //print_r($sqlRec);
+        $json_data = array(
+            "draw"            => intval( $params['draw'] ),
+            "recordsTotal"    => intval( $totalRecords ),
+            "recordsFiltered" => intval($totalRecords),
+            "data"            => $ganadores
+        );
+        echo json_encode($json_data);
     }
 }
 ?>

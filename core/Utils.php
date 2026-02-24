@@ -52,19 +52,22 @@ class Utils {
         }
         echo "<script>$('.botones').html(\"$button\");</script>";
     }
-    static function GetDatesInLetters($fecha){
-        $dia= Utils::GetDay($fecha);
-        $num = date("j", strtotime($fecha));
+    static function GetDateFormatted($fecha){
+    
         $anno = date("Y", strtotime($fecha));
-        $mes = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
-        $mes = $mes[(date('m', strtotime($fecha))*1)-1];
-        return $dia.', '.$num.' de '.$mes.' del '.$anno;
+        $diasemana = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+        $meses = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
+        
+        $dia = date("j", strtotime($fecha));
+        $diasemana = $diasemana[(date('w', strtotime($fecha))*1)-1];
+        $mes = $meses[(date('m', strtotime($fecha))*1)-1];
+        return $diasemana.', '.$dia.' de '.$mes.' del '.$anno;
     }
 
-    function GetDay($fecha) {
-        $dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
-        $dia = $dias[date('w', strtotime($fecha))];
-        return $dia;
+    static function getTimeFormatted($hora){
+        $dt = DateTime::createFromFormat('H:i:s', $hora);
+        $hora12 = $dt->format('g:i A');
+        return $hora12;
     }
 }
 

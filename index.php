@@ -25,7 +25,7 @@ if ($uri[0] === "api") {
 
     switch ($uri[1]) {
         case "loanBalanceByCode":
-             $api = new ApiPrestamoController();
+            $api = new ApiPrestamoController();
             if ($method === "GET") {
                 if (isset($uri[2])) {
                     $id = Security::validateLoanCode($uri[2]);

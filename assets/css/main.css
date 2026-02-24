@@ -4625,6 +4625,44 @@ a.label:hover, a.label:focus {
   border-radius: 10px;
 }
 
+.badge.bg-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+.badge.bg-danger {
+  background-color: #f2dede;
+  color: #a94442;
+}
+
+.badge.bg-warning {
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+}
+
+.badge.bg-info {
+  background-color: #afd9ee;
+  color: #31708f;
+}
+.badge.bg-light {
+  background-color: #f8f9fa;
+  color: #636c72;
+}
+
+.badge.bg-dark {
+  background-color: #343a40;
+  color: #fff;
+}
+.badge.bg-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.badge.bg-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
 .badge:empty {
   display: none;
 }

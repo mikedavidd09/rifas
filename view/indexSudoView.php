@@ -2,7 +2,6 @@
    <head>
       <link rel="shortcut icon" href="1c050bc132.ico">
       <meta charset="utf-8">
-
       <!--Chrome,Firefox OS,Opera and Viladi-->
       <meta name="theme-color" content="#00635a">
       <!--Windows Phone-->
@@ -26,10 +25,6 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.11.1/css/themes/default.min.css"/>
       <link rel="stylesheet" href="assets/js/morris/morris.css">
       <style>
-         .badge {
-         background-color: #fa3e3e !important;
-         margin-right: 20px!important;
-         }
          .mb-custom {
          margin-bottom: 1.5rem; /* o el valor que desees */
          }
@@ -46,147 +41,124 @@
          $login=$_SESSION["Login_View"];
          ?>
       <div class="wrapper">
-      <div id="cover-spin" style="display: none;"></div>
-      <!-- Navbar-->
-      <header class="main-header hidden-print">
-         <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button--><a class="sidebar-toggle" href="#" data-toggle="offcanvas"></a> 
-            <!-- Navbar Right Menu-->
-            <div class="navbar-custom-menu">
-               <ul class="top-nav">
-
-                    
-                  <li class="dropdown notification-menu">
-                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-moon-o" aria-hidden="true"></i></a>
-                     <ul class="dropdown-menu">
-                        <li class="not-head">Modo</li>
-                        <li>
-                           <a  href="#" id="theme-dark">
-                              <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-moon-o fa-stack-1x fa-inverse"></i></span></span>
-                              <div class="media-body" ><span class="block">Oscuro</span></div>
-                           </a>
-                        </li>
-                        <li>
-                           <a class="link" href="#" id="theme-light">
-                              <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-sun-o fa-stack-1x fa-inverse"></i></span></span>
-                              <div class="media-body"><span class="block">Claro</span></div>
-                           </a>
-                        </li>
-                        <li class="not-footer"></li>
-                     </ul>
-                  </li>
-                  <li class="dropdown notification-menu">
-                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-file-text"></i></a>
-                     <ul class="dropdown-menu">
-                        <li class="not-head">Opciones</li>
-                        <li>
-                           <a class="link" href="index.php?controller=Cliente&action=getviewFormClientAnalisis&permisos=1,1,1,1">
-                              <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-group fa-stack-1x fa-inverse"></i></span></span>
-                              <div class="media-body"><span class="block">Analizar</span><span class="text-muted block">Clientes Aumento Capital</span></div>
-                           </a>
-                        </li>
-                        <li class="not-footer"></li>
-                     </ul>
-                  </li>
-                  <li class="dropdown notification-menu">
-                     <a class="dropdown-toggle link" href="index.php?controller=juegos&action=home" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-home fa-lg"></i></a>
-                    
-                  </li>
-                  <!-- User Menu-->
-                  <li class="dropdown">
-                     <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
-                     <ul class="dropdown-menu settings-menu">
-                        <li><a class ='link'  href="index.php?controller=logout&action=salir"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
-                     </ul>
-                  </li>
-               </ul>
-            </div>
-         </nav>
-      </header>
-      <!-- Side-Nav-->
-      <aside class="main-sidebar hidden-print">
-         <section class="sidebar">
-            <div class="user-panel">
-               <div class="pull-left image"><?php
-                  if($login->imagen == ""){
-                      echo"<div class='img-circle' style='background-image: url(assets/img/user_default.jpg)' alt='User Image'></div>";
-                  }
-                  else{
-                      echo"<div class='img-circle image' style='background-image: url(assets/img/fotos_colaborador/$login->imagen)' alt='User Image'></div>";
-                  }
-                  ?></div>
-               <div class="pull-left info">
-                  <p>Bienvenid@</p>
-                  <p class="designation"><?php $login=$_SESSION["Login_View"];
-                     echo strtoupper($login->usuario);
-                     ?></p>
-               </div>
-            </div>
-            <!-- Sidebar Menu-->    
-            <ul class="sidebar-menu">
-               <li class ="treeview">
-                  <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
-                  <ul class="treeview-menu">
-                     <li><a class='link' href="index.php?controller=colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>
-                     <li><a class='link' href="index.php?controller=colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
+         <div id="cover-spin" style="display: none;"></div>
+         <!-- Navbar-->
+         <header class="main-header hidden-print">
+            <nav class="navbar navbar-static-top">
+               <!-- Sidebar toggle button--><a class="sidebar-toggle" href="#" data-toggle="offcanvas"></a> 
+               <!-- Navbar Right Menu-->
+               <div class="navbar-custom-menu">
+                  <ul class="top-nav">
+                     <li class="dropdown notification-menu">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-moon-o" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                           <li class="not-head">Modo</li>
+                           <li>
+                              <a  href="#" id="theme-dark">
+                                 <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-moon-o fa-stack-1x fa-inverse"></i></span></span>
+                                 <div class="media-body" ><span class="block">Oscuro</span></div>
+                              </a>
+                           </li>
+                           <li>
+                              <a class="link" href="#" id="theme-light">
+                                 <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-sun-o fa-stack-1x fa-inverse"></i></span></span>
+                                 <div class="media-body"><span class="block">Claro</span></div>
+                              </a>
+                           </li>
+                           <li class="not-footer"></li>
+                        </ul>
+                     </li>
+                     <li class="dropdown notification-menu">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-file-text"></i></a>
+                        <ul class="dropdown-menu">
+                           <li class="not-head">Opciones</li>
+                           <li>
+                              <a class="link" href="index.php?controller=Cliente&action=getviewFormClientAnalisis&permisos=1,1,1,1">
+                                 <span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-group fa-stack-1x fa-inverse"></i></span></span>
+                                 <div class="media-body"><span class="block">Analizar</span><span class="text-muted block">Clientes Aumento Capital</span></div>
+                              </a>
+                           </li>
+                           <li class="not-footer"></li>
+                        </ul>
+                     </li>
+                     <li class="dropdown notification-menu">
+                        <a class="dropdown-toggle link" href="index.php?controller=juegos&action=home" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-home fa-lg"></i></a>
+                     </li>
+                     <!-- User Menu-->
+                     <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
+                        <ul class="dropdown-menu settings-menu">
+                           <li><a class ='link'  href="index.php?controller=logout&action=salir"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                        </ul>
+                     </li>
                   </ul>
-               </li>
-               <li class ="treeview">
-                  <a href="#"><i class="fa fa-gamepad"></i><span>Juegos</span><i class="fa fa-angle-right"></i></a>
-                  <ul class="treeview-menu">
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaDiaria"><i class="fa fa-circle-o"></i>Diaria</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juega3"><i class="fa fa-circle-o"></i>Juega 3</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaFecha"><i class="fa fa-circle-o"></i>Fechas</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaCombo"><i class="fa fa-circle-o"></i>combo</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaTica"><i class="fa fa-circle-o"></i>Tica</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaMonazos"><i class="fa fa-circle-o"></i>Monazos</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaHondurena"><i class="fa fa-circle-o"></i>Hondurena</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaJ3Honduras"><i class="fa fa-circle-o"></i>J3 Honduras</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaTerminacion"><i class="fa fa-circle-o"></i>Terminacion 2</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaPrimera"><i class="fa fa-circle-o"></i>Primera</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaSalvadorena"><i class="fa fa-circle-o"></i>Salvadorena</a></li>
-                     <li><a class='link' href="index.php?controller=juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
-                  </ul>
-               </li>
-               <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
-               <li ><a class ='link'   href="index.php?controller=juegos&action=numerosGanadores"><i class="fa fa-trophy"></i><span>Numeros Ganadores</span></a></li>
-               <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
-               <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
-            </ul>
-         </section>
-      </aside>
-      <div id="page" class="content-wrapper">
-      
-      </div>
-      <!-- Modal -->
-      <div class="modal fade" id="avisos" role="dialog">
-         <div class="modal-dialog">
-            <!-- Modal content-->
-            <style>
-               .zoom {
-               transition: transform .2s;
-               }
-            </style>
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"></h4>
                </div>
-               <div class="modal-body">
-                  <p id="mensaje"></p>
-                  <div class = "" >
-                     <p ><img id="img" src="" width="100%" height="100%"></p>
-                     <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/_EeA1yso2uY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+            </nav>
+         </header>
+         <!-- Side-Nav-->
+         <aside class="main-sidebar hidden-print">
+            <section class="sidebar">
+               <div class="user-panel">
+                  <div class="pull-left image"><?php
+                     if($login->imagen == ""){
+                        echo"<div class='img-circle' style='background-image: url(assets/img/user_default.jpg)' alt='User Image'></div>";
+                     }
+                     else{
+                        echo"<div class='img-circle image' style='background-image: url(assets/img/fotos_colaborador/$login->imagen)' alt='User Image'></div>";
+                     }
+                     ?></div>
+                  <div class="pull-left info">
+                     <p>Bienvenid@</p>
+                     <p class="designation"><?php $login=$_SESSION["Login_View"];
+                        echo strtoupper($login->usuario);
+                        ?></p>
                   </div>
                </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Entendido</button>
-               </div>
-            </div>
+               <!-- Sidebar Menu-->    
+               <ul class="sidebar-menu">
+                  <li class ="treeview">
+                     <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
+                     <ul class="treeview-menu">
+                        <li><a class='link' href="index.php?controller=colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>
+                        <li><a class='link' href="index.php?controller=colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
+                     </ul>
+                  </li>
+                  <li class ="treeview">
+                     <a href="#"><i class="fa fa-gamepad"></i><span>Juegos</span><i class="fa fa-angle-right"></i></a>
+                     <ul class="treeview-menu">
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=1"><i class="fa fa-circle-o"></i>Diaria</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=2"><i class="fa fa-circle-o"></i>Juega 3</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=3"><i class="fa fa-circle-o"></i>Fechas</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=4"><i class="fa fa-circle-o"></i>combo</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=5"><i class="fa fa-circle-o"></i>Tica</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=6"><i class="fa fa-circle-o"></i>Monazos</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=7"><i class="fa fa-circle-o"></i>Juega Hondurena</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=8"><i class="fa fa-circle-o"></i>J3 Honduras</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=9"><i class="fa fa-circle-o"></i>Terminacion 2</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=10"><i class="fa fa-circle-o"></i>Primera</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=11"><i class="fa fa-circle-o"></i>Salvadorena</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=12"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
+                     </ul>
+                  </li>
+                  <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
+                  <li class ="treeview">
+                     <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
+                     <ul class="treeview-menu">
+                        <li><a class ='link'   href="index.php?controller=juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
+                     </ul>
+                  </li>
+                  <li ><a class ='link'   href="index.php?controller=juegos&action=sorteos"><i class="fa fa-calendar"></i><span>Sorteos</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
+               </ul>
+            </section>
+         </aside>
+         <div id="page" class="content-wrapper">
+       
          </div>
       </div>
       <!-- Javascripts-->
-
       <script
          src="https://code.jquery.com/jquery-3.2.1.min.js"
          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -242,7 +214,9 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
       <!----- FIRMAS------>
       <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-      </div>
-      </div>
    </body>
 </html>
+<script>
+   console.log("DOM fully loaded and parsed");
+      $("#page").load("index.php?controller=Juegos&action=home");
+</script>

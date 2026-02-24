@@ -41,7 +41,7 @@
          script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
          -->
    </head>
-   <body class="sidebar-mini fixed">
+   <body class="sidebar-mini fixed pace-done">
       <?php 
          $login=$_SESSION["Login_View"];
          ?>
@@ -149,7 +149,13 @@
                   </ul>
                </li>
                <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
-               <li ><a class ='link'   href="index.php?controller=juegos&action=numerosGanadores"><i class="fa fa-trophy"></i><span>Numeros Ganadores</span></a></li>
+               <li class ="treeview">
+                  <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
+                  <ul class="treeview-menu">
+                     <li><a class ='link'   href="index.php?controller=juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
+                     <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
+                  </ul>
+               </li>
                <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
                <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
             </ul>
@@ -246,3 +252,7 @@
       </div>
    </body>
 </html>
+
+<script>
+   $("#page").load("index.php?controller=Juegos&action=home");
+</script>

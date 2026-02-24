@@ -126,7 +126,7 @@ class ColaboradorController extends ControladorBase{
         $colaborador->setTelefono($_POST["telefono"]);
         $colaborador->setIdSucursal(1);
         $id = $colaborador->getIdNow('id_colaborador');
-        $codigo = isset($_POST["codigo_colaborador"])?'none':$colaborador->generarCodeColaborador($colaborador->nombre, $colaborador->apellido, $id);
+        $codigo = isset($_POST["codigo"])?'none':$colaborador->generarCodeColaborador($colaborador->nombre, $colaborador->apellido, $id);
         $colaborador->setCodigo($codigo);
         $colaborador->setEstado("1");
 
@@ -285,7 +285,5 @@ class ColaboradorController extends ControladorBase{
 
         }
     }
-
-
 }
 ?>

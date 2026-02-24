@@ -6,34 +6,15 @@ function updateTable() {
 
 venta.numeros.sort((a, b) => a.numero - b.numero);
 
+console.log(venta.numeros);
+
   venta.numeros.forEach((item,index) => {
 
-    if([1,5,7,9,10,11].includes(venta.id_juego) ){ //  0 -99
-      if(item. numero >=0 && item.numero <10 )
-        numero = '0' + item.numero.toString();
-      else numero = item.numero.toString();
-    }else if([2,6,8].includes(venta.id_juego) ){ //  0 -999
-      if(item. numero <10 && item.numero >=0 )
-        numero = '00' + item.numero.toString();
-      else if(item. numero >=10 && item.numero <100 )
-        numero = '0' + item.numero.toString();
-      else numero = item.numero.toString();
-    }else if([4].includes(venta.id_juego) ){ //  0 -9999
-      if(item. numero >=0 && item.numero <10 )
-        numero = '000' + item.numero.toString();
-      else if(item. numero >=10 && item.numero <100 )
-        numero = '00' + item.numero.toString();
-      else if(item. numero >=100 && item.numero <1000 )
-        numero = '0' + item.numero.toString();
-      else numero = item.numero.toString();
-    }
-
-    const newRow = $('<tr>');
-    newRow.append($('<td>').html('<span class="badge badge-center rounded-pill text-bg-danger">' + (index+1) + '</span> ' ));
-
-    newRow.append($('<td>').html('<span class="badge badge-center rounded-pill text-bg-warning">#</span> ' + numero ));
-    newRow.append($('<td>').html('<span class="badge badge-center rounded-pill text-bg-danger">C$</span> ' + item.monto));
-    newRow.append($('<td>').html('<span class="badge badge-center rounded-pill text-bg-danger">C$</span> ' + item.monto  * 80));
+    const newRow = $('<tr class="text-center">');
+    newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">' + (index+1) + '</span> ' ));
+    newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">Nº</span> ' + item.numero ));
+    newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">C$</span> ' + item.monto));
+    newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">C$</span> ' + item.monto  * 80));
     newRow.append($('<td>').html('<a class="" href="#" onclick="deleteRow(this); return false;" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>'));
     tableBody.append(newRow);
   });
@@ -49,29 +30,27 @@ function deleteRow(button) {
   $('#addButton').on('click', function() {
     venta.nombre = $('#nombre').val().trim();
     let numero = $('#numero').val().trim();
+    let numeroInt = parseInt(numero,10);
     let monto = $('#monto').val().trim();
+    let maxdigits = $('#maxdigits').val();
+    let numeroLength =  numero.length;
     const numeroInput = $('#numero');
 
-   if (!monto || !numero || !venta.nombre) {
-      show_Notify("danger", "Error", "Todos los campos son obligatorios");
+    if(numeroLength != venta.maxdigits){
+      show_Notify("danger","Error","El numero debe tener exactamente " + venta.maxdigits + " digitos");
       return;
     }
-  
-     numero= parseInt(numero);
-     monto= parseInt(monto);
 
-     if(monto == 0){
+    monto= parseInt(monto);
+    premio = parseInt(monto * venta.factor);
+
+
+    if(monto == 0){
       show_Notify("danger","Error","Monto no puede ser Cero");
       return;
-     }
+    }
 
-
-  if (numero < venta.min || numero > venta.max) {
-    show_Notify("danger", "Error", 'Números válidos entre ' + venta.min + ' y ' + venta.max);
-    return;
-  }
-
-  venta.numeros.push({numero,monto});
+  venta.numeros.push({numero,monto,premio});
 
   updateTable();
 
@@ -79,10 +58,11 @@ function deleteRow(button) {
   $('#monto').val('');
   numeroInput.focus();
 
+
   });
 
 
- $('#addRandomNumber').on('click', function() {
+$('#addRandomNumber').on('click', function() {
 
   let montoRandom = $('#montoRandom').val().trim();
   let cantidadRandom = $('#cantidadRandom').val().trim();
@@ -113,24 +93,31 @@ if(montoRandom == 0){
   let numero =0;
 
   let numerosTemp = [];
-
-  console.log(montoRandom);
-
   for (let i = 0; i < cantidadRandom; i++) {
 
     do{
      numero = Math.floor(Math.random() * venta.max);
-  
-      }while(numerosTemp.find(item => item.numero === numero));
 
-      numerosTemp.push({numero: numero, monto: montoRandom});
+      let cantidadDigitos = String(numero).length;
+     // console.log('numero='+numero + ' cantidadDigitos='+cantidadDigitos + ' venta.maxdigits='+venta.maxdigits);
+    
+        numero = String(numero).padStart(venta.maxdigits, '0');
+      
+      }while(numerosTemp.find(item => item.numero === numero));
+      
+
+      numerosTemp.push({numero: numero, monto: montoRandom, premio: montoRandom * venta.factor});
   }
 
-     venta.numeros.push(...numerosTemp);
+    venta.numeros.push(...numerosTemp);
     show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " numeros aleatorios");
     updateTable();
 
- });
+    console.log(venta.numeros);
+
+
+
+});
 
 $('#addLineaNumber').on('click', function() {
 
@@ -161,8 +148,9 @@ $('#addLineaNumber').on('click', function() {
 
   for (let i = inicioLinea; i <= finalLinea; i++) {
     venta.numeros.push({
-      numero: i,
+      numero: String(i).padStart(venta.maxdigits, '0'),
       monto: montoLinea,
+      premio: montoLinea * venta.factor,
     });
 
   }
@@ -170,10 +158,10 @@ $('#addLineaNumber').on('click', function() {
     show_Notify("success", "Correcto", "Se agrego la linea del " + inicioLinea + " al " + finalLinea + "correctamente");
     updateTable();
 
- });
+});
 
 
- $('#addparNumber').on('click', function() {
+$('#addparNumber').on('click', function() {
 
   let montoPar = $('#montoPar').val().trim();
 
@@ -190,11 +178,11 @@ $('#addLineaNumber').on('click', function() {
 
 let pares = [];
   if([1,5,7,9,10,11].includes(venta.id_juego) ) // juega diaria 0 -99
-   pares = [0,11,22,33,44,55,66,77,88,99]; 
+  pares = [0,11,22,33,44,55,66,77,88,99]; 
 else if([2,6,8].includes(venta.id_juego) ) // juega 3 0 -999
-   pares = [0,11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999];
+  pares = [0,11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999];
    else if(venta.id_juego ==4 ) //  0 - 9999
-   pares = [0,11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999,1111,2222,3333,4444,5555,6666,7777,8888,9999];
+  pares = [0,11,22,33,44,55,66,77,88,99,111,222,333,444,555,666,777,888,999,1111,2222,3333,4444,5555,6666,7777,8888,9999];
 
   if(venta.numeros.length + pares.length > venta.max){
     show_Notify("danger", "Error", "Numero de linea no puede exceder mas de " + venta.max);
@@ -204,8 +192,9 @@ else if([2,6,8].includes(venta.id_juego) ) // juega 3 0 -999
   for (let i = 0; i < pares.length; i++) {
     
     venta.numeros.push({
-      numero: parseInt(pares[i]),
+      numero: String(pares[i]).padStart(venta.maxdigits, '0'),
       monto: parseInt(montoPar),
+      premio: parseInt(montoPar * 80),
     });
 
   }
@@ -241,12 +230,6 @@ function showReceipt() {
     day: 'numeric',
   };
 
-  let nombre = $('#nombre').val();
-
-  if (!nombre) {
-    show_Notify("danger", "Error", 'El nombre del cliente no puede estar vacío');
-    return;
-  }
 
   if (!venta.numeros.length) {
     show_Notify("danger", "Error", 'No hay números para la venta');
@@ -257,10 +240,10 @@ function showReceipt() {
     return a + b.monto;
   }, 0);
   venta.total = totalVenta;
-  venta.nombre = $('#nombre').val();
+  venta.nombre_cliente = $('#nombre').val().length>0?$('#nombre').val():'Sin cliente';
 
   $.ajax({
-    url: 'index.php?controller=juegos&action=store',
+    url: 'index.php?controller=Venta&action=store',
     type: 'POST',
     data: venta,
     success: function(response) {
@@ -273,45 +256,44 @@ function showReceipt() {
       }
       show_Notify("success", "Correcto",data.message);
 
-
+      let vendedor = document.getElementById('vendedor').value;
+ 
       let html = '';
-      $('#heder-receipt').html('');
-      html +=
-        '<h3> RIFAS EL REGALON </h3>' +
-        '<div> JUEGO:'+venta.juego+'</div>' +
-        '<div> SORTEO:'+data.sorteo+'</div>' +
-        '<div> Consecutivo:' + data.consecutivo + '</div>' +
-        '<div> VENDEDOR: Marcela Lopez </div>' +
-        '<div>CLIENTE: ' + venta.nombre + '</div>' +
-        '<div>DIRECCION:pizarra del estadio 2 c al Norte</div>' +
-        '<div>Tel: 8325-4510</div>' +
-        '<div>' +
-        fecha.toLocaleDateString('es-ES', opciones) +
-        ' ' +
-        new Date().toLocaleTimeString() +
-        '</div>';
 
-      $('#heder-receipt').append(html);
+      $('#rows_header').html(''); 
+
+      html +='<div> <p style="text-align: center; font-weight: bold; margin: 10px 0;">RIFAS EL REGALON</p> </div>' +
+        '<div> <p style="text-align: center;"> JUEGO:' + venta.nombre_juego + '</p> </div>' +
+        '<div> <p style="text-align: center;"> SORTEO:' + data.sorteo + '</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> VENTA Nº: ' + data.consecutivo + '</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> VENDEDOR: ' + vendedor + '</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> CLIENTE:' + venta.nombre_cliente + '</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> TELEFONO: 8325-4510</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> PUESTO: san felipe</p> </div>' +
+        '<div> <p style="text-align: center; margin: 10px 0;"> ' + fecha.toLocaleDateString('es-ES', opciones) + ' ' +  new Date().toLocaleTimeString() +  '</div>';
+
+      $('#heder-receipt').html(html);
+
+      $('#table_header').html('<tr> <th scope="col"> Apuesta   </th> <th scope="col">Monto</th> <th scope="col">Premio</th> </tr>');
 
       $('#rows_item').html('');
       let total = 0;
-       let premio =0;
+      let premio =0;
       venta.numeros.forEach((item) => {
-       premio  = parseInt(item.monto) * 80;
+      
         total += parseInt(item.monto);
         console.log(total);
         $('#rows_item').append(
           '<tr><td >' +
-            item.numero +
-            '</td><td >' +
-            item.monto +
-            '</td>' +
-            '<td >' +
-            premio +
-            '</td></tr>'
+          item.numero +
+          '</td> <td >' +
+          item.monto +
+          '</td> <td >' +
+          item.premio +
+          '</td></tr>'
         );
       });
-      $('#total').html('C$ ' + total);
+      $('#total').html('TOTAL: C$ ' + total);
 
       printReceipt();
       $('#numero, #monto, #nombre').val('');
@@ -325,8 +307,17 @@ function showReceipt() {
   });
 }
 
+function agregarCeros(numero, cantidadCeros) {
+  console.log('agregarCeros numero='+numero + ' cantidadCeros='+cantidadCeros);
+  console.log(String(numero).padStart(cantidadCeros, '0'));
+    return String(numero).padStart(cantidadCeros, '0');
+}
+
 function printReceipt() {
-  const receiptContent = document.querySelector('#receiptModal .modal-body').innerHTML;
+  const receiptContent = document.querySelector('#printableReceipt').innerHTML;
+
+
+  console.log(receiptContent);
   
   // 1. Construye el HTML del recibo
   const htmlContent = `
@@ -353,6 +344,7 @@ function printReceipt() {
             border-bottom: 1px solid #ddd; 
           }
           .text-right { text-align: right; }
+          .text-center {text-align: center; font-weight: bold; margin: 10px 0;}
           .total { font-weight: bold; }
         </style>
       </head>
@@ -378,4 +370,6 @@ function printReceipt() {
     URL.revokeObjectURL(url);
   };
 }
+
+
 

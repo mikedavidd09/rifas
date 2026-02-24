@@ -3,6 +3,7 @@ class Numero extends EntidadBase{
     public $id_numero;
     public $numero;
     public $monto;
+    public $premio;
     public $id_venta;
 
     public function __construct($adapter)
@@ -34,7 +35,14 @@ class Numero extends EntidadBase{
     public function setMonto($monto){
         $this->monto = $monto;
     }
-
+    function getPremio()
+    {
+        return $this->premio;
+    }
+    function setPremio($premio)
+    {
+        $this->premio = $premio;
+    }
     public function getIdVenta(){
         return $this->id_venta;
     }

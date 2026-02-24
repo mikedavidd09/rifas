@@ -143,7 +143,13 @@
                   </ul>
                </li>
                <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
-               <li ><a class ='link'   href="index.php?controller=juegos&action=numerosGanadores"><i class="fa fa-trophy"></i><span>Numeros Ganadores</span></a></li>
+                <li class ="treeview">
+                  <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
+                  <ul class="treeview-menu">
+                     <li><a class ='link'   href="#"><i class="fa fa-circle-o"></i><span>Numeros</span></a></li>
+                     <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ganadores</a></li>
+                  </ul>
+               </li>
 
             </ul>
          </section>
@@ -239,3 +245,8 @@
       </div>
    </body>
 </html>
+
+<script>
+console.log("DOM fully loaded and parsed");
+   $("#page").load("index.php?controller=Juegos&action=home");
+</script>

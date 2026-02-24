@@ -9,7 +9,8 @@ class Venta extends EntidadBase{
     public $id_colaborador;
     public $id_juego;
     public $total;
-    public $estado;
+    public $pagado;
+    public $borrado;
     public function __construct($adapter){
         $table="ventas";
         parent::__construct($table,$adapter);
@@ -88,10 +89,24 @@ class Venta extends EntidadBase{
         $this->id_sorteo = $id_sorteo;
     }
 
-    public function getEstado(){
-        return $this->estado;
+    public function getPagado(){
+        return $this->pagado;
     }
-    public function setEstado($estado){
-        $this->estado = $estado;
+    public function setPagado($pagado){
+        $this->pagado = $pagado;
+    }
+    public function getBorrado(){
+        return $this->borrado;
+    }
+    public function setBorrado($borrado){
+        $this->borrado = $borrado;
+    }
+
+        public function setAllToNone() {
+        $vars = get_object_vars($this);
+        
+        foreach ($vars as $key => $value) {
+            $this->$key = 'none';
+        }
     }
 }
