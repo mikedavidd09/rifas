@@ -31,6 +31,12 @@ class JuegoModel extends ModeloBase{
         return is_object($result) ? [$result]: $result;
     }
 
+    public function getSorteosDisponibles($id_juego,$now){
+        $sql = "SELECT s.etiqueta, s.inicio, s.fin, s.id_sorteo FROM sorteos s where s.id_juego = ".$id_juego." and s.fin >= '$now'";
+        $result  = $this->ejecutarSql($sql);
+        return is_object($result) ? [$result]: $result;
+    }
+
     public function existeNumeroGanador($id_juego,$id_sorteo,$today){
         $sql = "SELECT id_numero_ganador FROM numeros_ganadores WHERE id_juego = $id_juego AND id_sorteo = $id_sorteo AND fecha = '$today'";
         $result  = $this->ejecutarSql($sql);

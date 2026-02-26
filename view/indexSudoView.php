@@ -137,7 +137,7 @@
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=9"><i class="fa fa-circle-o"></i>Terminacion 2</a></li>
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=10"><i class="fa fa-circle-o"></i>Primera</a></li>
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=11"><i class="fa fa-circle-o"></i>Salvadorena</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=12"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
+                        <li><a class='link' href="index.php?controller=juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
                      </ul>
                   </li>
                   <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>

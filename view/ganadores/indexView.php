@@ -27,10 +27,11 @@
 </div>
 
 <script type="text/javascript" src="assets/js/cargaAjax.js"></script>
+<script type="text/javascript" src="assets/js/loto/alert.js"></script>
 
 <script>
 
-        console.log("DOM fully loaded and parsed");
+    console.log("DOM fully loaded and parsed");
 
     $.getScript("resources/js/jsDatatable.js", function(){
 
@@ -43,9 +44,7 @@
             let itemID = row[0];
 
             return '<a class="link" href="index.php?controller=Venta&action=ver_venta&id=' + itemID + '">' + data + '</a>';
-
         }
-
     },
     {
         "targets": 11,
@@ -53,9 +52,9 @@
         "render": function ( data, type, row, meta ) {
 
             if(data == 1)
-                return '<span class="badge bg-success rounded-pill">pagado</span>';
+                return '<span class="badge bg-info rounded-pill">PAGADO</span>';
             else
-                return '<span class="badge bg-danger rounded-pill">pendiente</span>';
+                return '<span class="badge bg-danger rounded-pill">PENDIENTE</span>';
         }
 
     },
@@ -64,8 +63,11 @@
 
         "render": function ( data, type, row, meta ) {
 
-          let id_venta = row[0];
-          return '<button type="button" class="btn btn-info" onclick="pagar('+id_venta+')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>';
+        let id_venta = row[0];
+        url = "index.php?controller=Venta&action=pagarPremio&id_venta=" + id_venta;
+        $message = '¿Está Seguro de realizar esta accion ?';
+        $table = "ganadores";
+        return '<button type="button" class="btn btn-info btn-alert" onclick = "alertConfirm(\'' + url + '\',\'' + $message + '\' ,\'' + $table + '\')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>';
         }
     },
     
@@ -74,3 +76,4 @@
     });
 
 </script>
+

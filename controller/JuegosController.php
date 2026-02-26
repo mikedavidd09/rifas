@@ -20,10 +20,10 @@ class JuegosController extends ControladorBase
 
     public function juegaMultisorteos(){
         $login = $_SESSION['Login_View'];
-        $digitos = strlen(abs(99)); 
         $juego = new juegoModel($this->adapter);
         $vendedor = $juego->getVendedor($login->id_colaborador);
-        $this->view('juegos/juegaMultisorteos',array());
+        $juegos = $juego->getJuegos();
+        $this->view('juegos/multisorteos',array('juegos'=>$juegos,'vendedor'=>$vendedor));
     }
 
     public function jugar(){
@@ -39,13 +39,24 @@ class JuegosController extends ControladorBase
             $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
     }
 
+    public function getJuegoById(){
+        $id_juego = $_POST['id_juego'];
+        $modelJuego  = new juegoModel($this->adapter);
+        $juego = $modelJuego->getJuegoById($id_juego);
+        $maxdigits = strlen(abs($juego->max));
+        $now = date('H:i:s');
+        $sorteos = $modelJuego->getSorteosDisponibles($id_juego,$now);
+        $arraySorteos = [];
+        foreach($sorteos as $item)
+            $arraySorteos[] = $item->id_sorteo;
+        echo json_encode(['juego'=>$juego,'maxdigits'=>$maxdigits,'sorteos'=>$sorteos,'arraySorteos'=>$arraySorteos]);
+    }
+
 
     public function sorteos(){
 
         $juego = new JuegoModel($this->adapter);
-
         $juegos = $juego->getJuegos();
-
         foreach($juegos as $item)
             $item->sorteos = $juego->getSorteos($item->id_juego);
 

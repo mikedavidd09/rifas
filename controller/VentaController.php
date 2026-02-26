@@ -183,14 +183,27 @@ class VentaController extends ControladorBase
         $log->setIdUser($login->id_user);
         $save = $log->put($log);
 
-        
-
-
 
         if($update == 1)
             echo json_encode(["status"=>true,"message"=>"Se elimino la venta correctamente nro=".$id_venta]);
         else
             echo json_encode(["status"=>false,"message"=>"Error al eliminar la venta ".$save]);
+    }
+
+    public function pagarPremio(){
+
+        $id_venta = $_GET['id_venta'];
+
+        $venta = new Venta($this->adapter);
+        $venta->setAllToNone();
+        $venta->setIdVenta($id_venta);
+        $venta->setPagado(1);
+        $update = $venta->updateById($id_venta,'venta',$venta);
+
+        if($update == 1)
+            echo json_encode(["status"=>true,"message"=>"Se pago el premio correctamente id_venta=".$id_venta]);
+        else
+            echo json_encode(["status"=>false,"message"=>"Error al pagar el premio ".$update]);
     }
 }
 ?>

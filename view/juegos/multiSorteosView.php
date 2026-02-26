@@ -3,13 +3,12 @@
 <div class="row g-12">
     <div class="col-md-6">
         <div class="card">
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading"><?php echo $juego->nombre; ?></h4>
-            </div>
+            
+             
+
             <div class="card-body">
                 <!-- Use flexbox so buttons stay horizontal when space allows -->
-
-                <div class="row mb-3">
+                   <div class="row mb-3 mb-custom">
                     <div class="col-xs-4">
                         <button id="random" class="btn btn-primary" data-toggle="modal" data-target="#randomModal">
                             <i class="fa fa-random"></i>
@@ -27,6 +26,22 @@
                     </div>
                 </div>
 
+                <div class="row mb-3 mb-custom">
+                    <div class="col-lg-12">
+                       <select class="form-control" id="id_juego" name="id_juego">
+                    <option value="0">Seleccione un juego</option>
+                        <?php foreach($juegos as $juego){ ?>
+                    <option value="<?php echo $juego->id_juego; ?>"><?php echo $juego->nombre; ?></option>
+                        <?php } ?>
+                </select>
+                    </div>
+                </div>
+                
+                <div id="sorteos">
+            
+
+                </div>
+
                 <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
                 <div class="row g-6">
                 
@@ -36,8 +51,8 @@
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" for="numero"> <?php echo 'Número ['.$juego->min.'-'.$juego->max.']'; ?></label>
-                        <input type="tel" id="numero" class="form-control onlynumber" maxlength="<?php echo $maxdigits; ?>" />
+                        <label class="form-label" for="numero" id="rango"> Rango:</label>
+                        <input type="tel" id="numero" class="form-control onlynumber"  />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="monto">Monto C$</label>
@@ -55,7 +70,7 @@
                                 <i class="fa fa-plus-circle"></i>
                                 <span class="align-middle">Agregar</span>
                             </button>
-                            <button class="btn btn-primary" onclick="showReceipt()">
+                            <button class="btn btn-primary" onclick="showReceipt('multisorteoStore')">
                                 <i class="fa fa-save"></i>
                                 <span class="align-middle">Guardar</span>
                             </button>
@@ -286,20 +301,55 @@
 
 <script>
 
-    window.venta = {
-        id_juego: <?php echo (int)($juego->id_juego); ?>,
-        nombre_juego: <?php echo json_encode($juego->nombre); ?>,
-        nombre_cliente:"",
-        min: <?php echo (int)($juego->min); ?>,
-        max: <?php echo (int)($juego->max); ?>,
-        maxdigits: <?php echo (int)($maxdigits); ?>,
-        factor: <?php echo (int)($juego->factor); ?>,
-        numeros: [],
-        sorteos:[],
-        total: 0,
-        premio: 0
-    };
-console.log(venta);
+    document.getElementById("id_juego").addEventListener("change", function() {
+        document.getElementById('numero').value = '';
 
+
+        $.ajax({
+            url: "index.php?controller=Juegos&action=getJuegoById",
+            type: "POST",
+            dataType: "json",
+            data: {id_juego: this.value},
+            success: function(data){
+                let {juego,maxdigits,sorteos,arraySorteos} = data;
+                
+                document.getElementById('numero').maxLength = maxdigits;
+                document.getElementById('numero').placeholder = juego.min.padStart(maxdigits, '0');
+                document.getElementById('rango').innerHTML = '';
+                document.getElementById('rango').innerHTML = 'Rango: ['+juego.min.padStart(maxdigits, '0')+' - '+juego.max +']';
+                console.log(sorteos);
+                window.venta = {
+                id_juego: parseInt(juego.id_juego),
+                nombre_juego: juego.nombre,
+                nombre_cliente:"",
+                min: parseInt(juego.min),
+                max: parseInt(juego.max),
+                maxdigits: maxdigits,
+                factor: juego.factor,
+                sorteos: arraySorteos,
+                numeros: [],
+                total: 0,
+                premio: 0
+            };
+            console.log(venta);
+
+            let html = '';
+            sorteos.forEach(function(sorteo){
+            html +='<div class="row g-6"> ';
+            html +='<div class="col-md-3">';
+            html +='<lavel class="form-label" for="'+sorteo.etiqueta+'">'+sorteo.etiqueta+'</lavel>';
+            html +='</div>';
+            html +='<div class="col-md-3">';
+            html +='<div class="toggle"><label><input type="checkbox" name="checkSorteos[]" value="'+sorteo.id_sorteo+'"><span class="button-indecator"></span></label></div>';
+            html +='</div>';
+            html +='</div>';
+            document.getElementById('sorteos').innerHTML = html;
+
+            });
+        }
+        });
+    });
 
 </script>
+
+               
