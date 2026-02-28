@@ -311,7 +311,7 @@
             dataType: "json",
             data: {id_juego: this.value},
             success: function(data){
-                let {juego,maxdigits,sorteos,arraySorteos} = data;
+                let {juego,maxdigits,sorteos} = data;
                 
                 document.getElementById('numero').maxLength = maxdigits;
                 document.getElementById('numero').placeholder = juego.min.padStart(maxdigits, '0');
@@ -326,7 +326,7 @@
                 max: parseInt(juego.max),
                 maxdigits: maxdigits,
                 factor: juego.factor,
-                sorteos: arraySorteos,
+                sorteos: [],
                 numeros: [],
                 total: 0,
                 premio: 0

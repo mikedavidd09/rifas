@@ -6,8 +6,6 @@ function updateTable() {
 
 venta.numeros.sort((a, b) => a.numero - b.numero);
 
-console.log(venta.numeros);
-
   venta.numeros.forEach((item,index) => {
 
     const newRow = $('<tr class="text-center">');
@@ -112,10 +110,6 @@ if(montoRandom == 0){
     venta.numeros.push(...numerosTemp);
     show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " numeros aleatorios");
     updateTable();
-
-    console.log(venta.numeros);
-
-
 
 });
 
@@ -240,16 +234,31 @@ function showReceipt() {
     return a + b.monto;
   }, 0);
   venta.total = totalVenta;
-  venta.nombre_cliente = $('#nombre').val().length>0?$('#nombre').val():'Sin cliente';
+  venta.nombre_cliente = $('#nombre').val().length>0?$('#nombre').val():'';
+
+  
+  const todosLosCheckboxes = document.querySelectorAll('input[name="checkSorteos[]"]');
+  if(todosLosCheckboxes.length != 0){
+  const checkboxesMarcados = document.querySelectorAll('input[name="checkSorteos[]"]:checked');
+  if(checkboxesMarcados.length == 0){
+    show_Notify("danger", "Error", "Debe seleccionar al menos un sorteo");
+    return;
+  }
+  venta.sorteos = Array.from(checkboxesMarcados).map(cb => parseInt(cb.value));
+
+  } 
+
 
   $.ajax({
     url: 'index.php?controller=Venta&action=store',
     type: 'POST',
     data: venta,
-    success: function(response) {
-      console.log(response);
-      const data = JSON.parse(response);
-      console.log(data);
+    dataType: 'json',                // Clave
+    contentType: 'application/json', // Clave
+    data: JSON.stringify(venta),     // Clave
+  
+    success: function(data) {
+  
       if (!data.status) {
         show_Notify("danger", "Error", data.message);
         return;
@@ -257,6 +266,14 @@ function showReceipt() {
       show_Notify("success", "Correcto",data.message);
 
       let vendedor = document.getElementById('vendedor').value;
+
+      let sorteos_html = '';
+      data.sorteos.forEach(item => {  
+          sorteos_html += '<div> <p style="text-align: center; margin: 10px 0;"> SORTEO:' + item.etiqueta + '</p> </div>';
+          sorteos_html += '<div> <p style="text-align: center; margin: 10px 0;"> VENTA Nº:' + item.consecutivo + '</p> </div>';
+      });
+
+      console.log(sorteos_html);
  
       let html = '';
 
@@ -264,8 +281,7 @@ function showReceipt() {
 
       html +='<div> <p style="text-align: center; font-weight: bold; margin: 10px 0;">RIFAS EL REGALON</p> </div>' +
         '<div> <p style="text-align: center;"> JUEGO:' + venta.nombre_juego + '</p> </div>' +
-        '<div> <p style="text-align: center;"> SORTEO:' + data.sorteo + '</p> </div>' +
-        '<div> <p style="text-align: center; margin: 10px 0;"> VENTA Nº: ' + data.consecutivo + '</p> </div>' +
+        sorteos_html +
         '<div> <p style="text-align: center; margin: 10px 0;"> VENDEDOR: ' + vendedor + '</p> </div>' +
         '<div> <p style="text-align: center; margin: 10px 0;"> CLIENTE:' + venta.nombre_cliente + '</p> </div>' +
         '<div> <p style="text-align: center; margin: 10px 0;"> TELEFONO: 8325-4510</p> </div>' +
@@ -282,7 +298,7 @@ function showReceipt() {
       venta.numeros.forEach((item) => {
       
         total += parseInt(item.monto);
-        console.log(total);
+  
         $('#rows_item').append(
           '<tr><td >' +
           item.numero +
@@ -307,17 +323,9 @@ function showReceipt() {
   });
 }
 
-function agregarCeros(numero, cantidadCeros) {
-  console.log('agregarCeros numero='+numero + ' cantidadCeros='+cantidadCeros);
-  console.log(String(numero).padStart(cantidadCeros, '0'));
-    return String(numero).padStart(cantidadCeros, '0');
-}
 
 function printReceipt() {
   const receiptContent = document.querySelector('#printableReceipt').innerHTML;
-
-
-  console.log(receiptContent);
   
   // 1. Construye el HTML del recibo
   const htmlContent = `

@@ -48,7 +48,7 @@ class JuegosController extends ControladorBase
         $sorteos = $modelJuego->getSorteosDisponibles($id_juego,$now);
         $arraySorteos = [];
         foreach($sorteos as $item)
-            $arraySorteos[] = $item->id_sorteo;
+            $arraySorteos[] = (int)$item->id_sorteo;
         echo json_encode(['juego'=>$juego,'maxdigits'=>$maxdigits,'sorteos'=>$sorteos,'arraySorteos'=>$arraySorteos]);
     }
 

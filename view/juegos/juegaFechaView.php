@@ -35,13 +35,31 @@
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="numero"> <?php echo 'Número ['.$juego->min.'-'.$juego->max.']'; ?></label>
-                        <input type="tel" id="numero" class="form-control onlynumber" maxlength="<?php echo $maxdigits; ?>" />
-                    </div>
-                    <div class="col-md-6">
+                         <div class="col-md-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" class="form-control onlynumber" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="numero">Mes</label>
+                    <select class="form-control" id="mes" name="mes">
+                        <option value="0">Seleccione un mes</option>
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="monto">Dia</label>
+                        <input type="tel" id="dia" class="form-control onlynumber" />
                     </div>
 
                     <div class="col-md-6">

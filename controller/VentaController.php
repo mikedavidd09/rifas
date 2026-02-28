@@ -97,35 +97,54 @@ class VentaController extends ControladorBase
     
     public function store(){
 
-        $consecutivo = time();
+        $inputJSON = file_get_contents('php://input');
+
+        $data = json_decode($inputJSON, true);
+
+        $sorteos_ids = $data['sorteos'];
+    
         $now  = new DateTime();
         $hora = $now->format('H:i:s');
-        $sorteo = new SorteoModel($this->adapter);
-        $sorteo = $sorteo->getSorteo($_POST["id_juego"],$hora);
+        $sorteoModel = new SorteoModel($this->adapter);
 
-        if($sorteo == null){
+        if(count($sorteos_ids) == 0){
+
+        $sorteos = $sorteoModel->getSorteo($data['id_juego'],$hora);
+
+        if($sorteos == null){
             echo json_encode(["status"=>false,"data"=>"","message"=>"Error, no se puede guardar el sorteo, fuera de horario! = ".$now->format('Y-m-d H:i:s')]);
         return;
         }
+    }else
+        $sorteos = $sorteoModel->getSorteoIds($data["id_juego"],$sorteos_ids);
+
 
         $venta = new Venta($this->adapter);
-        $venta->setIdJuego($_POST["id_juego"]);
-        $venta->setNombre($_POST["nombre_cliente"]);
+
+        $baseTime = time();
+        $i=1;
+        foreach($sorteos as $sorteo){
+
+        $consecutivo = $baseTime . str_pad($i, 1, '0', STR_PAD_LEFT);
+        $sorteo->consecutivo = $consecutivo;
+        $venta->setIdJuego($data["id_juego"]);
+        $venta->setNombre($data["nombre_cliente"]);
         $venta->setFecha(date('Y-m-d'));
         $venta->setHora(date('H:i:s'));
         $venta->setConsecutivo($consecutivo);
         $venta->setIdColaborador($_SESSION['Login_View']->id_colaborador);
         $venta->setIdSorteo($sorteo->id_sorteo);
-        $venta->setTotal($_POST["total"]);
+        $venta->setTotal($data["total"]);
         $venta->setPagado('0');
         $venta->setBorrado('0');
+
         $save = $venta->put($venta);
 
         $id_venta = $venta->getIdEnd('id_venta');
         
         $numero = new Numero($this->adapter);
 
-        foreach($_POST["numeros"] as $item){
+        foreach($data["numeros"] as $item){
         
             $numero->setIdVenta($id_venta);
             $numero->setNumero($item ['numero']);
@@ -133,11 +152,10 @@ class VentaController extends ControladorBase
             $numero->setPremio($item ['premio']);
             $save = $numero->put($numero);
         }
-
-
+        $i++;
+    }
         if($save == 1)
-            echo json_encode(["status"=>true,"consecutivo"=>$consecutivo,"sorteo"=>$sorteo->etiqueta,"data"=>"","message"=>"Exito, se guardo correctamente! id_venta=".$id_venta]);
-    
+            echo json_encode(["status"=>true,"consecutivo"=>$consecutivo,"sorteos"=>$sorteos,"data"=>"","message"=>"Exito, se guardo correctamente!"]);
     }
 
     public function ver_venta(){
