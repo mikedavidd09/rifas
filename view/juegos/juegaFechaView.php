@@ -35,7 +35,7 @@
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
-                         <div class="col-md-6">
+                        <div class="col-md-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" class="form-control onlynumber" />
                     </div>

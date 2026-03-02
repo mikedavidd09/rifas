@@ -11,6 +11,11 @@ class RolesModel extends ModeloBase{
         return $usuario;
     }
 
+    public function getComisiones(){
+        $query="SELECT * FROM comisiones";
+        $result=$this->ejecutarSql($query);
+        return is_object($result)? [$result]:$result;
+    }
 
 }
 ?>

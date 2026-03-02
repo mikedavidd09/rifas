@@ -39,12 +39,12 @@
             </div>
             <div class="col-xs-6 col-md-3 mb-custom">
                <a class='link' href="index.php?controller=juegos&action=jugar&juego=8" class="thumbnail">
-               <img src="resources/imagen/juegos/juegaJ3Honduras.jpg" alt="Imagen" class="img-responsive img-rounded">
+               <img src="resources/imagen/juegos/juegaJ3Honduras.webp" alt="Imagen" class="img-responsive img-rounded">
                </a>
             </div>
             <div class="col-xs-6 col-md-3 mb-custom">
                <a class='link' href="index.php?controller=juegos&action=jugar&juego=9" class="thumbnail">
-               <img src="resources/imagen/juegos/juegaTerminacion2.jpg" alt="Imagen" class="img-responsive img-rounded">
+               <img src="resources/imagen/juegos/juegaTerminacion2.webp" alt="Imagen" class="img-responsive img-rounded">
                </a>
             </div>
             <div class="col-xs-6 col-md-3 mb-custom">

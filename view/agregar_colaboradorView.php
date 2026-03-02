@@ -21,7 +21,7 @@
                 <label>Contraseña: </label> <INPUT type="password" name="password" class="form-control">
             
                 <label> Cargo:</label>
-                <SELECT name="id_role" class=" form-control">
+                <SELECT name="id_role" id="id_role" class=" form-control">
                    <option value="0">-Seleccione-</option>
                     <?php
                    
@@ -31,8 +31,19 @@
                     ?>
 
                 </SELECT>
-               
+
+                <label>Comision:</label>
+                <SELECT name="id_comision" id="id_comision" class=" form-control">
+                   <option value="0">-Seleccione-</option>
+                    <?php
+                   
+                    foreach ($comisiones as $comision) {
+                        echo "<OPTION VALUE=\"".$comision->id_comision."\">".$comision->tasa."</OPTION>";
+                    }
+                    ?>
                 </SELECT>
+        
+    
               
                 <label> Fecha Ingreso: </label>
                 <div class='input-group date'>

@@ -20,7 +20,8 @@ class ColaboradorController extends ControladorBase{
         $role = $_SESSION['Login_View']->role;
         $where = $role =='sudo' ? '' : ' where id_role <> 1';
         $roles = new RolesModel($this->adapter);
-        $this->view("agregar_colaborador", ["roles" => $roles->getRoles($where)]);
+        $comisiones = $roles->getComisiones();
+        $this->view("agregar_colaborador", ["roles" => $roles->getRoles($where),"comisiones" => $comisiones]);
     }
     
 
@@ -102,10 +103,9 @@ class ColaboradorController extends ControladorBase{
             </div>";
             $role = $_SESSION['Login_View']->role;
             $roles = new RolesModel($this->adapter);
-             $where = $role =='sudo' ? '' : ' where id_role <> 1';
-            $roles = $roles->getRoles($where);
+            $where = $role =='sudo' ? '' : ' where id_role <> 1';
             
-            $this->view("datos_colaborador", array("colaborador" => $colaborador,"roles" => $roles,"button" => $button));
+            $this->view("datos_colaborador", array("colaborador" => $colaborador,"roles" =>$roles->getRoles($where) ,"button" => $button,"comisiones" => $roles->getComisiones()));
         }else {
             echo "error";
         }
@@ -125,6 +125,7 @@ class ColaboradorController extends ControladorBase{
         $colaborador->setDireccion($_POST["direccion"]);
         $colaborador->setTelefono($_POST["telefono"]);
         $colaborador->setIdSucursal(1);
+        $colaborador->setIdComision($_POST["id_comision"]);
         $id = $colaborador->getIdNow('id_colaborador');
         $codigo = isset($_POST["codigo"])?'none':$colaborador->generarCodeColaborador($colaborador->nombre, $colaborador->apellido, $id);
         $colaborador->setCodigo($codigo);

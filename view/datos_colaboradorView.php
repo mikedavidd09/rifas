@@ -130,6 +130,23 @@
                         </SELECT>
                      </div>
                   </div>
+                   <div class="form-group">
+                     <label class="control-label col-sm-2" for="cedula">Comision:</label>
+                     <div class="col-xs-10">
+                        <SELECT name="id_comision" id="id_comision" class=" form-control">
+                           <option value="0">-Seleccione-</option>
+                           <?php
+                              foreach ($comisiones as $comision) {
+                               if($comision->id_comision == $colaborador->id_comision){
+                                   echo "<OPTION VALUE=\"".$comision->id_comision."\" SELECTED>".$comision->tasa."</OPTION>";
+                               }else{
+                                   echo "<OPTION VALUE=\"".$comision->id_comision."\">".$comision->tasa."</OPTION>";
+                               }
+                              }
+                              ?>
+                        </SELECT>
+                     </div>
+                  </div>
                   <div class="form-group">
                      <label class="control-label col-sm-2" for="cedula">Usuario:</label>
                      <div class="col-xs-10">

@@ -9,6 +9,7 @@ class Colaborador extends EntidadBase{
     public $direccion;
     public $telefono;
     public $id_sucursal;
+    public $id_comision;
     public $fecha_ingreso;
     public $fecha_egreso;
     public $estado; 
@@ -107,6 +108,14 @@ class Colaborador extends EntidadBase{
     public function getIdSucursal()
     {
         return $this->id_sucursal;
+    }
+    public function setIdComision($id_comision)
+    {
+        $this->id_comision = $id_comision;
+    }
+    public function getIdComision()
+    {
+        return $this->id_comision;
     }
     public function setEstado($estado)
     {

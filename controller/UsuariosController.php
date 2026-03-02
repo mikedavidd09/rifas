@@ -148,7 +148,7 @@ class UsuariosController extends ControladorBase
         date_default_timezone_set('America/Managua');
         require_once 'core/Utils.php';
         $from = '01:00';
-        $to = '19:30';
+        $to = '20:30';
         $flat = true;
         $dateTest = new DateTime();
         $input = $dateTest->format('H:i');
@@ -182,7 +182,7 @@ class UsuariosController extends ControladorBase
                         echo($json);
                         exit;
                     }
-                    //print_r($userLogin);
+                  
                     $id_colaborador = $userLogin->id_colaborador;
                  
                     $data = $this->tieneSessionAbierta($userLogin->id_user);
@@ -193,7 +193,7 @@ class UsuariosController extends ControladorBase
                     } else {
                         $misma_session = false;
                     }
-                    if (!empty($userLogin) && (($userLogin->role == 'admin' || $userLogin->role == 'super') || Utils::hourIsBetween($from, $to, $input)) && (!$tiene_session || $misma_session)) {
+                    if (!empty($userLogin) && (($userLogin->role == 'sudo' || $userLogin->role == 'admin') || Utils::hourIsBetween($from, $to, $input)) && (!$tiene_session || $misma_session)) {
 
 
                         $login->AsignarSessionStar("Login_View", $userLogin);
@@ -230,7 +230,9 @@ class UsuariosController extends ControladorBase
                         }
 
                     } else {
-                        if (!Utils::hourIsBetween($from, $to, $input)&&($userLogin->cargo != 'Administrador' &&$userLogin->cargo != 'Supervisor'&& ($userLogin->perfil_name != 'Sudo' || $userLogin->perfil_name != 'privileged'))) {
+                         
+                        if (!Utils::hourIsBetween($from, $to, $input)&&($userLogin->role != 'sudo' && $userLogin->role != 'admin')) {
+                         
                             $resp = array(
                                 'respuesta' => 'false',
                                 'data' => '',
@@ -242,6 +244,7 @@ class UsuariosController extends ControladorBase
                         }
                    
                         if ($tiene_session) {
+                              
                             $resp = array(
                                 'respuesta' => 'false',
                                 'data' => '',
@@ -252,6 +255,7 @@ class UsuariosController extends ControladorBase
                             exit;
                         }
                         if (empty($userLogin)) {
+                              print_r($userLogin); die();  print_r($userLogin); die();
                             $resp = array(
                                 'respuesta' => 'false',
                                 'data' => '',
