@@ -37,35 +37,35 @@
                     </div>
                         <div class="col-md-6">
                         <label class="form-label" for="monto">Monto C$</label>
-                        <input type="tel" id="monto" class="form-control onlynumber" />
+                        <input type="tel" id="monto" name="monto" class="form-control onlynumber" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="numero">Mes</label>
                     <select class="form-control" id="mes" name="mes">
                         <option value="0">Seleccione un mes</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
+                        <option value="Ene">Enero</option>
+                        <option value="Feb">Febrero</option>
+                        <option value="Mar">Marzo</option>
+                        <option value="Abr">Abril</option>
+                        <option value="May">Mayo</option>
+                        <option value="Jun">Junio</option>
+                        <option value="Jul">Julio</option>
+                        <option value="Ago">Agosto</option>
+                        <option value="Sep">Septiembre</option>
+                        <option value="Oct">Octubre</option>
+                        <option value="Nov">Noviembre</option>
+                        <option value="Dic">Diciembre</option>
                     </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="monto">Dia</label>
-                        <input type="tel" id="dia" class="form-control onlynumber" />
+                        <input type="tel" id="dia" nae="dia" class="form-control onlynumber"  maxlength="<?php echo $maxdigits; ?>" />
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <button
-                                id="addButton"
+                                id="addFecha"
                                 class="btn btn-primary"
                                 data-repeater-create=""
                                 fdprocessedid="7v82oo"
@@ -271,24 +271,8 @@
             </div>
             <div class="modal-body">
                 <div id="printableReceipt" class="receipt text-center">
-                    <div class="receipt-header" id="heder-receipt"></div>
-                
-                    <table class="receipt-items">
-                        <thead id="table_header" class="thead-default text-center">
+                    <div class="receipt-header" id="content-receipt">
 
-                        </thead>
-                        <tbody id="rows_item"></tbody>
-                        <tfoot>
-                            <tr>
-                            <th></th> <th id="total"></th> <th></th>                            
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="receipt-footer">
-
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡ Valido para un sorteo ! </div>
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡Porfavor revise su ticket ! </div>
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡ Premio valido por 7 dias ! </div>
                     </div>
                 </div>
             </div>
@@ -313,6 +297,7 @@
         maxdigits: <?php echo (int)($maxdigits); ?>,
         factor: <?php echo (int)($juego->factor); ?>,
         numeros: [],
+        sorteos:[],
         total: 0,
         premio: 0
     };

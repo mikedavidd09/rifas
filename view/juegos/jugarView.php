@@ -253,25 +253,8 @@
             </div>
             <div class="modal-body">
                 <div id="printableReceipt" class="receipt text-center">
-                    <div class="receipt-header" id="heder-receipt"></div>
-                
-                    <table class="receipt-items">
-                        <thead id="table_header" class="thead-default text-center">
-
-                        </thead>
-                        <tbody id="rows_item"></tbody>
-                        <tfoot>
-                            <tr>
-                            <th></th> <th id="total"></th> <th></th>                            
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="receipt-footer">
-
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡ Valido para un sorteo ! </div>
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡Porfavor revise su ticket ! </div>
-                    <div> <p style="text-align: center; margin: 10px 0;"> ¡ Premio valido por 7 dias ! </div>
-                    </div>
+                    <div class="receipt-header" id="content-receipt">
+                    </div>  
                 </div>
             </div>
             <div class="modal-footer">
