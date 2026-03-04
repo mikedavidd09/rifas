@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Agregar NumeroS Ganadores</h3>
+        <h3 class="card-title">Agregar Numeros Ganadores</h3>
     </div>
     <div class="card-body">
         <?php 
@@ -35,7 +35,14 @@
                             <?php foreach($juego->sorteos as $sorteo){ ?>
                             <tr class="text-center">
                                 <td><?php echo $sorteo->etiqueta; ?></td>
-                                <td><input type="text"  class="form-control input-underlined"  name="numero" id="numero_<?php echo $juego->id_juego; ?>_<?php echo $sorteo->id_sorteo; ?>" placeholder="<?php echo $ceros ?>" maxlength="<?php echo $maxdigits ?>"  required oninput="this.value = this.value.replace(/[^0-9]/g, '')"></td>
+                                <td><input type="text"  class="form-control input-underlined" 
+                                           name="numero" 
+                                           id="numero_<?php echo $juego->id_juego; ?>_<?php echo $sorteo->id_sorteo; ?>" 
+                                           placeholder="<?php echo $ceros ?>"
+                                           maxlength="<?php echo $maxdigits ?>" 
+                                           required oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                          value="<?php echo $sorteo->numero == NULL ? '' : $sorteo->numero; ?>"
+                                           "></td>
                                 <td><button type="button" class="btn btn-info" onclick="guardar(<?php echo $juego->id_juego; ?>, <?php echo $sorteo->id_sorteo; ?>)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button></td>
                             </tr>
                             <?php } ?>

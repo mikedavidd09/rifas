@@ -66,8 +66,10 @@ class JuegosController extends ControladorBase
     public function add_numero_ganador(){
         $juego = new JuegoModel($this->adapter);
         $juegos = $juego->getJuegos();
-        foreach($juegos as $item)
+        foreach($juegos as $item){
             $item->sorteos = $juego->getSorteos($item->id_juego);
+           
+        }
         return $this->view('ganadores/agregar',['juegos'=>$juegos]);
     }
 
