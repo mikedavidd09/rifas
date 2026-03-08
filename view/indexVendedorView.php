@@ -138,7 +138,8 @@
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
-                     <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
+                     <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Clientes</a></li>
+                     <li><a class='link' href="index.php?controller=juegos&action=ver_numeros_ganadores"><i class="fa fa-circle-o"></i>Numeros</a></li>
                      </ul>
                   </li>
                   <li ><a class ='link'   href="index.php?controller=juegos&action=sorteos"><i class="fa fa-calendar"></i><span>Sorteos</span></a></li>

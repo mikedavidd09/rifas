@@ -223,5 +223,13 @@ class VentaController extends ControladorBase
         else
             echo json_encode(["status"=>false,"message"=>"Error al pagar el premio ".$update]);
     }
+
+
+    public function verPuestos(){
+        $this->view('venta/ver_puestos',array());
+    }
+
+
+
 }
 ?>

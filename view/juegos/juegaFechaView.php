@@ -15,31 +15,24 @@
                             <i class="fa fa-random"></i>
                         </button>
                     </div>
-                    <div class="col-xs-4">
-                        <button id="linea" class="btn btn-primary" data-toggle="modal" data-target="#lineaModal">
-                            <i class="fa fa-signal"></i>
-                        </button>
-                    </div>
-                    <div class="col-xs-4">
-                        <button id="suerte" class="btn btn-primary" data-toggle="modal" data-target="#paresModal">
-                            <i class="fa fa-exchange"></i>
-                        </button>
-                    </div>
+                
                 </div>
 
                 <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
                 <div class="row g-6">
                 
                     <input type="hidden" id="vendedor" value="<?php echo $vendedor; ?>" />
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
-                        <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" name="monto" class="form-control onlynumber" />
                     </div>
-                    <div class="col-md-6">
+                </div>
+                <div class="row g-6">
+                    <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="numero">Mes</label>
                     <select class="form-control" id="mes" name="mes">
                         <option value="0">Seleccione un mes</option>
@@ -57,27 +50,20 @@
                         <option value="Dic">Diciembre</option>
                     </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Dia</label>
                         <input type="tel" id="dia" nae="dia" class="form-control onlynumber"  maxlength="<?php echo $maxdigits; ?>" />
                     </div>
+                </div>
+                <div class="row g-6">
 
-                    <div class="col-md-6">
-                        <div class="form-group">
+                    <div class="col-md-6 col-xs-6" style="margin-top: 10px;">
                             <button
                                 id="addFecha"
-                                class="btn btn-primary"
-                                data-repeater-create=""
-                                fdprocessedid="7v82oo"
-                            >
+                                class="btn btn-primary">
                                 <i class="fa fa-plus-circle"></i>
                                 <span class="align-middle">Agregar</span>
                             </button>
-                            <button class="btn btn-primary" onclick="showReceipt()">
-                                <i class="fa fa-save"></i>
-                                <span class="align-middle">Guardar</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,6 +90,18 @@
         </div>
     </div>
 </div>
+
+ <div id="inferior" class="footer-buttons">
+                    <div class="row">
+                  
+                    <div class="col-md-6 col-xs-6">
+                        <button class="btn btn-primary mb-custom" onclick="showReceipt()">
+                            <i class="fa fa-save"></i>
+                            <span class="align-middle">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 <!-- Modal  resgistrar numero aleatorios -->
 <div
     id="randomModal"
@@ -150,115 +148,12 @@
             <!-- Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="addRandomNumber" type="button" class="btn btn-primary">Agregar</button>
+                <button id="addFechaRandom" type="button" class="btn btn-primary">Agregar</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div
-    id="lineaModal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="lineaModalLabel"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="randomModalLabel">Registrar Linea</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <!-- Body -->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <label class="form-label" for="montoLinea">Monto C$</label>
-                                        <input type="tel" id="montoLinea" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label class="form-label" for="cantidadLinea">Inicio</label>
-                                        <input type="tel" id="inicioLinea" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label class="form-label" for="finalLinea">Inicio</label>
-                                        <input type="tel" id="finalLinea" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="addLineaNumber" type="button" class="btn btn-primary">Agregar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal  resgistrar todos los numeros pares -->
-<div
-    id="paresModal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="paresModalLabel"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="randomModalLabel">Registrar todos los numeros pares</h5>
-            </div>
-
-            <!-- Body -->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label class="form-label" for="montoPar">Monto C$</label>
-                                        <input type="tel" id="montoPar" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="addparNumber" type="button" class="btn btn-primary">Agregar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="receiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -301,7 +196,50 @@
         total: 0,
         premio: 0
     };
-console.log(venta);
+
+    $('#addFechaRandom').on('click', function() {
+        let montoRandom = $('#montoRandom').val().trim();
+        let cantidadRandom = $('#cantidadRandom').val().trim();
+        if (!montoRandom || !cantidadRandom) {
+            show_Notify("danger", "Error", "Todos los campos son obligatorios");
+            return;
+        }
+        montoRandom = parseInt(montoRandom);
+        cantidadRandom = parseInt(cantidadRandom);
+        if (cantidadRandom < 1 || cantidadRandom > 31) {
+            show_Notify("danger", "Error", "Solo se pueden agregar numeros entre 1 y 31");
+            return;
+        }
+        if (montoRandom == 0) {
+            show_Notify("danger", "Error", "Monto no puede ser Cero");
+            return;
+        }
+        const meses = ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        let index =0;
+        let diaRandom =0;
+        let fechaRandom = '';
+        let numerosTemp = [];
+
+        for (let i = 0; i < cantidadRandom; i++) {
+            do {
+                index = Math.floor(Math.random() * 12);
+                console.log(index);
+                diaRandom = Math.floor(Math.random() * 31) + 1;
+                fechaRandom = diaRandom + ' ' + meses[index];
+                
+            } while (numerosTemp.find(item => item.numero === fechaRandom));
+            numerosTemp.push({
+                numero: fechaRandom,
+                monto: montoRandom,
+                premio: montoRandom * venta.factor,
+            });
+        }
+        venta.numeros.push(...numerosTemp);
+        show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " numeros aleatorios");
+        updateTable();
+
+        $('#randomModal').modal('hide');
+    });
 
 
 </script>

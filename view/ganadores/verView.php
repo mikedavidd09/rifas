@@ -28,22 +28,14 @@
                             <tr class="btn-primary text-white">
                                 <th>SORTEO</th>
                                 <th>NUMERO</th>
-                                <th>GUARDAR</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($juego->sorteos as $sorteo){ ?>
                             <tr class="text-center">
-                                <td class=" style="width: 100px;"><?php echo $sorteo->numero; ?></td>
-                                <td><input type="text"  class="form-control input-underlined" 
-                                           name="numero" 
-                                           id="numero_<?php echo $juego->id_juego; ?>_<?php echo $sorteo->id_sorteo; ?>" 
-                                           placeholder="<?php echo $ceros ?>"
-                                           maxlength="<?php echo $maxdigits ?>" 
-                                           required oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                          value="<?php echo $sorteo->numero == NULL ? '' : $sorteo->numero; ?>"
-                                           "></td>
-                                <td><button type="button" class="btn btn-info" onclick="guardar(<?php echo $juego->id_juego; ?>, <?php echo $sorteo->id_sorteo; ?>)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button></td>
+                                <td><?php echo $sorteo->etiqueta; ?></td>
+                                <td> <?php echo $sorteo->numero == NULL ? '' : $sorteo->numero; ?></td>
+                            
                             </tr>
                             <?php } ?>
                         </tbody>

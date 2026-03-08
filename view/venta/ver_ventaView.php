@@ -3,48 +3,47 @@
     <div class="card">
         <div class="card-body">
             <div class="row mb-3 text-center" id="printableReceipt">
-                <div> <p style="text-align: center; font-weight: bold; margin: 2px 0;">RIFAS EL REGALON</p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> RECIBO DE COPIA </p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> JUEGO: <?php echo $venta->juego; ?> </p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> SORTEO: <?php echo $venta->sorteo; ?> </p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> VENTA Nº: <?php echo $venta->consecutivo; ?> </p></div>
-                <div> <p style="text-align: center; margin: 2px 0;"> VENDEDOR: <?php echo $venta->vendedor; ?></p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> CLIENTE: <?php echo $venta->cliente; ?></p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> TELEFONO: 8325-4510</p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> PUESTO: san felipe</p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> <?php echo $fecha; ?> </p> </div>
-                <div> <p style="text-align: center; margin: 2px 0;"> <?php echo $hora; ?> </p> </div>
-                <hr />
+                <p style="text-align: center; font-weight: bold; margin: 1px 0; font-size: 1.4em;">RIFAS EL REGALONes</p>
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> RECIBO DE COPIA </p>
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> JUEGO: <?php echo $venta->juego; ?> </p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> SORTEO: <?php echo $venta->sorteo; ?> </p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> VENTA Nº: <?php echo $venta->consecutivo; ?> </p>
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> VENDEDOR: <?php echo $venta->vendedor; ?></p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> CLIENTE: <?php echo $venta->cliente; ?></p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> TELEFONO: 8325-4510</p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> PUESTO: Leon</p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> <?php echo $fecha; ?> </p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> <?php echo $hora; ?> </p>
                 <div classs="table-responsive text-nowrap">
                     <table id="dataTable" class="table text-nowrap">
                         <thead>
-                            <tr>
-                                <th>Apuesta</th>
-                                <th>Monto</th>
-                                <th>Premio</th>
+                            <tr style="font-weight: bold; text-align: center;">
+                                <th scope="col" >Apuestass</th>
+                                <th scope="col" >Monto</th>
+                                <th scope="col" >Premio</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             <?php
                             $i=1; foreach ($numeros as $item) { ?>
                             <tr class="text-center">
-                                <td> <?php echo $item->numero; ?></td>
-                                <td> <?php echo $item->monto; ?></td>
-                                <td> <?php echo $item->monto * 80; ?></td>
+                                <td > <?php echo $item->numero; ?></td>
+                                <td > <?php echo $item->monto; ?></td>
+                                <td> <?php echo $item->premio; ?></td>
                             </tr>
                             <?php $i++; } ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                            <th></th> <th>Total: C$ <?php echo $venta->total ?></th> <th></th>                            
+                            <th></th> <th style="font-size: 1.3em;">Total: C$ <?php echo $venta->total ?></th> <th></th>                            
                             </tr>
                         </tfoot>
                     </table>
                     <div class="receipt-footer">
 
-                    <div> <p style="text-align: center; margin: 1px 0;"> ¡ Valido para un sorteo ! </div>
-                    <div> <p style="text-align: center; margin: 1px 0;"> ¡Porfavor revise su ticket ! </div>
-                    <div> <p style="text-align: center; margin: 1px 0;"> ¡ Premio valido por 7 dias ! </div>
+                    <p style="text-align: center; margin: 2px 0;"> ¡ Valido para un sorteo ! </p>
+                    <p style="text-align: center; margin: 1px 0;"> ¡Porfavor revise su ticket ! </p>
+                    <p style="text-align: center; margin: 1px 0;"> ¡ Premio valido por 7 dias ! </p>
                     </div>
                 </div>
             </div>
@@ -117,40 +116,46 @@
     function printReceipt() {
         const receiptContent = document.querySelector("#printableReceipt").innerHTML;
 
-
-
         // 1. Construye el HTML del recibo
         const htmlContent = `
-        <!DOCTYPE html>
-        <html>
-        <meta charset="UTF-8">
-        <head>
-            <title>Recibo - Rifa la Bendición</title>
-            <style>
-            body { 
-                font-family: Arial, sans-serif; 
-                margin: 20px;
-                font-size: 14px;
-                max-width: 800px;
-            }
-            table { 
-                width: 100%; 
-                border-collapse: collapse; 
-                margin-top: 20px;
-            }
-            th, td { 
-                padding: 8px; 
-                text-align: left; 
-                border-bottom: 1px solid #ddd; 
-            }
-            .text-right { text-align: right; }
-            .total { font-weight: bold; }
-            </style>
-        </head>
-        <body>
-            ${receiptContent}
-        </body>
-        </html>
+         <!DOCTYPE html>
+    <html>
+     <meta charset="UTF-8">
+      <head>
+        <title>Recibo - Rifa la Bendición</title>
+        <style>
+          body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+            font-size: 14px;
+            max-width: 800px;
+          }
+          table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+          }
+          th, td { 
+            padding: 5px; 
+            text-align: center; 
+            border-bottom: 2px solid #7e7070ff; 
+            font-size: 1.1em;
+          }
+          .text-right { text-align: right; }
+          .text-center {text-align: center; margin: 10px 0;}
+          .text-bold { font-weight: bold;}
+          .margin1 { margin: 1px 0;}
+          .margin2 { margin: 2px 0;}
+          .font-2 { font-size: 1.2em;}
+          .font-3 { font-size: 1.3em;}
+          .font-4 { font-size: 1.4em;}
+          .font-1.5 { font-size: 1.5em;}
+        </style>
+      </head>
+      <body>
+        ${receiptContent}
+      </body>
+    </html>
     `;
 
         // 2. Crea un Blob (objeto binario) con el HTML

@@ -3,12 +3,10 @@
 <div class="row g-12">
     <div class="col-md-6">
         <div class="card">
-            
-             
 
             <div class="card-body">
                 <!-- Use flexbox so buttons stay horizontal when space allows -->
-                   <div class="row mb-3 mb-custom">
+                <div class="row mb-3 mb-custom">
                     <div class="col-xs-4">
                         <button id="random" class="btn btn-primary" data-toggle="modal" data-target="#randomModal">
                             <i class="fa fa-random"></i>
@@ -28,53 +26,46 @@
 
                 <div class="row mb-3 mb-custom">
                     <div class="col-lg-12">
-                       <select class="form-control" id="id_juego" name="id_juego">
-                    <option value="0">Seleccione un juego</option>
-                        <?php foreach($juegos as $juego){ ?>
-                    <option value="<?php echo $juego->id_juego; ?>"><?php echo $juego->nombre; ?></option>
-                        <?php } ?>
-                </select>
+                        <select class="form-control" id="id_juego" name="id_juego">
+                            <option value="0">Seleccione un juego</option>
+                                <?php foreach($juegos as $juego){ ?>
+                            <option value="<?php echo $juego->id_juego; ?>"><?php echo $juego->nombre; ?></option>
+                                <?php } ?>
+                        </select>
                     </div>
                 </div>
                 
                 <div id="sorteos">
-            
-
+        
                 </div>
 
                 <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
                 <div class="row g-6">
                 
                     <input type="hidden" id="vendedor" value="<?php echo $vendedor; ?>" />
-                    <div class="col-md-6">
-                        <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" />
+                 
+                    <div class="col-md-6 col-xs-6">
+                        <label class="form-label" for="numero" id="rango"> Numero:</label>
+                        <input type="tel" id="numero" class="form-control onlynumber" /> 
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="numero" id="rango"> Rango:</label>
-                        <input type="tel" id="numero" class="form-control onlynumber"  />
-                    </div>
-                    <div class="col-md-6">
+
+                      <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" class="form-control onlynumber" />
                     </div>
+                </div>
+                <div class="row g-6">
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <button
-                                id="addButton"
-                                class="btn btn-primary"
-                                data-repeater-create=""
-                                fdprocessedid="7v82oo"
-                            >
+                       <div class="col-md-6 col-xs-6">
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 col-xs-6" style="margin-top: 10px;">
+                            <button id="addButton" class="btn btn-primary">
                                 <i class="fa fa-plus-circle"></i>
                                 <span class="align-middle">Agregar</span>
                             </button>
-                            <button class="btn btn-primary" onclick="showReceipt('multisorteoStore')">
-                                <i class="fa fa-save"></i>
-                                <span class="align-middle">Guardar</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -152,6 +143,17 @@
         </div>
     </div>
 </div>
+
+            <div id="inferior" class="footer-buttons">
+                    <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <button class="btn btn-primary mb-custom" onclick="showReceipt()">
+                            <i class="fa fa-save"></i>
+                            <span class="align-middle">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
 <!-- Modal -->
 <div
@@ -300,8 +302,6 @@
                 
                 document.getElementById('numero').maxLength = maxdigits;
                 document.getElementById('numero').placeholder = juego.min.padStart(maxdigits, '0');
-                document.getElementById('rango').innerHTML = '';
-                document.getElementById('rango').innerHTML = 'Rango: ['+juego.min.padStart(maxdigits, '0')+' - '+juego.max +']';
                 console.log(sorteos);
                 window.venta = {
                 id_juego: parseInt(juego.id_juego),
@@ -336,5 +336,3 @@
     });
 
 </script>
-
-               

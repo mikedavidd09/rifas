@@ -23,7 +23,7 @@ class JuegosController extends ControladorBase
         $juego = new juegoModel($this->adapter);
         $vendedor = $juego->getVendedor($login->id_colaborador);
         $juegos = $juego->getJuegos();
-        $this->view('juegos/multisorteos',array('juegos'=>$juegos,'vendedor'=>$vendedor));
+        $this->view('juegos/multiSorteos',array('juegos'=>$juegos,'vendedor'=>$vendedor));
     }
 
     public function jugar(){
@@ -68,9 +68,17 @@ class JuegosController extends ControladorBase
         $juegos = $juego->getJuegos();
         foreach($juegos as $item){
             $item->sorteos = $juego->getSorteos($item->id_juego);
-           
+        
         }
         return $this->view('ganadores/agregar',['juegos'=>$juegos]);
+    }
+
+    public function ver_numeros_ganadores(){
+        $juego = new JuegoModel($this->adapter);
+        $juegos = $juego->getJuegos();
+        foreach($juegos as $item)
+            $item->sorteos = $juego->getSorteos($item->id_juego);
+        return $this->view('ganadores/ver',['juegos'=>$juegos]);
     }
 
 

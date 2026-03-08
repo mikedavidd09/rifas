@@ -119,38 +119,39 @@
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
-                        <li><a class='link' href="index.php?controller=colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>
-                        <li><a class='link' href="index.php?controller=colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
+                        <li><a class='link' href="index.php?controller=Colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>
+                        <li><a class='link' href="index.php?controller=Colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
                      </ul>
                   </li>
+                   <li ><a class ='link'   href="index.php?controller=Venta&action=puestos"><i class="fa fa-users"></i><span>Puestos</span></a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-gamepad"></i><span>Juegos</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=1"><i class="fa fa-circle-o"></i>Diaria</a></li>
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=2"><i class="fa fa-circle-o"></i>Juega 3</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=3"><i class="fa fa-circle-o"></i>Fechas</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=4"><i class="fa fa-circle-o"></i>combo</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=5"><i class="fa fa-circle-o"></i>Tica</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=6"><i class="fa fa-circle-o"></i>Monazos</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=7"><i class="fa fa-circle-o"></i>Juega Hondurena</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=8"><i class="fa fa-circle-o"></i>J3 Honduras</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=9"><i class="fa fa-circle-o"></i>Terminacion 2</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=10"><i class="fa fa-circle-o"></i>Primera</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=11"><i class="fa fa-circle-o"></i>Salvadorena</a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=3"><i class="fa fa-circle-o"></i>Fechas</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=4"><i class="fa fa-circle-o"></i>combo</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=5"><i class="fa fa-circle-o"></i>Tica</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=6"><i class="fa fa-circle-o"></i>Monazos</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=7"><i class="fa fa-circle-o"></i>Juega Hondurena</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=8"><i class="fa fa-circle-o"></i>J3 Honduras</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=9"><i class="fa fa-circle-o"></i>Terminacion 2</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=10"><i class="fa fa-circle-o"></i>Primera</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=jugar&juego=11"><i class="fa fa-circle-o"></i>Salvadorena</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
                      </ul>
                   </li>
                   <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
-                        <li><a class ='link'   href="index.php?controller=juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
-                        <li><a class='link' href="index.php?controller=juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
+                        <li><a class ='link'   href="index.php?controller=Juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
                      </ul>
                   </li>
-                  <li ><a class ='link'   href="index.php?controller=juegos&action=sorteos"><i class="fa fa-calendar"></i><span>Sorteos</span></a></li>
-                  <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
-                  <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=Juegos&action=sorteos"><i class="fa fa-calendar"></i><span>Sorteos</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=Juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=Reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
                </ul>
             </section>
          </aside>

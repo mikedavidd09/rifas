@@ -28,40 +28,36 @@
                 </div>
 
                 <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
-                <div class="row g-6">
-                
-                    <input type="hidden" id="vendedor" value="<?php echo $vendedor; ?>" />
-                    <div class="col-md-6">
-                        <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" />
+
+                <div class="row g-6 mb-custom">
+                    <div class="col-md-6 col-xs-6">
+                        <label class="form-label" for="numero">Numero</label>
+                        <input
+                            type="tel"
+                            id="numero"
+                            class="form-control onlynumber"
+                            maxlength="<?php echo $maxdigits; ?>"
+                        />
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="numero"> <?php echo 'Número ['.$juego->min.'-'.$juego->max.']'; ?></label>
-                        <input type="tel" id="numero" class="form-control onlynumber" maxlength="<?php echo $maxdigits; ?>" />
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" class="form-control onlynumber" />
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <button
-                                id="addButton"
-                                class="btn btn-primary"
-                                data-repeater-create=""
-                                fdprocessedid="7v82oo"
-                            >
-                                <i class="fa fa-plus-circle"></i>
-                                <span class="align-middle">Agregar</span>
-                            </button>
-                            <button class="btn btn-primary" onclick="showReceipt()">
-                                <i class="fa fa-save"></i>
-                                <span class="align-middle">Guardar</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
+
+                <div class="row g-6">
+                    <input type="hidden" id="vendedor" value="<?php echo $vendedor; ?>" />
+                    <div class="col-md-6 col-xs-6">
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" />
+                    </div>
+                     <div class="col-md-6 col-xs-6">
+                        <button id="addButton" class="btn btn-primary mb-custom">
+                            <i class="fa fa-plus-circle"></i>
+                            <span class="align-middle">Agregar</span>
+                        </button>
+                    </div>
+                </div>    
             </div>
         </div>
     </div>
@@ -73,11 +69,11 @@
                 <table id="dataTable" class="table text-nowrap">
                     <thead>
                         <tr>
-                            <th>Nº</th>
-                            <th>Numero</th>
-                            <th>Monto C$</th>
-                            <th>Premio C$</th>
-                            <th>Borrar</th>
+                            <th style="font-size: 1.4em;">No</th>
+                            <th style="font-size: 1.4em;">Apuesta</th>
+                            <th style="font-size: 1.4em;">Monto</th>
+                            <th style="font-size: 1.4em;">Premio</th>
+                            <th style="font-size: 1.4em;">Borrar</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0"></tbody>
@@ -86,6 +82,18 @@
         </div>
     </div>
 </div>
+
+ <div id="inferior" class="footer-buttons">
+                    <div class="row">
+                  
+                    <div class="col-md-6 col-xs-6">
+                        <button class="btn btn-primary mb-custom" onclick="showReceipt()">
+                            <i class="fa fa-save"></i>
+                            <span class="align-middle">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 <!-- Modal  resgistrar numero aleatorios -->
 <div
     id="randomModal"
@@ -253,13 +261,8 @@
             </div>
             <div class="modal-body">
                 <div id="printableReceipt" class="receipt text-center">
-                    <div class="receipt-header" id="content-receipt">
-                    </div>  
+                
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="printReceipt()">Imprimir</button>
             </div>
         </div>
     </div>
@@ -269,20 +272,18 @@
 
 <script>
 
-    window.venta = {
-        id_juego: <?php echo (int)($juego->id_juego); ?>,
-        nombre_juego: <?php echo json_encode($juego->nombre); ?>,
-        nombre_cliente:"",
-        min: <?php echo (int)($juego->min); ?>,
-        max: <?php echo (int)($juego->max); ?>,
-        maxdigits: <?php echo (int)($maxdigits); ?>,
-        factor: <?php echo (int)($juego->factor); ?>,
-        numeros: [],
-        sorteos:[],
-        total: 0,
-        premio: 0
-    };
-console.log(venta);
-
-
+        window.venta = {
+            id_juego: <?php echo (int)($juego->id_juego); ?>,
+            nombre_juego: <?php echo json_encode($juego->nombre); ?>,
+            nombre_cliente:"",
+            min: <?php echo (int)($juego->min); ?>,
+            max: <?php echo (int)($juego->max); ?>,
+            maxdigits: <?php echo (int)($maxdigits); ?>,
+            factor: <?php echo (int)($juego->factor); ?>,
+            numeros: [],
+            sorteos:[],
+            total: 0,
+            premio: 0
+        };
+    console.log(venta);
 </script>

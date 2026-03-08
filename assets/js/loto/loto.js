@@ -6,13 +6,21 @@ function updateTable() {
 
     venta.numeros.forEach((item, index) => {
 
-        const newRow = $('<tr class="text-center">');
-        newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">' + (index + 1) + '</span> '));
-        newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">Nº</span> ' + item.numero));
-        newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">C$</span> ' + item.monto));
-        newRow.append($('<td>').html('<span class="badge bg-info rounded-pill">C$</span> ' + item.monto * 80));
-        newRow.append($('<td>').html('<a class="" href="#" onclick="deleteRow(this); return false;" style="color: red;"><i class="fa fa-trash fa-lg"></i></a>'));
-        tableBody.append(newRow);
+    const newRow = $(`
+    <tr class="text-center">
+        <td style="font-size: 1.4em;"><span class="badge bg-info rounded-pill">${index + 1}</span></td>
+        <td style="font-size: 1.4em;">${item.numero}</td>
+        <td style="font-size: 1.4em;"><span class="badge bg-info rounded-pill">C$</span> ${item.monto}</td>
+        <td style="font-size: 1.4em;"><span class="badge bg-info rounded-pill">C$</span> ${item.premio}</td>
+        <td style="font-size: 1.4em;">
+            <a href="#" onclick="deleteRow(this); return false;" style="color: red;">
+                <i class="fa fa-trash fa-lg"></i>
+            </a>
+        </td>
+    </tr>
+`);
+
+tableBody.append(newRow);
     });
 }
 
@@ -34,7 +42,6 @@ $("#addFecha").on('click', function() {
         show_Notify("danger", "Error", "Todos los campos son obligatorios");
         return;
     }
-
 
     dia = parseInt(dia);
 
@@ -72,6 +79,13 @@ $("#addFecha").on('click', function() {
     $('#monto').focus();
 
 
+});
+
+$('#numero').on('keyup', function() {
+    const numero = $('#numero').val()
+    if (numero.length == venta.maxdigits) {
+        $('#monto').focus();
+    }
 });
 
 $('#addButton').on('click', function() {
@@ -183,7 +197,9 @@ $('#addRandomNumber').on('click', function() {
     venta.numeros.push(...numerosTemp);
     show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " numeros aleatorios");
     updateTable();
-
+    $('#montoRandom').val('');
+    $('#cantidadRandom').val('');
+    $('#randomModal').modal('hide');
 });
 
 $('#addLineaNumber').on('click', function() {
@@ -224,7 +240,10 @@ $('#addLineaNumber').on('click', function() {
 
     show_Notify("success", "Correcto", "Se agrego la linea del " + inicioLinea + " al " + finalLinea + "correctamente");
     updateTable();
-
+    $('#montoLinea').val('');
+    $('#inicioLinea').val('');
+    $('#finalLinea').val('');
+    $('#lineaModal').modal('hide');
 });
 
 
@@ -268,7 +287,8 @@ $('#addparNumber').on('click', function() {
 
     updateTable();
     show_Notify("success", "Correcto", "Se agregaron los numeros pares");
-
+    $('#montoPar').val('');
+    $('#paresModal').modal('hide');
 });
 
 
@@ -336,29 +356,30 @@ function showReceipt() {
 
             let vendedor = document.getElementById('vendedor').value;
 
-            let html = '';
+            let htmlContent = '';
 
             $('#content-receipt').html('');
 
 
 data.sorteos.forEach(sorteo => {
     
-    html += '<div class="ticket-container">' +
-        '<p style="text-align: center; font-weight: bold; margin: 10px 0;">RIFAS EL REGALON</p>' +
-        '<p style="text-align: center;">JUEGO: ' + venta.nombre_juego + '</p>' +
-        '<p style="text-align: center; margin: 10px 0;">SORTEO: ' + sorteo.etiqueta + '</p>' +
-        '<p style="text-align: center; margin: 10px 0;">VENTA Nº: ' + sorteo.consecutivo + '</p>' +
-        '<p style="text-align: center; margin: 10px 0;">VENDEDOR: ' + vendedor + '</p>' +
-        '<p style="text-align: center; margin: 10px 0;">CLIENTE: ' + venta.nombre_cliente + '</p>' +
-        '<p style="text-align: center; margin: 10px 0;">TELEFONO: 8325-4510</p>' +
-        '<p style="text-align: center; margin: 10px 0;">PUESTO: san felipe</p>' +
-        '<p style="text-align: center; margin: 10px 0;">' + fecha.toLocaleDateString('es-ES', opciones) + ' ' + new Date().toLocaleTimeString() + '</p>' +
-        '<table class="receipt-items">' +
-            '<thead class="thead-default text-center">' +
-                '<tr>' +
-                    '<th scope="col">Apuesta</th>' +
-                    '<th scope="col">Monto</th>' +
-                    '<th scope="col">Premio</th>' +
+    htmlContent += '<p class="text-center text-bold font-4 margin1">RIFAS EL REGALON</p>' +
+        '<p class="text-center font-2 margin1">JUEGO: ' + venta.nombre_juego + '</p>' +
+        '<p class="text-center font-2 margin1">SORTEO: ' + sorteo.etiqueta + '</p>' +
+        '<p class="text-center font-2 margin1">VENTA Nº: ' + sorteo.consecutivo + '</p>' +
+        '<p class="text-center font-2 margin1">VENDEDOR: ' + vendedor + '</p>' +
+        '<p class="text-center font-2 margin1">CLIENTE: ' + venta.nombre_cliente + '</p>' +
+        '<p class="text-center font-2 margin1">TELEFONO: 8325-4510</p>' +
+        '<p class="text-center font-2 margin1">PUESTO: Leon</p>' +
+        '<p class="text-center font-2 margin1">' + fecha.toLocaleDateString('es-ES', opciones) +'</p>' +
+        '<p class="text-center font-2 margin1">' + ' ' + new Date().toLocaleTimeString() + '</p>' +
+        
+        '<table class="table table-bordered">' +
+            '<thead >' +
+                '<tr class="text-bold">' +
+                    '<th scope="col" >Apuesta</th>' +
+                    '<th scope="col" >Monto</th>' +
+                    '<th scope="col" >Premio</th>' +
                 '</tr>' +
             '</thead>' +
             '<tbody>';
@@ -366,34 +387,31 @@ data.sorteos.forEach(sorteo => {
     let total = 0;
     venta.numeros.forEach(numero => {
         total += parseInt(numero.monto);
-        html += '<tr>' +
-            '<td>' + numero.numero + '</td>' +
-            '<td>' + numero.monto + '</td>' +
-            '<td>' + numero.premio + '</td>' +
+        htmlContent += '<tr>' +
+            '<td >' + numero.numero + '</td>' +
+            '<td >' + numero.monto + '</td>' +
+            '<td >' + numero.premio + '</td>' +
         '</tr>';
     });
 
-    html += '</tbody>' +
+    htmlContent += '</tbody>' +
         '<tfoot>' +
             '<tr>' +
                 '<th></th>' +
-                '<th>TOTAL: C$ ' + total + '</th>' +
+                '<th class="text-center text-bold font-2">TOTAL: C$ ' + total + '</th>' +
                 '<th></th>' +
             '</tr>' +
         '</tfoot>' +
         '</table>' +
         '<div class="receipt-footer">' +
-            '<p style="text-align: center; margin: 10px 0;">¡ Valido para un sorteo !</p>' +
-            '<p style="text-align: center; margin: 10px 0;">¡Porfavor revise su ticket !</p>' +
-            '<p style="text-align: center; margin: 10px 0;">¡ Premio valido por 7 dias !</p>' +
-        '</div>' +
-    '</div>';
-    html += '<hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />';
+            '<p class="text-center margin2">¡ Valido para un sorteo !</p>' +
+            '<p class="text-center margin2">¡Porfavor revise su ticket !</p>' +
+            '<p class="text-center margin2">¡ Premio valido por 7 dias !</p>' +
+        '</div>';
+    htmlContent += '<hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />';
 });
 
-console.log(html);
-
-$('#content-receipt').html(html);
+$('#printableReceipt').html(htmlContent);
 
             printReceipt();
             $('#numero, #monto, #nombre').val('');
@@ -431,13 +449,20 @@ function printReceipt() {
             margin-top: 20px;
           }
           th, td { 
-            padding: 8px; 
-            text-align: left; 
-            border-bottom: 1px solid #ddd; 
+            padding: 5px; 
+            text-align: center; 
+            border-bottom: 2px solid #7e7070ff; 
+            font-size: 1.2em;
           }
           .text-right { text-align: right; }
-          .text-center {text-align: center; font-weight: bold; margin: 10px 0;}
-          .total { font-weight: bold; }
+          .text-center {text-align: center; margin: 10px 0;}
+          .text-bold { font-weight: bold;}
+          .margin1 { margin: 1px 0;}
+          .margin2 { margin: 2px 0;}
+          .font-2 { font-size: 1.2em;}
+          .font-3 { font-size: 1.3em;}
+          .font-4 { font-size: 1.4em;}
+          .font-1.5 { font-size: 1.5em;}
         </style>
       </head>
       <body>
