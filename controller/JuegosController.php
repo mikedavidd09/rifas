@@ -17,6 +17,19 @@ class JuegosController extends ControladorBase
         return $this->view('home',array());
     }
 
+    public function homeAdmin(){
+        $login = $_SESSION['Login_View'];
+        $fechaLunes = date('Y-m-d', strtotime('monday this week'));
+        $today = date('Y-m-d');
+        $ventaModel = new VentaModel($this->adapter);
+        $facturado_dia = $ventaModel->getFacturadoRangoFecha($today,$today);
+        $pagado_dia = $ventaModel->getPagadoDiaRangoFecha($today,$today);
+        $facturado_semanal = $ventaModel->getFacturadoRangoFecha($fechaLunes,$today);
+        $pagado_semanal = $ventaModel->getPagadoDiaRangoFecha($fechaLunes,$today);
+        $total_usuarios = $ventaModel->getTotalUsuarios();
+    
+        $this->view('homeAdmin',array('facturado_dia'=>number_format($facturado_dia),'pagado_dia'=>$pagado_dia,'facturado_semanal'=>number_format($facturado_semanal),'pagado_semanal'=>number_format($pagado_semanal),'total_usuarios'=>$total_usuarios));
+    }
 
     public function juegaMultisorteos(){
         $login = $_SESSION['Login_View'];
@@ -57,17 +70,21 @@ class JuegosController extends ControladorBase
 
         $juego = new JuegoModel($this->adapter);
         $juegos = $juego->getJuegos();
-        foreach($juegos as $item)
-            $item->sorteos = $juego->getSorteos($item->id_juego);
+    
+        foreach($juegos as $item){
+            $sorteos = $juego->getSorteos($item->id_juego);
+            $item->sorteos = $sorteos;
+        }
 
         $this->view('juegos/sorteos',['juegos'=>$juegos]);
     }
 
     public function add_numero_ganador(){
+        $today = date('Y-m-d');
         $juego = new JuegoModel($this->adapter);
         $juegos = $juego->getJuegos();
         foreach($juegos as $item){
-            $item->sorteos = $juego->getSorteos($item->id_juego);
+            $item->sorteos = $juego->getNumerosGanadores($item->id_juego,$today);
         
         }
         return $this->view('ganadores/agregar',['juegos'=>$juegos]);

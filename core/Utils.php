@@ -53,13 +53,14 @@ class Utils {
         echo "<script>$('.botones').html(\"$button\");</script>";
     }
     static function GetDateFormatted($fecha){
-    
+
         $anno = date("Y", strtotime($fecha));
         $diasemana = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
         $meses = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
         
         $dia = date("j", strtotime($fecha));
-        $diasemana = $diasemana[(date('w', strtotime($fecha))*1)-1];
+        
+        $diasemana = $diasemana[(date('w', strtotime($fecha))*1)];
         $mes = $meses[(date('m', strtotime($fecha))*1)-1];
         return $diasemana.', '.$dia.' de '.$mes.' del '.$anno;
     }

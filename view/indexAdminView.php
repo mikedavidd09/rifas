@@ -116,7 +116,7 @@
                </div>
                <!-- Sidebar Menu-->    
                <ul class="sidebar-menu">
-                  <li class ="treeview">
+                     <li><a class='link' href="index.php?controller=Juegos&action=homeAdmin"><i class="fa fa-home fa-lg"></i>Home</a></li>                  <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class='link' href="index.php?controller=colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>

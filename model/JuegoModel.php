@@ -26,7 +26,13 @@ class JuegoModel extends ModeloBase{
     }
 
     public function getSorteos($id_juego){
-        $sql = "SELECT s.etiqueta, s.inicio, s.fin, s.id_sorteo, ng.numero FROM sorteos s left join numeros_ganadores ng on s.id_sorteo = ng.id_sorteo where s.id_juego = $id_juego";
+        $sql = "SELECT s.etiqueta, s.inicio, s.fin, s.id_sorteo FROM sorteos s where s.id_juego = $id_juego";
+        $result  = $this->ejecutarSql($sql);
+        return is_object($result) ? [$result]: $result;
+    }
+
+    public function getNumerosGanadores($id_juego,$fecha){
+        $sql = "SELECT s.etiqueta, s.inicio, s.fin, s.id_sorteo, ng.numero FROM sorteos s left join numeros_ganadores ng on s.id_sorteo = ng.id_sorteo and ng.fecha = '$fecha' where s.id_juego = $id_juego ";
         $result  = $this->ejecutarSql($sql);
         return is_object($result) ? [$result]: $result;
     }

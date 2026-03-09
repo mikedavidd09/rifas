@@ -34,7 +34,7 @@
                         <tbody>
                             <?php foreach($juego->sorteos as $sorteo){ ?>
                             <tr class="text-center">
-                                <td class=" style="width: 100px;"><?php echo $sorteo->numero; ?></td>
+                                <td class=" style="width: 100px;"><?php echo $sorteo->etiqueta; ?></td>
                                 <td><input type="text"  class="form-control input-underlined" 
                                            name="numero" 
                                            id="numero_<?php echo $juego->id_juego; ?>_<?php echo $sorteo->id_sorteo; ?>" 

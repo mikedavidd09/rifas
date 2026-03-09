@@ -116,6 +116,7 @@
                </div>
                <!-- Sidebar Menu-->    
                <ul class="sidebar-menu">
+                  <li><a class='link' href="index.php?controller=Juegos&action=homeAdmin"><i class="fa fa-home fa-lg"></i>Home</a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
@@ -123,7 +124,7 @@
                         <li><a class='link' href="index.php?controller=Colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
                      </ul>
                   </li>
-                   <li ><a class ='link'   href="index.php?controller=Venta&action=puestos"><i class="fa fa-users"></i><span>Puestos</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=Venta&action=puestos"><i class="fa fa-users"></i><span>Puestos</span></a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-gamepad"></i><span>Juegos</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
@@ -219,5 +220,5 @@
 </html>
 <script>
    console.log("DOM fully loaded and parsed");
-      $("#page").load("index.php?controller=Juegos&action=home");
+      $("#page").load("index.php?controller=Juegos&action=homeAdmin");
 </script>

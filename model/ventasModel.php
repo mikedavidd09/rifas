@@ -71,6 +71,47 @@ class VentaModel extends ModeloBase{
         return $obj;
     }
 
+    public function getFacturadoRangoFecha($fechaInicio,$fechaFin){
+        $query = "SELECT coalesce(sum(v.total),0) as facturado
+        FROM ventas v
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return $obj->facturado;
+    }
+
+    public function getPagadoDiaRangoFecha($fechaInicio,$fechaFin){
+        $query = "SELECT coalesce(sum(n.premio),0) as pagado
+        FROM ventas v
+    INNER JOIN colaboradores col 
+        ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s 
+        ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j 
+        ON v.id_juego = j.id_juego
+    INNER JOIN numeros n 
+        ON v.id_venta = n.id_venta
+    INNER JOIN numeros_ganadores ng 
+        ON ng.numero = n.numero 
+        AND ng.id_sorteo = s.id_sorteo 
+        AND ng.fecha = v.fecha
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0
+
+        ";
+        $obj=$this->ejecutarSql($query);
+        return $obj->pagado;
+    }
+
+    public function getTotalUsuarios(){
+        $query = "SELECT count(col.id_colaborador) as vendedores
+        FROM colaboradores col inner join usuarios u  on u.id_colaborador = col.id_colaborador
+        inner join roles r on r.id_role = u.id_role
+        WHERE r.nombre = 'vendedor' and col.estado = 1";
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? $obj->vendedores : 0;
+    }
+
 }
 
 ?>

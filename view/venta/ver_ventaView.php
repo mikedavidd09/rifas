@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row mb-3 text-center" id="printableReceipt">
-                <p style="text-align: center; font-weight: bold; margin: 1px 0; font-size: 1.4em;">RIFAS EL REGALONes</p>
+                <p style="text-align: center; font-weight: bold; margin: 1px 0; font-size: 1.4em;">RIFAS EL REGALON</p>
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> RECIBO DE COPIA </p>
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> JUEGO: <?php echo $venta->juego; ?> </p> 
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> SORTEO: <?php echo $venta->sorteo; ?> </p> 
