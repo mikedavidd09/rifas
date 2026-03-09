@@ -27,8 +27,17 @@ class JuegosController extends ControladorBase
         $facturado_semanal = $ventaModel->getFacturadoRangoFecha($fechaLunes,$today);
         $pagado_semanal = $ventaModel->getPagadoDiaRangoFecha($fechaLunes,$today);
         $total_usuarios = $ventaModel->getTotalUsuarios();
+
+        $facturado_dia_By_juego = $ventaModel->getFacturadoRangoFechaByJuego($today,$today);
+        $pagado_dia_By_juego = $ventaModel->getPagadoDiaRangoFechaByJuego($today,$today);
     
-        $this->view('homeAdmin',array('facturado_dia'=>number_format($facturado_dia),'pagado_dia'=>$pagado_dia,'facturado_semanal'=>number_format($facturado_semanal),'pagado_semanal'=>number_format($pagado_semanal),'total_usuarios'=>$total_usuarios));
+        $this->view('homeAdmin',array('facturado_dia'=>number_format($facturado_dia),
+        'pagado_dia'=>number_format($pagado_dia),
+        'facturado_semanal'=>number_format($facturado_semanal),
+        'pagado_semanal'=>number_format($pagado_semanal),
+        'facturado_dia_By_juego'=>$facturado_dia_By_juego,
+        'pagado_dia_By_juego'=>$pagado_dia_By_juego,
+        'total_usuarios'=>$total_usuarios));
     }
 
     public function juegaMultisorteos(){

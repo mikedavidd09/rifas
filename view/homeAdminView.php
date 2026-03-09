@@ -7,6 +7,18 @@
                 <h4 class="alert-heading">Facturado del Dia</h4>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    <?php foreach($facturado_dia_By_juego as $item){ ?>
+                        <div class="alert alert-info">
+                            <a href="#" class="btn btn-xs btn-primary pull-right">C$ <?php echo number_format($item->facturado); ?></a>
+                            <strong>JUEGO:</strong> <?php echo $item->juego; ?>
+                        </div>
+                    <?php } ?>
+
+                    </div>
+</div>
             </div>
             <div class="card-footer">
             </div>
@@ -19,6 +31,13 @@
                 <h4 class="alert-heading">Pagado del Dia</h4>
             </div>
             <div class="card-body">
+                <?php foreach($pagado_dia_By_juego as $item){ ?>
+                    <div class="alert alert-danger">
+                        <a href="#" class="btn btn-xs btn-danger pull-right">C$ <?php echo number_format($item->pagado); ?></a>
+                        <strong>JUEGO:</strong> <?php echo $item->juego; ?>
+                    </div>
+                <?php } ?>
+
             </div>
             <div class="card-footer">
             </div>
@@ -193,6 +212,7 @@
 .text-faded {
     color: rgba(255, 255, 255, 0.7);
 }
+
 
 </style>
 
