@@ -71,7 +71,7 @@ class VentaModel extends ModeloBase{
         return $obj;
     }
 
-    public function getFacturadoRangoFecha($fechaInicio,$fechaFin,){
+    public function getFacturadoRangoFecha($fechaInicio,$fechaFin){
         $query = "SELECT coalesce(sum(v.total),0) as facturado
         FROM ventas v
         WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0

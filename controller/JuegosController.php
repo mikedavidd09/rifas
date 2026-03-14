@@ -65,7 +65,7 @@ class JuegosController extends ControladorBase
 
     public function juegaMultisorteos(){
         $login = $_SESSION['Login_View'];
-        $juego = new juegoModel($this->adapter);
+        $juego = new JuegoModel($this->adapter);
         $vendedor = $juego->getVendedor($login->id_colaborador);
         $juegos = $juego->getJuegos();
         $this->view('juegos/multiSorteos',array('juegos'=>$juegos,'vendedor'=>$vendedor));
@@ -74,7 +74,7 @@ class JuegosController extends ControladorBase
     public function jugar(){
         $id_juego = $_GET['juego'];
         $login = $_SESSION['Login_View'];
-        $juego  = new juegoModel($this->adapter);
+        $juego  = new JuegoModel($this->adapter);
         $vendedor = $juego->getVendedor($login->id_colaborador);
         $juego = $juego->getJuegoById($id_juego);
         $maxdigits = strlen(abs($juego->max)); 
@@ -87,7 +87,7 @@ class JuegosController extends ControladorBase
 
     public function getJuegoById(){
         $id_juego = $_POST['id_juego'];
-        $modelJuego  = new juegoModel($this->adapter);
+        $modelJuego  = new JuegoModel($this->adapter);
         $juego = $modelJuego->getJuegoById($id_juego);
         $maxdigits = strlen(abs($juego->max));
         $now = date('H:i:s');
@@ -164,7 +164,7 @@ class JuegosController extends ControladorBase
     }  
     }
 
-    function ver_ganadores(){
+    public function ver_ganadores(){
 
         return $this->view('ganadores/index',array());
     }
@@ -222,7 +222,7 @@ class JuegosController extends ControladorBase
     $sqlTot .= $sql_query;
     $sqlRec .= $sql_query;
     $now  = new DateTime();
-    $today = $now->format('Y:m:d');
+    $today = $now->format('Y-m-d');
 
     if(!empty($params['search']['value']) ) 
         $where_condition .= " WHERE (concat(col.nombre,' ',col.apellido) LIKE '%".$params['search']['value']."%'
