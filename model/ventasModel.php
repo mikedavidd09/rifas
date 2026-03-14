@@ -71,10 +71,20 @@ class VentaModel extends ModeloBase{
         return $obj;
     }
 
-    public function getFacturadoRangoFecha($fechaInicio,$fechaFin){
+    public function getFacturadoRangoFecha($fechaInicio,$fechaFin,){
         $query = "SELECT coalesce(sum(v.total),0) as facturado
         FROM ventas v
         WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return $obj->facturado;
+    }
+
+        public function getFacturadoByColaborador($fechaInicio,$fechaFin,$id_colaborador){
+        $query = "SELECT coalesce(sum(v.total),0) as facturado
+        FROM ventas v
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 and v.id_colaborador = $id_colaborador
         ";
     
         $obj=$this->ejecutarSql($query);
@@ -92,6 +102,23 @@ class VentaModel extends ModeloBase{
         WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 
         GROUP BY j.id_juego, j.nombre 
         ORDER BY facturado DESC   
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? [$obj] : $obj;
+    }
+
+        public function getFacturadoByJuegoByColaborador($fechaInicio,$fechaFin,$id_colaborador){
+        $query = "SELECT 
+        j.id_juego,
+        j.nombre as juego,
+        coalesce(sum(v.total),0) as facturado
+        FROM ventas v
+        INNER JOIN juegos j 
+            ON v.id_juego = j.id_juego
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0  and v.id_colaborador = $id_colaborador
+        GROUP BY j.id_juego, j.nombre 
+        ORDER BY facturado DESC
         ";
     
         $obj=$this->ejecutarSql($query);
@@ -120,6 +147,28 @@ class VentaModel extends ModeloBase{
         return $obj->pagado;
     }
 
+        public function getPagadoByColaborador($fechaInicio,$fechaFin,$id_colaborador){
+        $query = "SELECT coalesce(sum(n.premio),0) as pagado
+        FROM ventas v
+    INNER JOIN colaboradores col 
+        ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s 
+        ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j 
+        ON v.id_juego = j.id_juego
+    INNER JOIN numeros n 
+        ON v.id_venta = n.id_venta
+    INNER JOIN numeros_ganadores ng 
+        ON ng.numero = n.numero 
+        AND ng.id_sorteo = s.id_sorteo 
+        AND ng.fecha = v.fecha
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 and v.id_colaborador = $id_colaborador
+
+        ";
+        $obj=$this->ejecutarSql($query);
+        return $obj->pagado;
+    }
+
     public function getPagadoDiaRangoFechaByJuego($fechaInicio,$fechaFin){
         $query = "SELECT
         j.id_juego,
@@ -139,6 +188,33 @@ class VentaModel extends ModeloBase{
         AND ng.id_sorteo = s.id_sorteo 
         AND ng.fecha = v.fecha
         WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 
+        group by j.id_juego, j.nombre
+        order by pagado DESC
+
+        ";
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? [$obj] : $obj;
+    }
+
+        public function getPagadoByJuegoByColaborador($fechaInicio,$fechaFin,$id_colaborador){
+        $query = "SELECT
+        j.id_juego,
+        j.nombre as juego,
+        coalesce(sum(n.premio),0) as pagado
+        FROM ventas v
+    INNER JOIN colaboradores col 
+        ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s 
+        ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j 
+        ON v.id_juego = j.id_juego
+    INNER JOIN numeros n 
+        ON v.id_venta = n.id_venta
+    INNER JOIN numeros_ganadores ng 
+        ON ng.numero = n.numero 
+        AND ng.id_sorteo = s.id_sorteo 
+        AND ng.fecha = v.fecha
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0  and v.id_colaborador = $id_colaborador
         group by j.id_juego, j.nombre
         order by pagado DESC
 

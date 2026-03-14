@@ -50,9 +50,9 @@ class JuegoModel extends ModeloBase{
     }
 
     public function getVendedor($id_colaborador){
-        $sql = "SELECT concat(col.nombre,' ',col.apellido) as vendedor FROM colaboradores col WHERE col.id_colaborador = $id_colaborador";
+        $sql = "SELECT concat(col.nombre,' ',col.apellido)as nombre , col.telefono as telefono FROM colaboradores col WHERE col.id_colaborador = $id_colaborador";
         $result  = $this->ejecutarSql($sql);
-        return is_object($result) ? $result->vendedor : false;
+        return is_object($result) ? $result : false;
     }
 
 }

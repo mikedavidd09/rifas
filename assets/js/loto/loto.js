@@ -96,19 +96,21 @@ $('#addButton').on('click', function() {
     let numeroLength = numero.length;
     const numeroInput = $('#numero');
 
+        if (!monto) {
+        show_Notify("danger", "Error", "Monto no puede estar vacio");
+        return;
+    }
+
+
     if (numeroLength != venta.maxdigits) {
         show_Notify("danger", "Error", "El numero debe tener exactamente " + venta.maxdigits + " digitos");
         return;
     }
 
+
     monto = parseInt(monto);
     premio = parseInt(monto * venta.factor);
 
-
-    if (monto == 0) {
-        show_Notify("danger", "Error", "Monto no puede ser Cero");
-        return;
-    }
 
     if (monto > 100) {
         show_Notify("danger", "Error", "El monto no puede ser mayor a 100");
@@ -355,6 +357,7 @@ function showReceipt() {
             show_Notify("success", "Correcto", data.message);
 
             let vendedor = document.getElementById('vendedor').value;
+            let telefono = document.getElementById('telefono').value;
 
             let htmlContent = '';
 
@@ -369,7 +372,7 @@ data.sorteos.forEach(sorteo => {
         '<p class="text-center font-2 margin1">VENTA Nº: ' + sorteo.consecutivo + '</p>' +
         '<p class="text-center font-2 margin1">VENDEDOR: ' + vendedor + '</p>' +
         '<p class="text-center font-2 margin1">CLIENTE: ' + venta.nombre_cliente + '</p>' +
-        '<p class="text-center font-2 margin1">TELEFONO: 8325-4510</p>' +
+        '<p class="text-center font-2 margin1">TELEFONO:' + telefono + '</p>' +
         '<p class="text-center font-2 margin1">PUESTO: Leon</p>' +
         '<p class="text-center font-2 margin1">' + fecha.toLocaleDateString('es-ES', opciones) +'</p>' +
         '<p class="text-center font-2 margin1">' + ' ' + new Date().toLocaleTimeString() + '</p>' +

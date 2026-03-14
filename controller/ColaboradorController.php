@@ -5,7 +5,6 @@ class ColaboradorController extends ControladorBase{
     public $conectar;
     public $adapter;
     
-
     public function __construct(){
         parent::__construct();
         $this->conectar = new Conectar();
@@ -24,7 +23,6 @@ class ColaboradorController extends ControladorBase{
         $this->view("agregar_colaborador", ["roles" => $roles->getRoles($where),"comisiones" => $comisiones]);
     }
     
-
     public function listado()
     {
         $session =$_SESSION["Login_View"];
@@ -51,16 +49,16 @@ class ColaboradorController extends ControladorBase{
             $where_condition .= " OR col.codigo LIKE '%".$params['search']['value']."%'";
             $where_condition .= " OR col.cedula LIKE '%".$params['search']['value']."%'";
             $where_condition .= " OR col.telefono LIKE '%".$params['search']['value']."%'";
-          
+        
         }
 
         $sql_query = "SELECT col.id_colaborador,
-                             col.nombre,
-                             col.apellido,
-                             col.codigo,
-                             col.cedula,
-                             col.telefono
-                              FROM colaboradores col inner join usuarios u on col.id_colaborador=u.id_usuario inner join roles r on u.id_role=r.id_role";
+                            col.nombre,
+                            col.apellido,
+                            col.codigo,
+                            col.cedula,
+                            col.telefono
+                            FROM colaboradores col inner join usuarios u on col.id_colaborador=u.id_usuario inner join roles r on u.id_role=r.id_role";
         $sqlTot .= $sql_query;
         $sqlRec .= $sql_query;
 
@@ -91,7 +89,7 @@ class ColaboradorController extends ControladorBase{
     }
     public function ver_datos()
     {
-       
+    
         if (isset($_GET["obj"])) {
             $id_col = $_GET["obj"];
             $data_col = new colaboradorModel($this->adapter);
@@ -111,7 +109,8 @@ class ColaboradorController extends ControladorBase{
         }
     }
 
-    public function getObjetColaborador(){
+    public function getObjetColaborador($id_parent){
+
         $fecha   =date('Y/m/d', strtotime($_POST['fecha_ingreso']));
         $fechaEgreso = isset($_POST["fecha_egreso"])? date('Ymd' , strtotime($_POST["fecha_egreso"])) : date('Ymd');
 
@@ -126,6 +125,7 @@ class ColaboradorController extends ControladorBase{
         $colaborador->setTelefono($_POST["telefono"]);
         $colaborador->setIdSucursal(1);
         $colaborador->setIdComision($_POST["id_comision"]);
+        $colaborador->setIdParent($id_parent);
         $id = $colaborador->getIdNow('id_colaborador');
         $codigo = isset($_POST["codigo"])?'none':$colaborador->generarCodeColaborador($colaborador->nombre, $colaborador->apellido, $id);
         $colaborador->setCodigo($codigo);
@@ -156,13 +156,19 @@ class ColaboradorController extends ControladorBase{
         $save_c = false;
         $save_p = false;
         if (isset($_POST["nombre"])) {
-            $obj_c = $this->getObjetColaborador();
+
+            if(($_POST['id_role']== '1') || ($_POST['id_role']=='2'))
+            $id_parent = NULL;
+                else
+            $id_parent = $_SESSION['Login_View']->id_colaborador;
+
+            $obj_c = $this->getObjetColaborador($id_parent);
             $save_c = $obj_c->put($obj_c);
 
 			if($save_c==1)
-			 $obj_c->SetLogFile("Colaborador","NuevoColaborador",$obj_c->getNombre()." ".$obj_c->getApellido());
-		else
-			 $obj_c->SetLogFile("Error","NuevoColaborador",$save_c);
+			$obj_c->SetLogFile("Colaborador","NuevoColaborador",$obj_c->getNombre()." ".$obj_c->getApellido());
+		    else
+			$obj_c->SetLogFile("Error","NuevoColaborador",$save_c);
 
         }
         if (isset($_POST["usuario"])){
@@ -247,7 +253,7 @@ class ColaboradorController extends ControladorBase{
 
         if (isset($_GET["id"])) {
             $id = (int)$_GET["id"];
-            $obj_field = $this->getObjetColaborador();
+            $obj_field = $this->getObjetColaborador('none');
             $obj_field->setIdColaborador($id);
             $update = $obj_field->updateById($id, 'colaborador', $obj_field);
             $obj_user = $this->getObjetUser();

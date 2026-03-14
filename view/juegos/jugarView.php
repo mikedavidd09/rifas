@@ -47,6 +47,7 @@
 
                 <div class="row g-6">
                     <input type="hidden" id="vendedor" value="<?php echo $vendedor; ?>" />
+                    <input type="hidden" id="telefono" value="<?php echo $telefono; ?>" />
                     <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />

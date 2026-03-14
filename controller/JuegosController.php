@@ -17,7 +17,7 @@ class JuegosController extends ControladorBase
         return $this->view('home',array());
     }
 
-    public function homeAdmin(){
+    public function dashBoard(){
         $login = $_SESSION['Login_View'];
         $fechaLunes = date('Y-m-d', strtotime('monday this week'));
         $today = date('Y-m-d');
@@ -40,6 +40,29 @@ class JuegosController extends ControladorBase
         'total_usuarios'=>$total_usuarios));
     }
 
+        public function dashBoardVendedor(){
+        $login = $_SESSION['Login_View'];
+        $fechaLunes = date('Y-m-d', strtotime('monday this week'));
+        $today = date('Y-m-d');
+        $ventaModel = new VentaModel($this->adapter);
+        $facturado_dia = $ventaModel->getFacturadoByColaborador($today,$today,$login->id_colaborador);
+        $pagado_dia = $ventaModel->getPagadoByColaborador($today,$today,$login->id_colaborador);
+        $facturado_semanal = $ventaModel->getFacturadoByColaborador($fechaLunes,$today,$login->id_colaborador);
+        $pagado_semanal = $ventaModel->getPagadoByColaborador($fechaLunes,$today,$login->id_colaborador);
+    
+
+        $facturado_dia_By_juego = $ventaModel->getFacturadoByJuegoByColaborador($today,$today,$login->id_colaborador);
+        $pagado_dia_By_juego = $ventaModel->getPagadoByJuegoByColaborador($today,$today,$login->id_colaborador);
+    
+        $this->view('homeAdmin',array('facturado_dia'=>number_format($facturado_dia),
+        'pagado_dia'=>number_format($pagado_dia),
+        'facturado_semanal'=>number_format($facturado_semanal),
+        'pagado_semanal'=>number_format($pagado_semanal),
+        'facturado_dia_By_juego'=>$facturado_dia_By_juego,
+        'pagado_dia_By_juego'=>$pagado_dia_By_juego,
+        'total_usuarios'=>1));
+    }
+
     public function juegaMultisorteos(){
         $login = $_SESSION['Login_View'];
         $juego = new juegoModel($this->adapter);
@@ -55,10 +78,11 @@ class JuegosController extends ControladorBase
         $vendedor = $juego->getVendedor($login->id_colaborador);
         $juego = $juego->getJuegoById($id_juego);
         $maxdigits = strlen(abs($juego->max)); 
+
         if($id_juego == 3)
-            $this->view('juegos/juegaFecha',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
+            $this->view('juegos/juegaFecha',['juego'=>$juego,'vendedor'=>$vendedor->nombre,'telefono'=>$vendedor->telefono,'maxdigits'=>$maxdigits]);
         else
-            $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
+            $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor->nombre,'telefono'=>$vendedor->telefono,'maxdigits'=>$maxdigits]);
     }
 
     public function getJuegoById(){
@@ -100,10 +124,11 @@ class JuegosController extends ControladorBase
     }
 
     public function ver_numeros_ganadores(){
+        $today = date('Y-m-d');
         $juego = new JuegoModel($this->adapter);
         $juegos = $juego->getJuegos();
         foreach($juegos as $item)
-            $item->sorteos = $juego->getSorteos($item->id_juego);
+            $item->sorteos = $juego->getNumerosGanadores($item->id_juego,$today);
         return $this->view('ganadores/ver',['juegos'=>$juegos]);
     }
 
@@ -231,5 +256,16 @@ class JuegosController extends ControladorBase
         );
         echo json_encode($json_data);
     }
+
+    public function ViewMovimientos(){
+
+        return $this->view('movimientos/ver',array());
+    }
+
+    public function ViewCalculos(){
+        return $this->view('movimientos/calculos',array());
+    }
+
+
 }
 ?>

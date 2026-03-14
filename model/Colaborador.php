@@ -13,6 +13,7 @@ class Colaborador extends EntidadBase{
     public $fecha_ingreso;
     public $fecha_egreso;
     public $estado; 
+    public $id_parent;
     public function __construct($adapter){
         $table="colaboradores";
         parent::__construct($table,$adapter);
@@ -124,6 +125,15 @@ class Colaborador extends EntidadBase{
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    public function setIdParent($id_parent)
+    {
+        $this->id_parent = $id_parent;
+    }
+    public function getIdParent()
+    {
+        return $this->id_parent;
     }
     public function generarCodeColaborador($nombre,$apellido,$id){
         $codigo = "AC_".substr($nombre,0,1).substr($apellido,0,1).$id;

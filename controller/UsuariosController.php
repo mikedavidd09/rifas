@@ -148,7 +148,7 @@ class UsuariosController extends ControladorBase
         date_default_timezone_set('America/Managua');
         require_once 'core/Utils.php';
         $from = '08:00';
-        $to = '21:00';
+        $to = '23:58';
         $flat = true;
         $dateTest = new DateTime();
         $input = $dateTest->format('H:i');

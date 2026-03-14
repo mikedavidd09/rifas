@@ -116,7 +116,8 @@
                </div>
                <!-- Sidebar Menu-->    
                <ul class="sidebar-menu">
-                     <li><a class='link' href="index.php?controller=Juegos&action=homeAdmin"><i class="fa fa-home fa-lg"></i>Home</a></li>                  <li class ="treeview">
+                       <li><a class='link' href="index.php?controller=Juegos&action=dashBoard"><i class="fa fa-home fa-pie-chart"></i>Ventas</a></li>
+                     <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class='link' href="index.php?controller=colaborador&action=agregar"><i class="fa fa-circle-o"></i>Agregar</a></li>
@@ -140,7 +141,7 @@
                         <li><a class='link' href="index.php?controller=juegos&action=juegaMultisorteos"><i class="fa fa-circle-o"></i>Multisorteos</a></li>
                      </ul>
                   </li>
-                  <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-pie-chart"></i><span>Ventas</span></a></li>
+                    <li ><a class ='link'   href="index.php?controller=Venta&action=index"><i class="fa fa-usd"></i><span>Facturas</span></a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
@@ -150,6 +151,14 @@
                   </li>
                   <li ><a class ='link'   href="index.php?controller=juegos&action=sorteos"><i class="fa fa-calendar"></i><span>Sorteos</span></a></li>
                   <li ><a class ='link'   href="index.php?controller=juegos&action=bloquearNumero"><i class="fa fa-lock"></i><span>Bloquear Numeros</span></a></li>
+                  <li ><a class ='link'   href="index.php?controller=Juegos&action=ViewGastos"><i class="fa fa-money"></i><span>Gastos</span></a></li>
+                     <li class ="treeview">
+                     <a href="#"><i class="fa fa-credit-card"></i><span>Movimientos</span><i class="fa fa-angle-right"></i></a>
+                     <ul class="treeview-menu">
+                        <li><a class ='link'   href="index.php?controller=Juegos&action=ViewMovimientos"><i class="fa fa-circle-o"></i><span>Ver</span></a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=ViewCalculos"><i class="fa fa-circle-o"></i>Calculos</a></li>
+                     </ul>
+                  </li>
                   <li ><a class ='link'   href="index.php?controller=reports&action=viewReports"><i class="fa fa-list-alt"></i><span>Reportes</span></a></li>
                </ul>
             </section>
@@ -218,5 +227,5 @@
 </html>
 <script>
    console.log("DOM fully loaded and parsed");
-      $("#page").load("index.php?controller=Juegos&action=home");
+      $("#page").load("index.php?controller=Juegos&action=dashBoard");
 </script>
