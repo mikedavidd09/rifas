@@ -33,6 +33,8 @@ class VentaModel extends ModeloBase{
         v.id_venta,
         v.consecutivo,
         concat(col.nombre,' ',col.apellido) as vendedor,
+        col.telefono,
+        col.direccion,
         v.nombre as cliente,
 	    j.nombre as juego, 
         s.etiqueta as sorteo,
@@ -232,6 +234,23 @@ class VentaModel extends ModeloBase{
         return is_object($obj) ? $obj->vendedores : 0;
     }
 
+    public function getMontoVendidoBynumero($id_juego,$id_sorteo,$numero,$fecha){
+        $query = "SELECT SUM(monto) as monto from ventas v
+        inner join numeros n on v.id_venta = n.id_venta 
+        where n.numero = '$numero' 
+        and v.id_juego = $id_juego 
+        and v.id_sorteo = $id_sorteo 
+        and v.fecha = '$fecha' 
+        and v.borrado = 0";
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? $obj->monto : 0;
+    }   
+
+    public function getIdVentaByConsecutivo($consecutivo){
+        $query = "SELECT id_venta from ventas where consecutivo = '$consecutivo'";
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? $obj->id_venta : 0;
+    }
 }
 
 ?>

@@ -3,13 +3,29 @@
 <div class="row g-12">
     <div class="col-md-6">
         <div class="card">
+
             <div class="card-body">
-                <div id="botones" class="row mb-3 mb-custom">
+                <!-- Use flexbox so buttons stay horizontal when space allows -->
+                <div class="row mb-3 mb-custom">
+                    <div class="col-xs-4">
+                        <button id="random" class="btn btn-primary" data-toggle="modal" data-target="#randomModal">
+                            <i class="fa fa-random"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="linea" class="btn btn-primary" data-toggle="modal" data-target="#lineaModal">
+                            <i class="fa fa-signal"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="suerte" class="btn btn-primary" data-toggle="modal" data-target="#paresModal">
+                            <i class="fa fa-exchange"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="row mb-3 mb-custom">
-                    <hr class="my-4" style="border-top: 1px solid #979797ff !important" />
-                    <div class="col-md-6 col-xs-6">
+                    <div class="col-lg-12">
                         <select class="form-control" id="id_juego" name="id_juego">
                             <option value="0">Seleccione un juego</option>
                                 <?php foreach($juegos as $juego){ ?>
@@ -17,42 +33,42 @@
                                 <?php } ?>
                         </select>
                     </div>
-                    <div id= "addButtonContainer" class="col-md-6 col-xs-6"> 
-
-                    </div>
                 </div>
                 
+                <div id="sorteos">
+        
+                </div>
+
+                <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
                 <div class="row g-6">
                 
                     <input type="hidden" id="vendedor" value="<?php echo $vendedor->nombre; ?>" />
                     <input type="hidden" id="telefono" value="<?php echo $vendedor->telefono; ?>" />
                     <input type="hidden" id="direccion" value="<?php echo $vendedor->direccion; ?>" />
-                
+                 
                     <div class="col-md-6 col-xs-6">
-                        <label class="form-label" for="numero" id="rango">Apuesta :</label>
+                        <label class="form-label" for="numero" id="rango"> Numero:</label>
                         <input type="tel" id="numero" class="form-control onlynumber" /> 
                     </div>
 
-                    <div class="col-md-6 col-xs-6">
+                      <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Monto C$</label>
                         <input type="tel" id="monto" class="form-control onlynumber" />
                     </div>
                 </div>
                 <div class="row g-6">
 
-                    <div class="col-md-6 col-xs-6">
+                       <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
 
-                    <div id="mesContainer" class="col-md-6 col-xs-6">
-                    
+                    <div class="col-md-6 col-xs-6" style="margin-top: 10px;">
+                            <button id="addButton" class="btn btn-primary">
+                                <i class="fa fa-plus-circle"></i>
+                                <span class="align-middle">Agregar</span>
+                            </button>
                     </div>
-                
-                </div>
-                    <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
-                <div class="row g-6" id="sorteos">
-                
                 </div>
             </div>
         </div>
@@ -66,7 +82,7 @@
                     <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Apuesta</th>
+                            <th>Numero</th>
                             <th>Monto C$</th>
                             <th>Premio C$</th>
                             <th>Borrar</th>
@@ -270,159 +286,13 @@
     </div>
 </div>
 
-<!-- Modal  resgistrar numero aleatorios -->
-<div
-    id="randomFechaModal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="randomModalLabel"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title" id="randomModalLabel">Generar Fechas Aleatorio</h5>
-            </div>
-
-            <!-- Body -->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label class="form-label" for="montoFechaRandom">Monto C$</label>
-                                        <input type="tel" id="montoFechaRandom" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label class="form-label" for="cantidadFechaRandom">Cantidad de Aleatorios</label>
-                                        <input type="tel" id="cantidadFechaRandom" class="form-control onlynumber" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="addFechaRandom" type="button" class="btn btn-primary">Agregar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="assets/js/loto/loto.js"></script>
 
 <script>
-    function generarBotones(id_juego) {
-          let htmlBotones = ``;
-    // 1. Seleccionamos el contenedor
-    const contenedor = document.getElementById('botones');
-    const mesContainer = document.getElementById('mesContainer');
-    const addButtonContainer = document.getElementById('addButtonContainer');
-
-    // Verificamos que el elemento exista para evitar errores
-    if (contenedor) {
-        // 2. Limpiamos el contenido anterior
-        contenedor.innerHTML = '';
-        mesContainer.innerHTML = '';
-        addButtonContainer.innerHTML = '';
-
-        // 3. Definimos el HTML que queremos crear
-        // Nota: He separado la segunda fila ("fecha") para que sea HTML válido 
-        // (una fila no debe estar dentro de otra fila directamente).
-        // También cambié el ID del segundo botón "random" a "randomFecha" para evitar IDs duplicados.
-        if(id_juego == 0){
-            htmlAddButton = '';
-        }
-        else if(id_juego == 3){
-                htmlBotones = `
-                        <div class="col-xs-4">
-                            <button id="random" class="btn btn-primary" data-toggle="modal" data-target="#randomFechaModal">
-                                <i class="fa fa-random"></i>
-                            </button>
-                        </div>`;
-                htmlMes = `
-                        <label class="form-label" for="mes">Mes</label>
-                    <select class="form-control" id="mes" name="mes">
-                        <option value="0">Seleccione un mes</option>
-                        <option value="Ene">Enero</option>
-                        <option value="Feb">Febrero</option>
-                        <option value="Mar">Marzo</option>
-                        <option value="Abr">Abril</option>
-                        <option value="May">Mayo</option>
-                        <option value="Jun">Junio</option>
-                        <option value="Jul">Julio</option>
-                        <option value="Ago">Agosto</option>
-                        <option value="Sep">Septiembre</option>
-                        <option value="Oct">Octubre</option>
-                        <option value="Nov">Noviembre</option>
-                        <option value="Dic">Diciembre</option>
-                    </select>`;
-
-                    mesContainer.innerHTML = htmlMes;
-
-                    htmlAddButton = `
-                            <button
-                                id="addFecha"
-                                class="btn btn-primary form-control">
-                                <i class="fa fa-plus-circle"></i>
-                                <span class="align-middle"> Fecha</span>
-                            </button>`;
-
-        }
-        else {
-            mesContainer.innerHTML = '';
-                htmlBotones = `
-                <div class="col-xs-4">
-                    <button id="random" class="btn btn-primary" data-toggle="modal" data-target="#randomModal">
-                        <i class="fa fa-random"></i>
-                    </button>
-                </div>
-                <div class="col-xs-4">
-                    <button id="linea" class="btn btn-primary" data-toggle="modal" data-target="#lineaModal">
-                        <i class="fa fa-signal"></i>
-                    </button>
-                </div>
-                <div class="col-xs-4">
-                    <button id="suerte" class="btn btn-primary" data-toggle="modal" data-target="#paresModal">
-                        <i class="fa fa-exchange"></i>
-                    </button>
-                </div>
-            </div> `;
-
-            htmlAddButton = `
-                            <button
-                                id="addButton"
-                                class="btn btn-primary form-control">
-                                <i class="fa fa-plus-circle"></i>
-                                <span class="align-middle">Numero</span>
-                            </button>`;
-            }
-        // 4. Insertamos el HTML en el contenedor
-        contenedor.innerHTML = htmlBotones;
-         addButtonContainer.innerHTML = htmlAddButton;
-    } else {
-        console.error('No se encontró el div con id="botones"');
-    }
-}
-
 
     document.getElementById("id_juego").addEventListener("change", function() {
         document.getElementById('numero').value = '';
 
-        generarBotones(this.value);
 
         $.ajax({
             url: "index.php?controller=Juegos&action=getJuegoById",
@@ -434,7 +304,7 @@
                 
                 document.getElementById('numero').maxLength = maxdigits;
                 document.getElementById('numero').placeholder = juego.min.padStart(maxdigits, '0');
-             
+                console.log(sorteos);
                 window.venta = {
                 id_juego: parseInt(juego.id_juego),
                 nombre_juego: juego.nombre,
@@ -448,25 +318,21 @@
                 total: 0,
                 premio: 0
             };
+            console.log(venta);
 
             let html = '';
-            if(sorteos)
             sorteos.forEach(function(sorteo){
-        
-            html +='<div class="col-md-3 col-xs-6 col-sm-3">';
+            html +='<div class="row g-6"> ';
+            html +='<div class="col-md-3">';
             html +='<lavel class="form-label" for="'+sorteo.etiqueta+'">'+sorteo.etiqueta+'</lavel>';
             html +='</div>';
-            html +='<div class="col-md-3 col-xs-6 col-sm-3">';
+            html +='<div class="col-md-3">';
             html +='<div class="toggle"><label><input type="checkbox" name="checkSorteos[]" value="'+sorteo.id_sorteo+'"><span class="button-indecator"></span></label></div>';
             html +='</div>';
-
+            html +='</div>';
             document.getElementById('sorteos').innerHTML = html;
 
             });
-            else{
-                document.getElementById('sorteos').innerHTML = 'No hay sorteos disponibles';
-            }
-                updateTable();
         }
         });
     });

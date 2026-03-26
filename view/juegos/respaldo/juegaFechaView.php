@@ -15,6 +15,7 @@
                             <i class="fa fa-random"></i>
                         </button>
                     </div>
+                
                 </div>
 
                 <hr class="my-4" style="border-top: 1px solid #7b7a7aff !important" />
@@ -24,10 +25,8 @@
                     <input type="hidden" id="telefono" value="<?php echo $vendedor->telefono; ?>" />
                     <input type="hidden" id="direccion" value="<?php echo $vendedor->direccion; ?>" />
                     <div class="col-md-6 col-xs-6">
-
-                    <label class="form-label" for="dia">Dia</label>
-                        <input type="tel" id="numero" name="numero" class="form-control onlynumber"  maxlength="<?php echo $maxdigits; ?>" />
-                       
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
                     <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="monto">Monto C$</label>
@@ -36,13 +35,7 @@
                 </div>
                 <div class="row g-6">
                     <div class="col-md-6 col-xs-6">
-
-                     <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" />
-                    
-                    </div>
-                    <div class="col-md-6 col-xs-6">
-                            <label class="form-label" for="mes">Mes</label>
+                        <label class="form-label" for="numero">Mes</label>
                     <select class="form-control" id="mes" name="mes">
                         <option value="0">Seleccione un mes</option>
                         <option value="Ene">Enero</option>
@@ -59,10 +52,14 @@
                         <option value="Dic">Diciembre</option>
                     </select>
                     </div>
+                    <div class="col-md-6 col-xs-6">
+                        <label class="form-label" for="monto">Dia</label>
+                        <input type="tel" id="dia" nae="dia" class="form-control onlynumber"  maxlength="<?php echo $maxdigits; ?>" />
+                    </div>
                 </div>
                 <div class="row g-6">
 
-                    <div class="col-md-6 col-xs-6" style="margin-top: 10px;" id="addButtonContainer">
+                    <div class="col-md-6 col-xs-6" style="margin-top: 10px;">
                             <button
                                 id="addFecha"
                                 class="btn btn-primary">
@@ -123,7 +120,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="randomModalLabel">Generar Fechas Aleatorio</h5>
+                <h5 class="modal-title" id="randomModalLabel">Registrar Aleatorio</h5>
             </div>
 
             <!-- Body -->
@@ -134,14 +131,14 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label class="form-label" for="montoFechaRandom">Monto C$</label>
-                                        <input type="tel" id="montoFechaRandom" class="form-control onlynumber" />
+                                        <label class="form-label" for="montoRandom">Monto C$</label>
+                                        <input type="tel" id="montoRandom" class="form-control onlynumber" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label class="form-label" for="cantidadFechaRandom">Cantidad de Aleatorios</label>
-                                        <input type="tel" id="cantidadFechaRandom" class="form-control onlynumber" />
+                                        <label class="form-label" for="cantidadRandom">Cantidad de Aleatorios</label>
+                                        <input type="tel" id="cantidadRandom" class="form-control onlynumber" />
                                     </div>
                                 </div>
                             </div>
@@ -201,5 +198,50 @@
         total: 0,
         premio: 0
     };
+
+    $('#addFechaRandom').on('click', function() {
+        let montoRandom = $('#montoRandom').val().trim();
+        let cantidadRandom = $('#cantidadRandom').val().trim();
+        if (!montoRandom || !cantidadRandom) {
+            show_Notify("danger", "Error", "Todos los campos son obligatorios");
+            return;
+        }
+        montoRandom = parseInt(montoRandom);
+        cantidadRandom = parseInt(cantidadRandom);
+        if (cantidadRandom < 1 || cantidadRandom > 31) {
+            show_Notify("danger", "Error", "Solo se pueden agregar numeros entre 1 y 31");
+            return;
+        }
+        if (montoRandom == 0) {
+            show_Notify("danger", "Error", "Monto no puede ser Cero");
+            return;
+        }
+        const meses = ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        let index =0;
+        let diaRandom =0;
+        let fechaRandom = '';
+        let numerosTemp = [];
+
+        for (let i = 0; i < cantidadRandom; i++) {
+            do {
+                index = Math.floor(Math.random() * 12);
+                console.log(index);
+                diaRandom = Math.floor(Math.random() * 31) + 1;
+                fechaRandom = diaRandom + ' ' + meses[index];
+                
+            } while (numerosTemp.find(item => item.numero === fechaRandom));
+            numerosTemp.push({
+                numero: fechaRandom,
+                monto: montoRandom,
+                premio: montoRandom * venta.factor,
+            });
+        }
+        venta.numeros.push(...numerosTemp);
+        show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " numeros aleatorios");
+        updateTable();
+
+        $('#randomModal').modal('hide');
+    });
+
 
 </script>

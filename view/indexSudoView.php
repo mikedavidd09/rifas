@@ -116,7 +116,8 @@
                </div>
                <!-- Sidebar Menu-->    
                <ul class="sidebar-menu">
-                  <li><a class='link' href="index.php?controller=Juegos&action=dashBoard"><i class="fa fa-home fa-pie-chart"></i>Ventas</a></li>
+                  <li><a class='link' href="index.php?controller=Juegos&action=dashBoard"><i class="fa fa-home fa-pie-chart"></i><span>Ventas</span></a></li>
+                  <li><a class='link' href="index.php?controller=Juegos&action=ViewmontoLimite"><i class="fa fa-line-chart"></i><span> Monto Limite</span></a></li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
@@ -126,7 +127,7 @@
                   </li>
                   <li ><a class ='link'   href="index.php?controller=Venta&action=puestos"><i class="fa fa-users"></i><span>Puestos</span></a></li>
                   <li class ="treeview">
-                     <a href="#"><i class="fa fa-gamepad"></i><span>Juegos</span><i class="fa fa-angle-right"></i></a>
+                     <a href="#"><i class="fa fa-gamepad"></i><span>Jugar</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=1"><i class="fa fa-circle-o"></i>Diaria</a></li>
                         <li><a class='link' href="index.php?controller=juegos&action=jugar&juego=2"><i class="fa fa-circle-o"></i>Juega 3</a></li>
@@ -147,6 +148,7 @@
                      <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class ='link'   href="index.php?controller=Juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=borrar_numeros_ganadores"><i class="fa fa-circle-o"></i><span>Borrar</span></a></li>
                         <li><a class='link' href="index.php?controller=Juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
                      </ul>
                   </li>

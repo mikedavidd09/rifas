@@ -46,14 +46,14 @@
                 </div>
 
                 <div class="row g-6">
-                    <input type="hidden" id="vendedor" value="<?php echo $vendedor->nombre; ?>" />
+                        <input type="hidden" id="vendedor" value="<?php echo $vendedor->nombre; ?>" />
                     <input type="hidden" id="telefono" value="<?php echo $vendedor->telefono; ?>" />
                     <input type="hidden" id="direccion" value="<?php echo $vendedor->direccion; ?>" />
                     <div class="col-md-6 col-xs-6">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" />
                     </div>
-                     <div class="col-md-6 col-xs-6" id="addButtonContainer">
+                     <div class="col-md-6 col-xs-6">
                         <button id="addButton" class="btn btn-primary mb-custom">
                             <i class="fa fa-plus-circle"></i>
                             <span class="align-middle">Agregar</span>
@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label class="form-label" for="finalLinea">Final</label>
+                                        <label class="form-label" for="finalLinea">Inicio</label>
                                         <input type="tel" id="finalLinea" class="form-control onlynumber" />
                                     </div>
                                 </div>

@@ -80,9 +80,9 @@ class JuegosController extends ControladorBase
         $maxdigits = strlen(abs($juego->max)); 
 
         if($id_juego == 3)
-            $this->view('juegos/juegaFecha',['juego'=>$juego,'vendedor'=>$vendedor->nombre,'telefono'=>$vendedor->telefono,'maxdigits'=>$maxdigits]);
+            $this->view('juegos/juegaFecha',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
         else
-            $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor->nombre,'telefono'=>$vendedor->telefono,'maxdigits'=>$maxdigits]);
+            $this->view('juegos/jugar',['juego'=>$juego,'vendedor'=>$vendedor,'maxdigits'=>$maxdigits]);
     }
 
     public function getJuegoById(){
@@ -93,11 +93,11 @@ class JuegosController extends ControladorBase
         $now = date('H:i:s');
         $sorteos = $modelJuego->getSorteosDisponibles($id_juego,$now);
         $arraySorteos = [];
+        if($sorteos)
         foreach($sorteos as $item)
             $arraySorteos[] = (int)$item->id_sorteo;
         echo json_encode(['juego'=>$juego,'maxdigits'=>$maxdigits,'sorteos'=>$sorteos,'arraySorteos'=>$arraySorteos]);
     }
-
 
     public function sorteos(){
 
@@ -121,6 +121,13 @@ class JuegosController extends ControladorBase
         
         }
         return $this->view('ganadores/agregar',['juegos'=>$juegos]);
+    }
+
+    public function borrar_numeros_ganadores(){
+        $today = date('Y-m-d');
+        $juego = new JuegoModel($this->adapter);
+        $juegos = $juego->getAllNumerosGanadores($today);
+        $this->view('ganadores/borrar',['juegos'=>$juegos]);
     }
 
     public function ver_numeros_ganadores(){
@@ -266,6 +273,33 @@ class JuegosController extends ControladorBase
         return $this->view('movimientos/calculos',array());
     }
 
+   public function ViewmontoLimite(){
+    $juegoMdl = new JuegoModel($this->adapter);
+    $juegos = $juegoMdl->getJuegos();
+    $this->view('juegos/montoLimite',['juegos'=>$juegos]);
+   }
+   public function guardarMontoLimite(){
+    if(isset($_POST['id_juego']) && isset($_POST['monto_limite'])){
+        $id_juego = $_POST['id_juego'];
+        $monto_limite = $_POST['monto_limite'];
+        $juego = new Juego($this->adapter);
+        $juego->setAllNone();
+        $juego->setIdJuego($id_juego);
+        $juego->setMontoLimite($monto_limite);
+       
+        $save = $juego->updateById($id_juego,'juego',$juego);
+    
+        if($save){
+            echo json_encode(['status'=>true,'message'=>'Se actualizo el monto limite correctamente']);
+        }else{
+            echo json_encode(['status'=>false,'message'=>'Error al actualizar el monto limite']);
+        }
+    }
+    else{
+        echo json_encode(['status'=>false,'message'=>'Error, variables no definidas']);
+    }
+
+   }
 
 }
 ?>

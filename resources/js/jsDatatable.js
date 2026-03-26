@@ -6,6 +6,7 @@ function DatatableJs(selector,url,col,colHiperVinc) {
         filtere='';
     }
 
+
     if ( $.fn.DataTable.isDataTable(selector) ) {
         $(selector).DataTable().destroy();
     } else {
@@ -57,6 +58,18 @@ function DatatableJs(selector,url,col,colHiperVinc) {
                             dt.ajax.reload();
                         }
                     },
+                    {
+                        text: '<i class="fa fa-calendar"">Filtrar por fecha</i>',
+                        action: function ( e, dt, node, config ) {
+                            var fecha = $("#fecha").val();
+                            if(fecha == undefined){
+                                alertify.error('Se debe seleccionar una fecha');
+                                return;
+                            }
+                            var url = "index.php?controller=Venta&action=getVentas&fecha="+fecha;
+                            dt.ajax.url(url).load();
+                        }
+                    }
                 ],
                 "columnDefs": colHiperVinc
             });

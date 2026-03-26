@@ -117,6 +117,7 @@
                <!-- Sidebar Menu-->    
                <ul class="sidebar-menu">
                        <li><a class='link' href="index.php?controller=Juegos&action=dashBoard"><i class="fa fa-home fa-pie-chart"></i>Ventas</a></li>
+                        <li><a class='link' href="index.php?controller=Juegos&action=ViewmontoLimite"><i class="fa fa-line-chart"></i><span> Monto Limite</span></a></li>
                      <li class ="treeview">
                      <a href="#"><i class="fa fa-user"></i><span>Colaboradores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">

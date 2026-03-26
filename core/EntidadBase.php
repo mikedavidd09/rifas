@@ -69,7 +69,7 @@ class EntidadBase
     public function updateById($id, $class, $object_instance)
     {
         $data_src = $this->prepareField($object_instance, 'update');
-   
+
         $query = $this->db->query("UPDATE $this->table SET $data_src WHERE id_$class=$id");
         return $query;
     }
@@ -117,11 +117,25 @@ class EntidadBase
     public function put($object_instance)
     {
         $data_src = $this->prepareField($object_instance, '');
-        //print_r("INSERT INTO $this->table VALUES('0$data_src')");
+       // print_r("INSERT INTO $this->table VALUES('0$data_src')");
         $result = $this->db->query("INSERT INTO $this->table VALUES('0$data_src')");
         $result = $this->db->error !=''?$this->db->error:$result;
         return $result;
     }
+
+    public function storage($object_instance)
+    {
+    $data_src = $this->prepareField($object_instance, '');
+    $result = $this->db->query("INSERT INTO $this->table VALUES('0$data_src')");
+
+    if ($this->db->error != '') {
+        return ['success' => false, 'error' => $this->db->error];
+    }
+
+    $last_id = $this->db->insert_id; // Para MySQLi
+    return ['success' => true, 'id' => $last_id];
+    }
+
 
     public function prepareField($object_instance, $crud)
     {

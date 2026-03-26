@@ -10,8 +10,8 @@
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> VENTA Nº: <?php echo $venta->consecutivo; ?> </p>
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> VENDEDOR: <?php echo $venta->vendedor; ?></p> 
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> CLIENTE: <?php echo $venta->cliente; ?></p> 
-                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> TELEFONO: 8325-4510</p> 
-                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> PUESTO: Leon</p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> TELEFONO:<?php echo $venta->telefono ?></p> 
+                <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> PUESTO: <?php echo $venta->direccion ?></p> 
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> <?php echo $fecha; ?> </p> 
                 <p style="text-align: center; margin: 1px 0; font-size: 1.2em;"> <?php echo $hora; ?> </p>
                 <div classs="table-responsive text-nowrap">

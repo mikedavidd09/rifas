@@ -19,8 +19,6 @@ class VentaController extends ControladorBase
 
     public function getVentas(){
 
-
-
     $session = $_SESSION['Login_View'];
     $params = $columns = $totalRecords = $data = array();
 
@@ -28,26 +26,26 @@ class VentaController extends ControladorBase
 
     $columns = array(
             0 => 'v.id_venta',
-            1 => 'v.nombre',
-            2 => 'j.nombre',
-            3 => 's.etiqueta',
-            4 => 'v.consecutivo',
-            5 => 'concat(col.nombre," ",col.apellido)',
+            1 => 'v.consecutivo',
+            2 => 'concat(col.nombre," ",col.apellido)',
+            3 => 'v.nombre',
+            4 => 'j.nombre',
+            5 => 's.etiqueta',
             6 => 'v.fecha',
             7 => 'v.hora',
             8 => 'v.total',
-            9 => 'borrado'
+            9=>'borrado'
         );
 
     $where_condition = $sqlTot = $sqlRec = "";
 
     $sql_query = "SELECT 
     v.id_venta,
+    v.consecutivo,
+    concat(col.nombre,' ',col.apellido) as vendedor,
     v.nombre,
 	j.nombre, 
     s.etiqueta,
-    v.consecutivo,
-    concat(col.nombre,' ',col.apellido) as vendedor,
     v.fecha,
     v.hora,
     v.total,
@@ -61,7 +59,8 @@ class VentaController extends ControladorBase
     INNER JOIN roles r on u.id_role = r.id_role";
     $sqlTot .= $sql_query;
     $sqlRec .= $sql_query;
-
+    $now  = new DateTime();
+    $today = $now->format('Y:m:d');
 
     if($params['search']['value'])
 
@@ -85,14 +84,6 @@ class VentaController extends ControladorBase
                                 OR v.total LIKE '%".$params['search']['value']."%' 
                                 OR v.id_venta LIKE '%".$params['search']['value']."%' $borrado)";
                                 }
-            $now  = new DateTime();
-            
-
-            if(isset($_GET['fecha']) && $_GET['fecha'] != '')
-                $today = $_GET['fecha'];
-            else 
-                $today = $now->format('Y:m:d');
-
         $where_condition.= ($session->role == "sudo"  || $session->role == "admin") ?  " and fecha = '$today' ":" and fecha = '$today' and col.id_colaborador = ".$session->id_colaborador;
         $sqlTot .= $where_condition;
         $sqlRec .= $where_condition;
@@ -128,67 +119,53 @@ class VentaController extends ControladorBase
 
         if(count($sorteos_ids) == 0){
 
-            $sorteos = $sorteoModel->getSorteo($data['id_juego'],$hora);
+        $sorteos = $sorteoModel->getSorteo($data['id_juego'],$hora);
 
-            if($sorteos == null){
-                echo json_encode(["status"=>false,"data"=>"","message"=>"Error, no se puede guardar el sorteo, fuera de horario! = ".$now->format('Y-m-d H:i:s')]);
-                return;
-            }
-        }else
-            $sorteos = $sorteoModel->getSorteoIds($data["id_juego"],$sorteos_ids);
+        if($sorteos == null){
+            echo json_encode(["status"=>false,"data"=>"","message"=>"Error, no se puede guardar el sorteo, fuera de horario! = ".$now->format('Y-m-d H:i:s')]);
+        return;
+        }
+    }else
+        $sorteos = $sorteoModel->getSorteoIds($data["id_juego"],$sorteos_ids);
 
-            $venta = new Venta($this->adapter);
-            $ventaModel = new VentaModel($this->adapter);
-            $baseTime = str_replace('.', '', microtime(true));
-            $juegoModel = new JuegoModel($this->adapter);
-            $montoLimite = $juegoModel->getMontoLimite($data["id_juego"]);
-            $i=1;
-            foreach($sorteos as $sorteo){
 
-                foreach($data["numeros"] as $item){
-                    $monto = $ventaModel->getMontoVendidoBynumero($data["id_juego"],$sorteo->id_sorteo,$item ['numero'],date('Y-m-d'));
-                    if($montoLimite > 0 && $monto + $item['monto'] > $montoLimite){
-                        echo json_encode(["status"=>false,"data"=>"","message"=>"Error, No se puede guardar, monto limite superado"]);
-                        return;
-                    }
-                }
+        $venta = new Venta($this->adapter);
 
-                $consecutivo = $baseTime . str_pad($i, 1, '0', STR_PAD_LEFT);
-                $sorteo->consecutivo = $consecutivo;
-                $venta->setIdJuego($data["id_juego"]);
-                $venta->setNombre($data["nombre_cliente"]);
-                $venta->setFecha(date('Y-m-d'));
-                $venta->setHora(date('H:i:s'));
-                $venta->setConsecutivo($consecutivo);
-                $venta->setIdColaborador($_SESSION['Login_View']->id_colaborador);
-                $venta->setIdSorteo($sorteo->id_sorteo);
-                $venta->setTotal($data["total"]);
-                $venta->setPagado('0');
-                $venta->setBorrado('0');
+        $baseTime = time();
+        $i=1;
+        foreach($sorteos as $sorteo){
 
-                $save = $venta->storage($venta);
+        $consecutivo = $baseTime . str_pad($i, 1, '0', STR_PAD_LEFT);
+        $sorteo->consecutivo = $consecutivo;
+        $venta->setIdJuego($data["id_juego"]);
+        $venta->setNombre($data["nombre_cliente"]);
+        $venta->setFecha(date('Y-m-d'));
+        $venta->setHora(date('H:i:s'));
+        $venta->setConsecutivo($consecutivo);
+        $venta->setIdColaborador($_SESSION['Login_View']->id_colaborador);
+        $venta->setIdSorteo($sorteo->id_sorteo);
+        $venta->setTotal($data["total"]);
+        $venta->setPagado('0');
+        $venta->setBorrado('0');
 
-                if ($save['success'] === false) {
-                    echo json_encode(["status" => false,"message" => "Error 201, no se pudo guardar el registro: " . $save['error']]);
-                    return;
-                }
-                $sorteo->id_venta = $save['id'];
-                    $numero = new Numero($this->adapter);
+        $save = $venta->put($venta);
 
-                    foreach($data["numeros"] as $item){
-                        $numero->setIdVenta($sorteo->id_venta);
-                        $numero->setNumero($item ['numero']);
-                        $numero->setMonto($item ['monto']);
-                        $numero->setPremio($item ['premio']);
-                        $saveNumero = $numero->storage($numero);
-                        if($saveNumero['success'] == false){
-                            echo json_encode(["status" => false,"message" => "Error 202, no se pudo guardar el registro:sorteo=" . $sorteo->etiqueta ." ". $saveNumero['error']]);
-                            return;
-                        }
-                    }
-                $i++;
-            }
-        echo json_encode(["status"=>true,"sorteos"=>$sorteos,"message"=>"Exito, se guardo correctamente!"]);    
+        $id_venta = $venta->getIdEnd('id_venta');
+        
+        $numero = new Numero($this->adapter);
+
+        foreach($data["numeros"] as $item){
+        
+            $numero->setIdVenta($id_venta);
+            $numero->setNumero($item ['numero']);
+            $numero->setMonto($item ['monto']);
+            $numero->setPremio($item ['premio']);
+            $save = $numero->put($numero);
+        }
+        $i++;
+    }
+        if($save == 1)
+            echo json_encode(["status"=>true,"consecutivo"=>$consecutivo,"sorteos"=>$sorteos,"data"=>"","message"=>"Exito, se guardo correctamente!"]);
     }
 
     public function ver_venta(){

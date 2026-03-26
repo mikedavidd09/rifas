@@ -4,11 +4,9 @@ function updateTable() {
 
     venta.numeros.sort((a, b) => a.numero - b.numero);
 
-    let total = 0;
     venta.numeros.forEach((item, index) => {
-        total += parseInt(item.monto);
 
-    let newRow = $(`
+    const newRow = $(`
     <tr class="text-center">
         <td style="font-size: 1.4em;"><span class="badge bg-info rounded-pill">${index + 1}</span></td>
         <td style="font-size: 1.4em;">${item.numero}</td>
@@ -24,16 +22,6 @@ function updateTable() {
 
 tableBody.append(newRow);
     });
-    let totalRow = $(`
-    <tr class="text-center">
-        
-        <td colspan="5" style="font-size: 1.4em;">Total: C$ ${total}</td>
-    
-    </tr>
-`);
-
-
-tableBody.append(totalRow);
 }
 
 function deleteRow(button) {
@@ -43,29 +31,27 @@ function deleteRow(button) {
     updateTable();
 }
 
-$("#addButtonContainer").on('click', '#addFecha', function() {
+$("#addFecha").on('click', function() {
     let mes = $('#mes').val().trim();
-    let dia = $('#numero').val().trim();
+    let dia = $('#dia').val().trim();
     let monto = $('#monto').val().trim();
 
-    if (!mes || !dia || !monto) {
+    let length = dia.length;
+
+    if (!mes || !dia) {
         show_Notify("danger", "Error", "Todos los campos son obligatorios");
         return;
     }
 
     dia = parseInt(dia);
 
+
     if (dia < 1 || dia > 31) {
         show_Notify("danger", "Error", "Dia no puede ser menor a 1 y no puede ser mayor a 31");
         return;
     }
 
-    if(mes == '0'){
-        show_Notify("danger", "Error", "Debes Seleccionar un mes");
-        return;
-    }
-
-    let numero = String(dia) + ' '+ String(mes);
+    const numero = String(dia) + ' '+ String(mes);
 
     let montomaximo = venta.numeros.reduce((total, item) => {
         return item.numero === numero ? total + item.monto : total;
@@ -98,12 +84,11 @@ $("#addButtonContainer").on('click', '#addFecha', function() {
 $('#numero').on('keyup', function() {
     const numero = $('#numero').val()
     if (numero.length == venta.maxdigits) {
-        $('#monto').select().focus();
-    
+        $('#monto').focus();
     }
 });
 
-$("#addButtonContainer").on('click', '#addButton', function() {
+$('#addButton').on('click', function() {
     venta.nombre = $('#nombre').val().trim();
     let numero = $('#numero').val().trim();
     let numeroInt = parseInt(numero, 10);
@@ -116,43 +101,46 @@ $("#addButtonContainer").on('click', '#addButton', function() {
         return;
     }
 
+
     if (numeroLength != venta.maxdigits) {
         show_Notify("danger", "Error", "El numero debe tener exactamente " + venta.maxdigits + " digitos");
         return;
     }
 
 
-  const existingItem = venta.numeros.find(
-    (item) => item.numero === numero
-  );
     monto = parseInt(monto);
     premio = parseInt(monto * venta.factor);
 
-    if(monto > 100){
-        show_Notify("danger", "Error", "El monto no puede ser mayor a 100 C$");
+
+    if (monto > 100) {
+        show_Notify("danger", "Error", "El monto no puede ser mayor a 100");
         return;
     }
 
-  if (existingItem) {
-      if (monto + parseInt(existingItem.monto) > 100) {
-        show_Notify("danger", "Error", "El monto no puede superar los 100 C$");
+    let sumamonto = 0;
+
+
+    const montomaximo = venta.numeros.reduce((total, item) => {
+        return item.numero === numero ? total + item.monto : total;
+    }, 0);
+
+    if (montomaximo + monto > 100) {
+        show_Notify("danger", "Error", "El monto no puede ser mayor a 100");
         return;
     }
-    existingItem.monto += monto;
-    existingItem.premio = parseInt(existingItem.monto * venta.factor);
-  } else {
-    
+
     venta.numeros.push({
-      numero,
-      monto,
-      premio
+        numero,
+        monto,
+        premio
     });
-  }
 
     updateTable();
 
     $('#numero').val('');
+    $('#monto').val('');
     numeroInput.focus();
+
 
 });
 
@@ -305,55 +293,6 @@ $('#addparNumber').on('click', function() {
     $('#paresModal').modal('hide');
 });
 
-    $('#addFechaRandom').on('click', function() {
-        let montoFechaRandom = $('#montoFechaRandom').val().trim();
-        let cantidadFechaRandom = $('#cantidadFechaRandom').val().trim();
-
-      
-
-        if (!montoFechaRandom || !cantidadFechaRandom) {
-            show_Notify("danger", "Error", "Todos los campos son obligatorios ");
-            return;
-        }
-        montoRandom = parseInt(montoFechaRandom);
-        cantidadRandom = parseInt(cantidadFechaRandom);
-
-          console.log("montoRandom"+montoRandom + " cantidadRandom="+cantidadRandom);
-
-        if (cantidadRandom < 1 || cantidadRandom > 31) {
-            show_Notify("danger", "Error", "Solo se pueden agregar numeros entre 1 y 31");
-            return;
-        }
-        if (montoRandom == 0) {
-            show_Notify("danger", "Error", "Monto no puede ser Cero");
-            return;
-        }
-        const meses = ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-        let index =0;
-        let diaRandom =0;
-        let fechaRandom = '';
-        let numerosTemp = [];
-
-        for (let i = 0; i < cantidadRandom; i++) {
-            do {
-                index = Math.floor(Math.random() * 12);
-                console.log(index);
-                diaRandom = Math.floor(Math.random() * 31) + 1;
-                fechaRandom = diaRandom + ' ' + meses[index];
-                
-            } while (numerosTemp.find(item => item.numero === fechaRandom));
-            numerosTemp.push({
-                numero: fechaRandom,
-                monto: montoRandom,
-                premio: montoRandom * venta.factor,
-            });
-        }
-        venta.numeros.push(...numerosTemp);
-        show_Notify("success", "Correcto", "Se agregaron " + cantidadRandom + " fechas aleatorios");
-        updateTable();
-
-        $('#randomModal').modal('hide');
-    });
 
 $('#deleteAll').on('click', function() {
     venta.numeros = [];
@@ -431,7 +370,7 @@ data.sorteos.forEach(sorteo => {
     htmlContent += '<p class="text-center text-bold font-4 margin1">RIFAS EL REGALON</p>' +
         '<p class="text-center font-2 margin1">JUEGO: ' + venta.nombre_juego + '</p>' +
         '<p class="text-center font-2 margin1">SORTEO: ' + sorteo.etiqueta + '</p>' +
-        '<p class="text-center font-2 margin1">VENTA Nº: ' + sorteo.id_venta + '</p>' +
+        '<p class="text-center font-2 margin1">VENTA Nº: ' + sorteo.consecutivo + '</p>' +
         '<p class="text-center font-2 margin1">VENDEDOR: ' + vendedor + '</p>' +
         '<p class="text-center font-2 margin1">CLIENTE: ' + venta.nombre_cliente + '</p>' +
         '<p class="text-center font-2 margin1">TELEFONO:' + telefono + '</p>' +

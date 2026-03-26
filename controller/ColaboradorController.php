@@ -164,6 +164,7 @@ class ColaboradorController extends ControladorBase{
 
             $obj_c = $this->getObjetColaborador($id_parent);
             $save_c = $obj_c->put($obj_c);
+         
 
 			if($save_c==1)
 			$obj_c->SetLogFile("Colaborador","NuevoColaborador",$obj_c->getNombre()." ".$obj_c->getApellido());
