@@ -1,10 +1,10 @@
 <?php
 require_once 'core/Utils.php';
-
+require_once 'config/roles.php';
 class ColaboradorController extends ControladorBase{
     public $conectar;
     public $adapter;
-    
+ 
     public function __construct(){
         parent::__construct();
         $this->conectar = new Conectar();
@@ -21,6 +21,70 @@ class ColaboradorController extends ControladorBase{
         $roles = new RolesModel($this->adapter);
         $comisiones = $roles->getComisiones();
         $this->view("agregar_colaborador", ["roles" => $roles->getRoles($where),"comisiones" => $comisiones]);
+    }
+
+        public function asignature(){
+        $role = $_SESSION['Login_View']->role;
+        $where = $role =='sudo' ? '' : ' where id_role <> 1';
+        $roles = new RolesModel($this->adapter);
+        $comisiones = $roles->getComisiones();
+
+        //extraer a los colabordores
+        $Obj_col = new colaboradorModel($this->adapter);
+       // $colaborador = $Obj_col->getColaboradoresAll();
+       $supervisores = $Obj_col->getColaboradoresByRole(Roles::SUPERVISOR);
+       $this->view("colaborador/asignar_colaborador", ["supervisores" => $supervisores]);
+    }
+    public function reasignature(){
+        $role = $_SESSION['Login_View']->role;
+        $where = $role =='sudo' ? '' : ' where id_role <> 1';
+        $roles = new RolesModel($this->adapter);
+        $comisiones = $roles->getComisiones();
+
+        //extraer a los colabordores
+        $Obj_col = new colaboradorModel($this->adapter);
+        $colaborador = $Obj_col->getColaboradoresAll();
+        $this->view("colaborador/reasignar_vendedor", ["colaborador" => $colaborador]);
+    }
+    public function Asignacion(){
+        if(isset($_POST["id_colaborador_super"])){
+            $login = $_SESSION["Login_View"];
+            $id_colaborador = $_POST["id_colaborador_super"];
+            $vendedores=$_POST["myasignature"];
+            $id_vendedores="";
+            $resp = array();
+            for ($i=0;$i<count($vendedores);$i++){     
+                $id_vendedores .= $vendedores[$i].","; 
+            }
+            $id_vendedor=trim($id_vendedores, ',');
+            $cl = new ColaboradorModel($this->adapter);
+            $save = $cl->setUpdateAsignacionSupervisor($id_colaborador,$id_vendedor);
+            if($save == 1){
+                $resp = array(
+                  'respuesta' => 'true',
+                  'data' => '',
+                  'mensaje' => '.Se Asigno correctamente Los vendedores al Supervisor.'
+              );
+            }else{
+                $resp = array(
+                  'respuesta' => 'false',
+                  'data' => '',
+                  'mensaje' => 'ERROR.'
+              );
+                
+            }
+             $json = json_encode($resp);
+               
+              echo($json);
+        }else{
+            $resp = array(
+                  'respuesta' => 'false',
+                  'data' => '',
+                  'mensaje' => 'ERROR.Por favor seleccione el Colaborador.'
+              );
+              $json = json_encode($resp);
+              echo($json);
+        }
     }
     
     public function listado()
@@ -48,7 +112,7 @@ class ColaboradorController extends ControladorBase{
             $where_condition .= " OR col.apellido LIKE '%".$params['search']['value']."%'";
             $where_condition .= " OR col.codigo LIKE '%".$params['search']['value']."%'";
             $where_condition .= " OR col.cedula LIKE '%".$params['search']['value']."%'";
-            $where_condition .= " OR col.telefono LIKE '%".$params['search']['value']."%'";
+            $where_condition .= " OR col.telefono LIKE '%".$params['search']['value']."%' )";
         
         }
 
@@ -292,6 +356,15 @@ class ColaboradorController extends ControladorBase{
             }
 
         }
+    }
+
+        public function dataByComboSupervision(){
+        //$session = $_SESSION['Login_View'];
+        //$id_sucursal= $_GET["seleccion"];
+        $colaborador = new ColaboradorModel($this->adapter);
+       
+            $all_colaborador=$colaborador->getColaboradoresSupervisor();
+        echo json_encode($all_colaborador);
     }
 }
 ?>

@@ -30,6 +30,7 @@ class JuegosController extends ControladorBase
 
         $facturado_dia_By_juego = $ventaModel->getFacturadoRangoFechaByJuego($today,$today);
         $pagado_dia_By_juego = $ventaModel->getPagadoDiaRangoFechaByJuego($today,$today);
+        $facturado_By_Usuarios = $ventaModel->getFacturadoPagadoGbyColaborador($today,$today);
     
         $this->view('homeAdmin',array('facturado_dia'=>number_format($facturado_dia),
         'pagado_dia'=>number_format($pagado_dia),
@@ -37,6 +38,7 @@ class JuegosController extends ControladorBase
         'pagado_semanal'=>number_format($pagado_semanal),
         'facturado_dia_By_juego'=>$facturado_dia_By_juego,
         'pagado_dia_By_juego'=>$pagado_dia_By_juego,
+        'facturado_By_Usuarios'=>$facturado_By_Usuarios,
         'total_usuarios'=>$total_usuarios));
     }
 

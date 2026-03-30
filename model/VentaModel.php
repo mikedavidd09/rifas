@@ -251,6 +251,85 @@ class VentaModel extends ModeloBase{
         $obj=$this->ejecutarSql($query);
         return is_object($obj) ? $obj->id_venta : 0;
     }
+
+    public function getFacturadoByUsuarios($fechaInicio,$fechaFin){
+        $query = "SELECT 
+        concat(col.nombre,' ',col.apellido) as vendedor,
+        coalesce(sum(v.total),0) as facturado
+        FROM ventas v
+        INNER JOIN colaboradores col 
+            ON v.id_colaborador = col.id_colaborador
+        INNER JOIN sorteos s 
+            ON v.id_sorteo = s.id_sorteo
+        INNER JOIN juegos j 
+            ON v.id_juego = j.id_juego
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 
+        GROUP BY col.id_colaborador, col.nombre, col.apellido
+        ORDER BY facturado DESC   
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? [$obj] : $obj;
+    }
+
+        public function getPagadoByUsuarios($fechaInicio,$fechaFin){
+        $query = "SELECT 
+        concat(col.nombre,' ',col.apellido) as vendedor,
+        coalesce(sum(n.premio),0) as pagado
+        FROM ventas v
+        INNER JOIN colaboradores col 
+            ON v.id_colaborador = col.id_colaborador
+        INNER JOIN sorteos s 
+            ON v.id_sorteo = s.id_sorteo
+        INNER JOIN juegos j 
+            ON v.id_juego = j.id_juego
+        INNER JOIN numeros n 
+            ON v.id_venta = n.id_venta
+        WHERE v.fecha between '$fechaInicio' and '$fechaFin' and v.borrado = 0 
+        GROUP BY col.id_colaborador, col.nombre, col.apellido
+        ORDER BY pagado DESC   
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? [$obj] : $obj;
+    }
+
+    public function getFacturadoPagadoGbyColaborador($fechaInicio,$fechaFin){
+        $query = "SELECT
+    v.vendedor,
+    v.facturado,
+    COALESCE(p.pagado, 0) as pagado
+FROM (
+    SELECT
+        concat(col.nombre,' ',col.apellido) as vendedor,
+        coalesce(sum(v.total),0) as facturado,
+        col.id_colaborador
+    FROM ventas v
+    INNER JOIN colaboradores col ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j ON v.id_juego = j.id_juego
+    WHERE v.fecha BETWEEN '$fechaInicio' AND '$fechaFin' AND v.borrado = 0
+    GROUP BY col.id_colaborador, col.nombre, col.apellido
+) v
+LEFT JOIN (
+    SELECT
+        concat(col.nombre,' ',col.apellido) as vendedor,
+        coalesce(sum(n.premio),0) as pagado,
+        col.id_colaborador
+    FROM ventas v
+    INNER JOIN colaboradores col ON v.id_colaborador = col.id_colaborador
+    INNER JOIN sorteos s ON v.id_sorteo = s.id_sorteo
+    INNER JOIN juegos j ON v.id_juego = j.id_juego
+    INNER JOIN numeros n ON v.id_venta = n.id_venta
+    WHERE v.fecha BETWEEN '$fechaInicio' AND '$fechaFin' AND v.borrado = 0
+    GROUP BY col.id_colaborador, col.nombre, col.apellido
+) p ON v.id_colaborador = p.id_colaborador
+ORDER BY v.facturado DESC;
+        ";
+    
+        $obj=$this->ejecutarSql($query);
+        return is_object($obj) ? [$obj] : $obj;
+    }
 }
 
 ?>

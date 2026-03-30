@@ -6,6 +6,28 @@ function DatatableJs(selector,url,col,colHiperVinc) {
         filtere='';
     }
 
+    let buttons = [];
+
+        buttons.push({
+            text: '<i class="fa fa-refresh"">Actualizar</i>',
+            action: function ( e, dt, node, config ) {
+                dt.ajax.reload();
+            }
+        });
+
+
+      let fecha = $("#fecha").val();
+      if(fecha != undefined){
+        buttons.push({
+            text: '<i class="fa fa-calendar"">Filtrar por fecha</i>',
+            action: function ( e, dt, node, config ) {
+              
+                var url = url+"&fecha="+fecha;
+                dt.ajax.url(url).load();
+            }
+        });
+    }
+
 
     if ( $.fn.DataTable.isDataTable(selector) ) {
         $(selector).DataTable().destroy();
@@ -51,26 +73,7 @@ function DatatableJs(selector,url,col,colHiperVinc) {
                     }
                 },
                 dom: 'Bfrtip',
-                buttons: [
-                    {
-                        text: '<i class="fa fa-refresh"">Actualizar</i>',
-                        action: function ( e, dt, node, config ) {
-                            dt.ajax.reload();
-                        }
-                    },
-                    {
-                        text: '<i class="fa fa-calendar"">Filtrar por fecha</i>',
-                        action: function ( e, dt, node, config ) {
-                            var fecha = $("#fecha").val();
-                            if(fecha == undefined){
-                                alertify.error('Se debe seleccionar una fecha');
-                                return;
-                            }
-                            var url = "index.php?controller=Venta&action=getVentas&fecha="+fecha;
-                            dt.ajax.url(url).load();
-                        }
-                    }
-                ],
+                buttons: buttons,
                 "columnDefs": colHiperVinc
             });
             tabla.api().columns([col]).visible(false);

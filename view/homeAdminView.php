@@ -1,5 +1,55 @@
 <div class="row g-12">
     <div class="col-md-4">
+       <div class="container bootstrap snippet">
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading blue"><i class="fa fa-dollar fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content blue">
+          <div class="circle-tile-description text-faded"> Facturado Semanal</div>
+          <div class="circle-tile-number text-faded "><?php echo $facturado_semanal; ?></div>
+          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="col-md-4">
+       <div class="container bootstrap snippet">
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading green"><i class="fa fa-dollar fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content green">
+          <div class="circle-tile-description text-faded"> Pagado Semanal</div>
+          <div class="circle-tile-number text-faded "><?php echo $pagado_semanal; ?></div>
+          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="col-md-4">
+     <div class="container bootstrap snippet">
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <div class="circle-tile ">
+        <a href="#"><div class="circle-tile-heading red"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
+        <div class="circle-tile-content red">
+          <div class="circle-tile-description text-faded"> Total Usuarios</div>
+          <div class="circle-tile-number text-faded "><?php echo $total_usuarios; ?></div>
+          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+</div>
+<div class="row g-12">
+    <div class="col-md-4">
         <div class="card">
 
             <div class="alert alert-success" role="alert">
@@ -42,54 +92,23 @@
             </div>
         </div>
     </div>  
-     <div class="col-md-4">
-     
-<div class="container bootstrap snippet">
-  <div class="row">
-    <div class="col-md-4 col-sm-6">
-      <div class="circle-tile ">
-        <a href="#"><div class="circle-tile-heading blue"><i class="fa fa-dollar fa-fw fa-3x"></i></div></a>
-        <div class="circle-tile-content blue">
-          <div class="circle-tile-description text-faded"> Facturado Semanal</div>
-          <div class="circle-tile-number text-faded "><?php echo $facturado_semanal; ?></div>
-          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="col-md-4">
+     <div class="card">
 
-<div class="container bootstrap snippet">
-  <div class="row">
-    <div class="col-md-4 col-sm-6">
-      <div class="circle-tile ">
-        <a href="#"><div class="circle-tile-heading green"><i class="fa fa-dollar fa-fw fa-3x"></i></div></a>
-        <div class="circle-tile-content green">
-          <div class="circle-tile-description text-faded"> Pagado Semanal</div>
-          <div class="circle-tile-number text-faded "><?php echo $pagado_semanal; ?></div>
-          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+     <?php
 
-<div class="container bootstrap snippet">
-  <div class="row">
-    <div class="col-md-4 col-sm-6">
-      <div class="circle-tile ">
-        <a href="#"><div class="circle-tile-heading red"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
-        <div class="circle-tile-content red">
-          <div class="circle-tile-description text-faded"> Total Usuarios</div>
-          <div class="circle-tile-number text-faded "><?php echo $total_usuarios; ?></div>
-          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+     if($facturado_By_Usuarios)
+     foreach($facturado_By_Usuarios as $item){ ?>
+        <div class="alert alert-info">
+            <a href="#" class="btn btn-xs btn-warning pull-right">C$ <?php echo number_format($item->pagado); ?></a>
+            <a href="#" class="btn btn-xs btn-primary pull-right">C$ <?php echo number_format($item->facturado); ?></a>
+            <strong><?php echo $item->vendedor; ?></strong>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-       
-    </div>  
+        <?php } ?>
+
+     </div>
+
+</div>  
 
     
 

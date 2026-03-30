@@ -125,7 +125,13 @@
                         <li><a class='link' href="index.php?controller=Colaborador&action=index"><i class="fa fa-circle-o"></i>Lista</a></li>
                      </ul>
                   </li>
-                  <li ><a class ='link'   href="index.php?controller=Venta&action=puestos"><i class="fa fa-users"></i><span>Puestos</span></a></li>
+                         <li class ="treeview">
+                     <a href="#"><i class="fa fa-users"></i><span>Puestos</span><i class="fa fa-angle-right"></i></a>
+                     <ul class="treeview-menu">
+                         <li><a class='link' href="index.php?controller=Colaborador&action=asignature"><i class="fa fa-circle-o"></i>Asignar Vendedor</a></li>
+                          <li><a class='link' href="index.php?controller=Colaborador&action=reasignature"><i class="fa fa-circle-o"></i>ReAsignar Vendedor</a></li>
+                     </ul>
+                  </li>
                   <li class ="treeview">
                      <a href="#"><i class="fa fa-gamepad"></i><span>Jugar</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
@@ -148,7 +154,7 @@
                      <a href="#"><i class="fa fa-trophy"></i><span>Ganadores</span><i class="fa fa-angle-right"></i></a>
                      <ul class="treeview-menu">
                         <li><a class ='link'   href="index.php?controller=Juegos&action=add_numero_ganador"><i class="fa fa-circle-o"></i><span>Agregar</span></a></li>
-                        <li><a class='link' href="index.php?controller=Juegos&action=borrar_numeros_ganadores"><i class="fa fa-circle-o"></i><span>Borrar</span></a></li>
+                        <li><a class='link' href="index.php?controller=NumeroGanador&action=borrarView"><i class="fa fa-circle-o"></i><span>Borrar</span></a></li>
                         <li><a class='link' href="index.php?controller=Juegos&action=ver_ganadores"><i class="fa fa-circle-o"></i>Ver</a></li>
                      </ul>
                   </li>

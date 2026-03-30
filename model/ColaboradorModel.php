@@ -37,6 +37,17 @@ class ColaboradorModel extends ModeloBase
         return is_object($usuario) ? [$usuario] : $usuario;
     }
 
+    public function getColaboradoresByRole($id_role){
+        $query = "SELECT * FROM colaboradores c
+                    inner join usuarios u on c.id_colaborador = u.id_colaborador 
+                    inner join roles r on r.id_role = u.id_role
+                    WHERE estado=1 and id_role=$id_role";
+        $usuario = $this->ejecutarSql($query);
+        return is_object($usuario) ? [$usuario] : $usuario;
+    }
+
+    
+
     public function getColaboradoresAsalariado()
     {
         $query = "SELECT * FROM colaboradores c inner join salarios s on c.id_colaborador=s.id_colaborador WHERE estado=1";
@@ -153,6 +164,20 @@ class ColaboradorModel extends ModeloBase
        return is_object($data) ? [$data] : $data;
 
     }
+
+        public function setUpdateAsignacionSupervisor($id_colaborador,$id_vendedor){
+         $query ="update $this->table set id_parent=$id_colaborador where id_colaborador in($id_vendedor)";
+        $result = $this->ejecutarSqlUpdate($query);
+        return $result;
+    }
+
+        public function getColaboradoresSupervisor(){
+        $query = "SELECT col.*,u.*,r.nombre as cargo FROM  colaboradores col inner join usuarios u on col.id_colaborador=u.id_colaborador inner join roles r on u.id_role=r.id_role WHERE col.estado=1 and r.nombre='super' or r.nombre='admin'";
+       
+        $usuario = $this->ejecutarSql($query);
+        return is_object($usuario) ? [$usuario] : $usuario;
+    }
+    
 
 }
 

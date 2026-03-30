@@ -62,6 +62,8 @@ class ModeloBase extends EntidadBase{
       return $query->num_rows;
   }
 
+
+
   public function ejecutarSqlReports($query)
 {
     $query = $this->db()->query($query);
@@ -87,7 +89,36 @@ public function ejecutarSqlUpdate($query){
       $query = $this->db()->query($query);
       return $query;
   }
+
+
+  public function ejecutarSqlRowPDO($query)
+{
+    $stmt = $this->db()->query($query);
+    if ($stmt !== false) {
+        $resultSet = $stmt->fetchAll(PDO::FETCH_NUM);
+        if (count($resultSet) > 1) {
+            return $resultSet;
+        } elseif (count($resultSet) == 1) {
+            return $resultSet;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+  public function TotalRecordPDO($query)
+{
+  $stmt = $this->db()->query($query);
+    return $stmt->rowCount();
+}
+
+
+
 }
 //Aqui podemos montarnos métodos para los modelos de consulta
+
+
 
  ?>
